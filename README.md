@@ -156,6 +156,88 @@ catch (Exception e)
 }
 ```
 
+#####Charge with card token example
+```
+// Create payload
+var cardChargeRequestModel = new CardTokenCharge()
+{
+	Email = "myEmail@hotmail.com",
+	AutoCapture = "Y",
+	AutoCapTime = 0,
+	Currency = "Usd",
+	TrackId = "TRK12345",
+	TransactionIndicator = "1",
+	CustomerIp = "82.23.168.254",
+	Description = "Ipad for Ebs travel",
+	Value = "100",
+	CardToken = "card_tok_************************************",
+	Products = new List<Product>(){
+		new Product{ 
+			Name="ipad 3", 
+			Price=100, 
+			Quantity=1, 
+			ShippingCost=10.5M, 
+			Description="Gold edition", 
+			Image="http://goofle.com/?id=12345", 
+			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
+		}
+	},
+	ShippingDetails = new Address()
+	{
+		AddressLine1 = "Flat 1",
+		AddressLine2 = "Glading Fields",
+		Postcode = "N16 2BR",
+		City = "London",
+		State = "Hackney",
+		Country = "GB",
+		Phone = new Phone()
+		{
+			CountryCode = "44",
+			Number = "203 583 44 55"
+		}
+	},
+	BillingDetails = new Address()
+	{
+		AddressLine1 = "Flat 42",
+		AddressLine2 = "Oxford Street",
+		Postcode = "W1W 8SY",
+		City = "London",
+		State = "London",
+		Country = "GB"
+	},
+	Metadata = new Dictionary<string, string>() { { "extraInformation", "EBS travel" } },
+	Udf1 = "udf1 string",
+	Udf2 = "udf2 string",
+	Udf3 = "udf3 string",
+	Udf4 = "udf4 string",
+	Udf5 = "udf5 string"
+};
+
+try
+{
+	// Create APIClient instance with your secret key
+	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+
+	// Submit your request and receive an apiResponse
+	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.ChargeWithCardToken(cardChargeRequestModel);
+
+	if (!apiResponse.HasError)
+	{
+		// Access the response object retrieved from the api
+		var charge = apiResponse.Model;
+	}
+	else
+	{
+		// Api has returned an error object. You can access the details in the error property of the apiResponse.
+		// apiResponse.error
+	}
+}
+catch (Exception e)
+{
+	//... Handle exception
+}
+```
+
 
 ####Customers
 #####Create customer with card example
