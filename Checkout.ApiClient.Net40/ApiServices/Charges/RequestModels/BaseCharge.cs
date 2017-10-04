@@ -24,6 +24,7 @@ namespace Checkout.ApiServices.Charges.RequestModels
         public string CustomerName { get; set; }
         public string RedirectUrl { get; set; }
         public List<Product> Products { get; set; }
+        public Address BillingDetails { get; set; }
         public Address ShippingDetails { get; set; }
         public BillingDescriptor Descriptor { get; set; }
         public bool? RiskCheck { get; set; }

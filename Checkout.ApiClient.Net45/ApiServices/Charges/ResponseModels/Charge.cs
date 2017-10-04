@@ -24,6 +24,7 @@ namespace Checkout.ApiServices.Charges.ResponseModels
         public string Status { get; set; }
         public bool IsCascaded { get; set; }
         public string AuthCode { get; set; }
+        public Address BillingDetails { get; set; }
         public Address ShippingDetails { get; set; }
         public List<CustomerPaymentPlan> CustomerPaymentPlans { get; set; }
         public LocalPayment LocalPayment { get; set; }
