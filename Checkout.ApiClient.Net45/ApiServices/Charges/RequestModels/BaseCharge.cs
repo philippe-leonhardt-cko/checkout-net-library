@@ -30,6 +30,8 @@ namespace Checkout.ApiServices.Charges.RequestModels
         public Address ShippingDetails { get; set; }
         public BillingDescriptor Descriptor { get; set; }
         public bool? RiskCheck { get; set; }
+        public string SuccessUrl { get; set; }
+        public string FailUrl { get; set; }
 
     }
 }
