@@ -12,8 +12,7 @@ namespace Tests
         [Test]
         public void CreateCard()
         {
-            var customer =
-                CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
             var cardCreateModel = TestHelper.GetCardCreateModel();
             var response = CheckoutClient.CardService.CreateCard(customer.Id, cardCreateModel);
 
@@ -30,13 +29,26 @@ namespace Tests
         }
 
         [Test]
-        public void DeleteCard()
+        public void DeleteOnlyCard()
         {
-            var customer =
-                CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
-            var customerCardId = customer.Cards.Data.First().Id;
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
+            var customerOnlyCardId = customer.Cards.Data.First().Id;
 
-            var response = CheckoutClient.CardService.DeleteCard(customer.Id, customerCardId);
+            var response = CheckoutClient.CardService.DeleteCard(customer.Id, customerOnlyCardId);
+
+            response.Should().NotBeNull();
+            response.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.Error.ErrorCode.Should().BeEquivalentTo("83041");
+        }
+
+        [Test]
+        public void DeleteSecondaryCard()
+        {
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
+            var customerPrimaryCardId = customer.Cards.Data.First().Id;
+            var customerSecondaryCardId = CheckoutClient.CardService.CreateCard(customer.Id, TestHelper.GetCardCreateModel(CardProvider.Mastercard)).Model.Id;
+
+            var response = CheckoutClient.CardService.DeleteCard(customer.Id, customerSecondaryCardId);
 
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
@@ -67,13 +79,9 @@ namespace Tests
         [Test]
         public void GetCardList()
         {
-            var customer =
-                CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
-            var customerCard1 =
-                CheckoutClient.CardService.CreateCard(customer.Id, TestHelper.GetCardCreateModel()).Model;
-            var customerCard2 =
-                CheckoutClient.CardService.CreateCard(customer.Id,
-                    TestHelper.GetCardCreateModel(CardProvider.Mastercard)).Model;
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
+            var customerCard1 = CheckoutClient.CardService.CreateCard(customer.Id, TestHelper.GetCardCreateModel()).Model;
+            var customerCard2 = CheckoutClient.CardService.CreateCard(customer.Id, TestHelper.GetCardCreateModel(CardProvider.Mastercard)).Model;
 
             var response = CheckoutClient.CardService.GetCardList(customer.Id);
 
@@ -85,8 +93,7 @@ namespace Tests
         [Test]
         public void UpdateCard()
         {
-            var customer =
-                CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
             var customerCardId = customer.Cards.Data.First().Id;
 
             var response = CheckoutClient.CardService.UpdateCard(customer.Id, customerCardId,

@@ -252,7 +252,7 @@ namespace Tests
             {
                 return new BaseCard()
                 {
-                    ExpiryYear = "2017",
+                    ExpiryYear = "2025",
                     ExpiryMonth = "06",
                     Name = RandomData.FullName,
                     BillingDetails = GetAddressModel()
@@ -278,7 +278,7 @@ namespace Tests
             else
             {
                 card.Cvv = "257";
-                card.Number = "5313581000123430";
+                card.Number = "5436031030606378";
             }
 
             return card;
