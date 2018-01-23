@@ -11,3 +11,4 @@ PublishProfiles/
 *.dbmdl
 *.nunit
 packages/
+.vs/
