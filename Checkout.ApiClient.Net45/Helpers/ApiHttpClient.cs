@@ -91,7 +91,7 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** Request ** Post {0}", requestUri));
+                Console.WriteLine(string.Format("\n\n** HttpRequest ** GET {0}", requestUri));
             }
 
             return SendRequest<T>(httpRequestMsg).Result;
@@ -112,7 +112,7 @@ namespace Checkout
             
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** Request ** Post {0}", requestUri));
+                Console.WriteLine(string.Format("\n\n** HttpRequest ** POST {0}", requestUri));
                 Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
             }
 
@@ -134,7 +134,7 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** Request ** Put {0}", requestUri));
+                Console.WriteLine(string.Format("\n\n** HttpRequest ** PUT {0}", requestUri));
                 Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
             }
 
@@ -156,7 +156,7 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** Request ** Delete {0}", requestUri));
+                Console.WriteLine(string.Format("\n\n** HttpRequest ** DELETE {0}", requestUri));
             }
 
             return SendRequest<T>(httpRequestMsg).Result; 
