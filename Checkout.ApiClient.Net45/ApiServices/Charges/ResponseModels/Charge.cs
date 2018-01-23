@@ -30,5 +30,16 @@ namespace Checkout.ApiServices.Charges.ResponseModels
         public LocalPayment LocalPayment { get; set; }
         public string SuccessUrl { get; set; }
         public string FailUrl { get; set; }
+        public string Udf1 { get; set; }
+        public string Udf2 { get; set; }
+        public string Udf3 { get; set; }
+        public string Udf4 { get; set; }
+        public string Udf5 { get; set; }
+        public string Enrolled { get; set; }
+        public string Xid { get; set; }
+        public string SignatureValid { get; set; }
+        public string AuthenticationResponse { get; set; }
+        public string Eci { get; set; }
+        public string Cavv { get; set; }
     }
 }
