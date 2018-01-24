@@ -79,17 +79,18 @@ namespace Tests
                 ToDate = DateTime.UtcNow
             };
 
-            //Get all customers created
+            // Get all customers created
             var response = CheckoutClient.CustomerService.GetCustomerList(custGetListRequest);
 
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             response.Model.Count.Should().BeGreaterOrEqualTo(4);
 
-            response.Model.Data[0].Id.Should().Be(customer4.Model.Id);
-            response.Model.Data[1].Id.Should().Be(customer3.Model.Id);
-            response.Model.Data[2].Id.Should().Be(customer2.Model.Id);
-            response.Model.Data[3].Id.Should().Be(customer1.Model.Id);
+            // Verify if customers are contained in the customer list regardless of parallel customer creation and sorting
+            response.Model.Data.ToString().Should().Contain(customer1.Model.ToString());
+            response.Model.Data.ToString().Should().Contain(customer2.Model.ToString());
+            response.Model.Data.ToString().Should().Contain(customer3.Model.ToString());
+            response.Model.Data.ToString().Should().Contain(customer4.Model.ToString());
         }
 
         [Test]
