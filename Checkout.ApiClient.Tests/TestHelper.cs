@@ -236,6 +236,17 @@ namespace Tests
             };
         }
 
+        public static TokenCard GetTokenCardModel()
+        {
+            return new TokenCard()
+            {
+                ExpiryMonth = "06",
+                ExpiryYear = "2018",
+                Number = "4242424242424242",
+                Cvv = "100"
+            };
+        }
+
         public static BaseCard GetBaseCardModel(CardProvider cardProvider = CardProvider.Visa)
         {
             if (cardProvider == CardProvider.Visa)

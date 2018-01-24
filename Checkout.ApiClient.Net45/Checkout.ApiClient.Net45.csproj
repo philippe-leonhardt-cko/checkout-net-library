@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServices\Cards\CardService.cs" />
+    <Compile Include="ApiServices\Tokens\RequestModels\TokenCard.cs" />
     <Compile Include="ApiServices\Charges\ChargeService.cs" />
     <Compile Include="ApiServices\Charges\RequestModels\BaseChargeInfo.cs" />
     <Compile Include="ApiServices\Charges\RequestModels\ChargeVoid.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="ApiServices\SharedModels\Phone.cs" />
     <Compile Include="ApiServices\SharedModels\SortColumn.cs" />
     <Compile Include="ApiServices\SharedModels\SortOrder.cs" />
+    <Compile Include="ApiServices\Tokens\ResponseModels\CardTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\VisaCheckoutTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\ResponseModels\CardTokenResponse.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenUpdate.cs" />

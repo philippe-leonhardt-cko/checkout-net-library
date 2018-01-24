@@ -67,6 +67,18 @@ namespace Tests
         }
 
         [Test]
+        public void CreateZeroAuthorisationCharge()
+        {
+            var cardCreateModel = TestHelper.GetTokenCardModel();
+            var cardToken = CheckoutClient.TokenService.GetCardToken(cardCreateModel).Model.Id;
+            var cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardToken, TestHelper.RandomData.Email);
+
+            var response = CheckoutClient.ChargeService.ChargeWithCardToken(cardTokenChargeModel);
+
+            response.HttpStatusCode.Should().NotBe(HttpStatusCode.BadGateway);
+        }
+
+        [Test]
         public void CreateChargeWithCard_3DChargeMode()
         {
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);

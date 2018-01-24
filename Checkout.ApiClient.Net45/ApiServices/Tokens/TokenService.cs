@@ -21,5 +21,10 @@ namespace Checkout.ApiServices.Tokens
         {
             return new ApiHttpClient().PostRequest<CardTokenResponse>(ApiUrls.VisaCheckout, AppSettings.PublicKey, requestModel);
         }
+
+        public HttpResponse<CardTokenCreate> GetCardToken(TokenCard requestModel)
+        {
+            return new ApiHttpClient().PostRequest<CardTokenCreate>(ApiUrls.CardToken, AppSettings.PublicKey, requestModel);
+        }
     }
 }
