@@ -66,7 +66,7 @@ namespace Tests
         [Test]
         public void GetCustomerList()
         {
-            var startTime = DateTime.UtcNow.AddHours(-1); // records for the past hour
+            var startTime = DateTime.UtcNow.AddMinutes(-5); // records for the past 5 minutes
 
             var customer1 = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard());
             var customer2 = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard());
