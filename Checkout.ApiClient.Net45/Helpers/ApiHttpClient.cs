@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,11 +76,12 @@ namespace Checkout
             return null;
         }
 
-       
+
+        public string callerSection = "";
         /// <summary>
         /// Submits a get request to the given web address with default content type e.g. text/plain
         /// </summary>
-        public HttpResponse<T> GetRequest<T>(string requestUri,string authenticationKey)
+        public HttpResponse<T> GetRequest<T>(string requestUri,string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage();
 
@@ -91,7 +93,9 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** HttpRequest ** GET {0}", requestUri));
+                callerSection = callerFunction;
+                Console.WriteLine(string.Format("\n\n<{0}>", callerSection));
+                Console.WriteLine(string.Format("\n** HttpRequest ** - Type GET\n\n\t{0}", requestUri));
             }
 
             return SendRequest<T>(httpRequestMsg).Result;
@@ -100,7 +104,7 @@ namespace Checkout
         /// <summary>
         /// Submits a post request to the given web address
         /// </summary>
-        public HttpResponse<T> PostRequest<T>(string requestUri,string authenticationKey, object requestPayload = null)
+        public HttpResponse<T> PostRequest<T>(string requestUri,string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Post, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
@@ -112,8 +116,10 @@ namespace Checkout
             
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** HttpRequest ** POST {0}", requestUri));
-                Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
+                callerSection = callerFunction;
+                Console.WriteLine(string.Format("\n<{0}>", callerSection));
+                Console.WriteLine(string.Format("\n** HttpRequest ** - Type POST\n\n\t{0}\n", requestUri));
+                Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", requestPayloadAsString));
             }
 
             return SendRequest<T>(httpRequestMsg).Result;
@@ -122,7 +128,7 @@ namespace Checkout
         /// <summary>
         /// Submits a put request to the given web address
         /// </summary>
-        public HttpResponse<T> PutRequest<T>(string requestUri, string authenticationKey, object requestPayload = null)
+        public HttpResponse<T> PutRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Put, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
@@ -134,8 +140,9 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** HttpRequest ** PUT {0}", requestUri));
-                Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
+                Console.WriteLine(string.Format("\n[{0}]", callerFunction));
+                Console.WriteLine(string.Format("\n** HttpRequest ** - Type PUT\n\n\t{0}\n", requestUri));
+                Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", requestPayloadAsString));
             }
 
             return SendRequest<T>(httpRequestMsg).Result;
@@ -144,7 +151,7 @@ namespace Checkout
         /// <summary>
         /// Submits a delete request to the given web address
         /// </summary>
-        public HttpResponse<T> DeleteRequest<T>(string requestUri, string authenticationKey)
+        public HttpResponse<T> DeleteRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage();
 
@@ -156,7 +163,8 @@ namespace Checkout
 
             if (AppSettings.DebugMode)
             {
-                Console.WriteLine(string.Format("\n\n** HttpRequest ** DELETE {0}", requestUri));
+                Console.WriteLine(string.Format("\n[{0}]", callerFunction));
+                Console.WriteLine(string.Format("\n** HttpRequest ** - Type DELETE\n\n\t{0}\n", requestUri));
             }
 
             return SendRequest<T>(httpRequestMsg).Result; 
@@ -190,7 +198,9 @@ namespace Checkout
 
                     if (AppSettings.DebugMode)
                     {
-                        Console.WriteLine(string.Format("\n** HttpResponse - Status {0}**\n {1}\n", responseMessage.StatusCode, responseAsString));
+                        Console.WriteLine(string.Format("\n** HttpResponse ** - Status {0}\n\n\t{1}\n", responseMessage.StatusCode, responseAsString));
+                        Console.WriteLine(string.Format("</{0}>\n", callerSection));
+                        callerSection = "";
                     }
                 }
 
