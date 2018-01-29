@@ -15,9 +15,7 @@ namespace Tests.RecurringPaymentsService
         {
             var cardCreateModel = TestHelper.GetCardChargeCreateModelWithNewPaymentPlan(TestHelper.RandomData.Email);
             var createResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
-            var cancelResponse =
-                CheckoutClient.RecurringPaymentsService.CancelCustomerPaymentPlan(
-                    createResponse.Model.CustomerPaymentPlans.Single().CustomerPlanId);
+            var cancelResponse = CheckoutClient.RecurringPaymentsService.CancelCustomerPaymentPlan(createResponse.Model.CustomerPaymentPlans.Single().CustomerPlanId);
 
             cancelResponse.Should().NotBeNull();
             cancelResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);

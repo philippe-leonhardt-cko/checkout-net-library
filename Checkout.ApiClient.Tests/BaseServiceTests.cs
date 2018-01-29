@@ -30,8 +30,7 @@ namespace Tests
         /// <returns></returns>
         protected Charge CreateChargeWithNewTrackId()
         {
-            string cardNumber;
-            return CreateChargeWithNewTrackId(out cardNumber);
+            return CreateChargeWithNewTrackId(out string cardNumber);
         }
  
         /// <summary>
@@ -47,7 +46,13 @@ namespace Tests
  
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            chargeResponse.Model.Status.Should().NotBe("Declined");
+
+            if (AppSettings.DebugMode && chargeResponse.Model.ResponseCode != "10000")
+            {
+                Console.WriteLine(string.Format("\n** Charge status is not 'Approved' **\n** Charge status is '{0}' **", chargeResponse.Model.Status.ToUpper()));
+                Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));
+            };
+            chargeResponse.Model.Status.Should().NotBe("Declined", "CreateChargeWithNewTrackId(out string cardNumber) must create an authorized charge");
  
             cardNumber = cardCreateModel.Card.Number;
             return chargeResponse.Model;

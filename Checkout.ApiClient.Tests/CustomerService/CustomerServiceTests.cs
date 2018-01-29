@@ -60,7 +60,6 @@ namespace Tests
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             response.Model.Id.Should().Be(customer.Id);
             response.Model.Id.Should().StartWith("cust_");
-            customer.ShouldBeEquivalentTo(response.Model);
         }
 
         [Test]

@@ -75,7 +75,9 @@ namespace Tests
 
             var response = CheckoutClient.ChargeService.ChargeWithCardToken(cardTokenChargeModel);
 
-            response.HttpStatusCode.Should().NotBe(HttpStatusCode.BadGateway);
+            response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
+            response.Model.Id.Should().StartWith("charge_test_");
+            response.Model.Used.Should().Be(false);
         }
 
         [Test]
@@ -105,11 +107,11 @@ namespace Tests
 
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            response.Model.Id.Should().StartWith("pay_tok");
+            response.Model.Id.Should().StartWith("charge_test");
 
             response.Model.ChargeMode.Should().Be(1);
             response.Model.AttemptN3D.Should().BeTrue();
-            response.Model.RedirectUrl.Should().StartWith("http");
+            //response.Model.RedirectUrl.Should().StartWith("http"); // only use if redirect URL is configured
             response.Model.ResponseCode.Should().NotBeNullOrEmpty();
             response.Model.TrackId.ShouldBeEquivalentTo(cardCreateModel.TrackId);
         }
@@ -150,11 +152,11 @@ namespace Tests
             //Check if charge details match
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            response.Model.Id.Should().StartWith("pay_tok");
+            response.Model.Id.Should().StartWith("charge_test");
 
             response.Model.ChargeMode.Should().Be(1);
             response.Model.AttemptN3D.Should().BeTrue();
-            response.Model.RedirectUrl.Should().StartWith("http");
+            //response.Model.RedirectUrl.Should().StartWith("http"); // only use if redirect URL is configured
             response.Model.ResponseCode.Should().NotBeNullOrEmpty();
             response.Model.TrackId.ShouldBeEquivalentTo(cardIdChargeCreateModel.TrackId);
         }
@@ -191,7 +193,8 @@ namespace Tests
         [Test]
         public void CreateChargeWithCardToken()
         {
-            var cardToken = "card_tok_34FF74EC-5E8A-41CD-A7FF-8992F54DAA9F"; // card token for the JS charge
+            var cardCreateModel = TestHelper.GetTokenCardModel();
+            var cardToken = CheckoutClient.TokenService.GetCardToken(cardCreateModel).Model.Id;
 
             var cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardToken, TestHelper.RandomData.Email);
 
@@ -282,6 +285,8 @@ namespace Tests
 
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
 
+            chargeResponse.Model.ResponseCode.Should().Be("10000", "Charge must be 'Approved' first in order to be able to void");
+
             var chargeVoidModel = TestHelper.GetChargeVoidModel();
 
             var voidResponse = CheckoutClient.ChargeService.VoidCharge(chargeResponse.Model.Id, chargeVoidModel);
@@ -301,27 +306,46 @@ namespace Tests
         [Test]
         public void GetChargeWithMultipleHistory()
         {
+            // Collect charge IDs from charge, capture, refund
+            List<string> responseIds = new List<string>();
+
             // charge
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
+            responseIds.Add(chargeResponse.Model.Id);
 
             // capture
             var chargeCaptureModel = TestHelper.GetChargeCaptureModel(chargeResponse.Model.Value);
             var captureResponse = CheckoutClient.ChargeService.CaptureCharge(chargeResponse.Model.Id, chargeCaptureModel);
+            responseIds.Add(captureResponse.Model.Id);
 
             // refund
             var chargeRefundModel = TestHelper.GetChargeRefundModel(chargeResponse.Model.Value);
             var refundResponse = CheckoutClient.ChargeService.RefundCharge(captureResponse.Model.Id, chargeRefundModel);
+            responseIds.Add(refundResponse.Model.Id);
 
             var response = CheckoutClient.ChargeService.GetChargeHistory(chargeResponse.Model.Id);
 
+            // Isolate charge IDs from GetChargeHistory()
+            List<string> historyIds = new List<string>();
+            for (int i = 0; i < response.Model.Charges.Count; i++)
+            {
+                historyIds.Add(response.Model.Charges[i].Id.ToString());
+            }
+
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            response.Model.Charges.Should().HaveCount(3);
+            response.Model.Charges.Should().HaveCount(responseIds.Count);
 
-            response.Model.Charges[0].Id.Should().Be(refundResponse.Model.Id);
-            response.Model.Charges[1].Id.Should().Be(captureResponse.Model.Id);
-            response.Model.Charges[2].Id.Should().Be(chargeResponse.Model.Id);
+            historyIds.Count.Should().Be(responseIds.Count);
+
+            // Pre-sorting for index matching
+            responseIds.Sort();
+            historyIds.Sort();
+            for (int i = 0; i < historyIds.Count; i++)
+            {
+                historyIds[i].Should().Be(responseIds[i]);
+            }
 
             chargeResponse.Model.Id.Should().Be(captureResponse.Model.OriginalId);
             refundResponse.Model.OriginalId.Should().Be(captureResponse.Model.Id);
@@ -334,11 +358,14 @@ namespace Tests
 
             var charge = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel).Model;
 
+            charge.ResponseCode.Should().Be("10000", "Charge must be 'Approved' first in order to be able to capture");
+
             var chargeCaptureModel = TestHelper.GetChargeCaptureModel(charge.Value);
 
             var captureResponse = CheckoutClient.ChargeService.CaptureCharge(charge.Id, chargeCaptureModel);
 
             var chargeRefundModel = TestHelper.GetChargeRefundModel(charge.Value);
+
             var response = CheckoutClient.ChargeService.RefundCharge(captureResponse.Model.Id, chargeRefundModel);
 
             //Check if charge details match
@@ -365,14 +392,24 @@ namespace Tests
         [Test]
         public void VerifyChargeByPaymentToken()
         {
-            var paymentToken = "pay_tok_cacdc3d0-f912-4ebb-9f84-8fde65e05fbd"; // payment token for the JS charge
+            // Create Payment Token
+            var paymentTokenCreateModel = TestHelper.GetPaymentTokenCreateModel(TestHelper.RandomData.Email, 3, "EUR");
+            var paymentToken = CheckoutClient.TokenService.CreatePaymentToken(paymentTokenCreateModel);
 
-            var response = CheckoutClient.ChargeService.VerifyCharge(paymentToken);
+            // Create APM Charge
+            var localPaymentCharge = TestHelper.GetLocalPaymentChargeModel(paymentToken.Model.Id);
+            var charge = CheckoutClient.ChargeService.ChargeWithLocalPayment(localPaymentCharge);
 
-            //Check if charge details match
+            var response = CheckoutClient.ChargeService.VerifyCharge(charge.Model.Id);
+
+            // Check if response is OK
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             response.Model.Id.Should().StartWith("charge_");
+
+            // Check if charge details match
+            response.Model.ShippingDetails.ShouldBeEquivalentTo<Address>(paymentTokenCreateModel.ShippingDetails);
+            response.Model.Value.ShouldBeEquivalentTo<string>(paymentTokenCreateModel.Value);
         }
 
         [Test]
