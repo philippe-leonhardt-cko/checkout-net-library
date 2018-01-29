@@ -17,6 +17,7 @@ namespace Checkout.ApiServices.Charges.ResponseModels
         public int ChargeMode { get; set; }
         public string CustomerId { get; set; }
         public string TransactionIndicator { get; set; }
+        public bool Used { get; set; }
         public Card Card { get; set; }
         public string ResponseMessage { get; set; }
         public string ResponseAdvancedInfo { get; set; }
