@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using CheckoutEnvironment = Checkout.Helpers.Environment;
-
+using Microsoft.Extensions.Configuration;
 namespace Checkout
 {
     /// <summary>
@@ -113,11 +113,16 @@ namespace Checkout
             { throw new KeyNotFoundException("Config value is invalid for: Environment"); }
         }
 
+        public static IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddXmlFile("App.Debug.config", optional: false)
+            .Build();
+
         private static string ReadConfig(string key,bool throwIfnotExist=false)
         {
             try
             {
-                return ConfigurationManager.AppSettings[key].ToString();
+                return configuration[key].ToString();
+                //return ConfigurationManager.AppSettings[key].ToString();
             }
             catch (Exception)
             {
