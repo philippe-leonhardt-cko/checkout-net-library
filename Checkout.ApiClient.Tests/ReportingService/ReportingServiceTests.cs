@@ -112,8 +112,7 @@ namespace Tests
             }
             else
             {
-                int value;
-                if (int.TryParse(request.PageNumber, out value) && value > 0)
+                if (int.TryParse(request.PageNumber, out int value) && value > 0)
                 {
                     if (response.Model.PageNumber == 9999)
                     {

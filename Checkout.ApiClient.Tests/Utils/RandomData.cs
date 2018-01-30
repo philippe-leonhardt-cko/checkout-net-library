@@ -252,7 +252,6 @@ namespace Tests
         /// </summary>
         public static decimal GetDecimalNumber(int rangeFrom = 0, int rangeTo = 10000, int precision=2)
         {
-            decimal randomDecimal;
 
             Func<int> getRange = () =>
             {
@@ -267,7 +266,7 @@ namespace Tests
                 return range;
             };
 
-            decimal.TryParse(string.Format("{0}.{1}", Faker.RandomNumber.Next(rangeFrom, rangeTo), Faker.RandomNumber.Next(0, getRange.Invoke())), out randomDecimal);
+            decimal.TryParse(string.Format("{0}.{1}", Faker.RandomNumber.Next(rangeFrom, rangeTo), Faker.RandomNumber.Next(0, getRange.Invoke())), out decimal randomDecimal);
 
             return randomDecimal;
         }
