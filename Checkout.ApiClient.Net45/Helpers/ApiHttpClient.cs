@@ -20,7 +20,7 @@ namespace Checkout
     /// </summary>
     public sealed class ApiHttpClient
     {
-        private WebRequestHandler requestHandler;
+        private HttpClientHandler requestHandler;
         private HttpClient httpClient;
 
         public ApiHttpClient()
@@ -34,7 +34,8 @@ namespace Checkout
             {
                 requestHandler.Dispose();
             }
-            requestHandler = new WebRequestHandler
+
+            requestHandler = new HttpClientHandler
             {
                 AutomaticDecompression = DecompressionMethods.GZip,
                 AllowAutoRedirect = false,
@@ -47,9 +48,12 @@ namespace Checkout
                 httpClient.Dispose();
             }
 
-            httpClient = new HttpClient(requestHandler);
-            httpClient.MaxResponseContentBufferSize = AppSettings.MaxResponseContentBufferSize;
-            httpClient.Timeout = TimeSpan.FromSeconds(AppSettings.RequestTimeout);
+            httpClient = new HttpClient(requestHandler)
+            {
+                MaxResponseContentBufferSize = AppSettings.MaxResponseContentBufferSize,
+                Timeout = TimeSpan.FromSeconds(AppSettings.RequestTimeout)
+            };
+            
             SetHttpRequestHeader("User-Agent",AppSettings.ClientUserAgentName);
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("Gzip"));
         }
@@ -67,8 +71,7 @@ namespace Checkout
 
         public string GetHttpRequestHeader(string name)
         {
-            IEnumerable<string> values = null;
-            httpClient.DefaultRequestHeaders.TryGetValues(name, out values);
+            httpClient.DefaultRequestHeaders.TryGetValues(name, out IEnumerable<string> values);
 
             if (values != null && values.Any())
             { return values.First(); }
@@ -81,12 +84,13 @@ namespace Checkout
         /// <summary>
         /// Submits a get request to the given web address with default content type e.g. text/plain
         /// </summary>
-        public HttpResponse<T> GetRequest<T>(string requestUri,string authenticationKey, [CallerMemberName] string callerFunction = "")
+        public HttpResponse<T> GetRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
-            var httpRequestMsg = new HttpRequestMessage();
-
-            httpRequestMsg.Method = HttpMethod.Get;
-            httpRequestMsg.RequestUri = new Uri(requestUri);
+            var httpRequestMsg = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(requestUri)
+            };
             httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
@@ -104,7 +108,7 @@ namespace Checkout
         /// <summary>
         /// Submits a post request to the given web address
         /// </summary>
-        public HttpResponse<T> PostRequest<T>(string requestUri,string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
+        public HttpResponse<T> PostRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Post, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
@@ -153,10 +157,11 @@ namespace Checkout
         /// </summary>
         public HttpResponse<T> DeleteRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
-            var httpRequestMsg = new HttpRequestMessage();
-
-            httpRequestMsg.Method = HttpMethod.Delete;
-            httpRequestMsg.RequestUri = new Uri(requestUri);
+            var httpRequestMsg = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(requestUri)
+            };
             httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
