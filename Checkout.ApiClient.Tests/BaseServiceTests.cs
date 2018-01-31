@@ -52,7 +52,7 @@ namespace Tests
                 Console.WriteLine(string.Format("\n** Charge status is not 'Approved' **\n** Charge status is '{0}' **", chargeResponse.Model.Status.ToUpper()));
                 Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));
             };
-            chargeResponse.Model.Status.Should().NotBe("Declined", "CreateChargeWithNewTrackId(out string cardNumber) must create an authorized charge");
+            chargeResponse.Model.Status.Should().NotBe("Declined", "CreateChargeWithNewTrackId(out string cardNumber) must create an authorized charge, you may re-run this test");
  
             cardNumber = cardCreateModel.Card.Number;
             return chargeResponse.Model;

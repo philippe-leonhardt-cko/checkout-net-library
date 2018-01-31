@@ -95,12 +95,7 @@ namespace Checkout
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
-            if (AppSettings.DebugMode)
-            {
-                callerSection = callerFunction;
-                Console.WriteLine(string.Format("\n\n<{0}>", callerSection));
-                Console.WriteLine(string.Format("\n** HttpRequest ** - Type GET\n\n\t{0}", requestUri));
-            }
+            callerSection = callerFunction;
 
             return SendRequest<T>(httpRequestMsg).Result;
         }
@@ -117,16 +112,10 @@ namespace Checkout
             httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
             
             SetHttpRequestHeader("Authorization", authenticationKey);
-            
-            if (AppSettings.DebugMode)
-            {
-                callerSection = callerFunction;
-                Console.WriteLine(string.Format("\n<{0}>", callerSection));
-                Console.WriteLine(string.Format("\n** HttpRequest ** - Type POST\n\n\t{0}\n", requestUri));
-                Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", requestPayloadAsString));
-            }
 
-            return SendRequest<T>(httpRequestMsg).Result;
+            callerSection = callerFunction;
+
+            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
         }
 
         /// <summary>
@@ -142,14 +131,9 @@ namespace Checkout
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
-            if (AppSettings.DebugMode)
-            {
-                Console.WriteLine(string.Format("\n[{0}]", callerFunction));
-                Console.WriteLine(string.Format("\n** HttpRequest ** - Type PUT\n\n\t{0}\n", requestUri));
-                Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", requestPayloadAsString));
-            }
+            callerSection = callerFunction;
 
-            return SendRequest<T>(httpRequestMsg).Result;
+            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
         }
 
         /// <summary>
@@ -166,11 +150,7 @@ namespace Checkout
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
-            if (AppSettings.DebugMode)
-            {
-                Console.WriteLine(string.Format("\n[{0}]", callerFunction));
-                Console.WriteLine(string.Format("\n** HttpRequest ** - Type DELETE\n\n\t{0}\n", requestUri));
-            }
+            callerSection = callerFunction;
 
             return SendRequest<T>(httpRequestMsg).Result; 
         }
@@ -180,7 +160,7 @@ namespace Checkout
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request)
+        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
             Task<HttpResponse<T>> response = null;
             HttpResponseMessage responseMessage = null;
@@ -203,6 +183,12 @@ namespace Checkout
 
                     if (AppSettings.DebugMode)
                     {
+                        Console.WriteLine(string.Format("\n<{0}>", callerSection));
+                        Console.WriteLine(string.Format("\n** HttpRequest ** - Type {0}\n\n\t{1}", request.Method.ToString().ToUpper(), request.RequestUri));
+                        if (payload != null)
+                        {
+                            Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", payload));
+                        }
                         Console.WriteLine(string.Format("\n** HttpResponse ** - Status {0}\n\n\t{1}\n", responseMessage.StatusCode, responseAsString));
                         Console.WriteLine(string.Format("</{0}>\n", callerSection));
                         callerSection = "";

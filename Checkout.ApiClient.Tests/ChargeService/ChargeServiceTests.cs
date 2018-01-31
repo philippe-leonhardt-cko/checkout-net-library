@@ -254,7 +254,7 @@ namespace Tests
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             chargeResponse.Model.Id.Should().StartWith("pay_tok_");
-            chargeResponse.Model.ResponseCode.Should().Be("10000");
+            chargeResponse.Model.ResponseCode.Should().StartWith("10", "Charge must be 'Approved' first in order to be able to capture");
             chargeResponse.Model.ChargeMode.Should().Be(3);
             chargeResponse.Model.LocalPayment.PaymentUrl.Should().NotBeNullOrWhiteSpace();
         }
@@ -285,7 +285,7 @@ namespace Tests
 
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
 
-            chargeResponse.Model.ResponseCode.Should().Be("10000", "Charge must be 'Approved' first in order to be able to void");
+            chargeResponse.Model.ResponseCode.Should().StartWith("10", "Charge must be 'Approved' first in order to be able to void");
 
             var chargeVoidModel = TestHelper.GetChargeVoidModel();
 
@@ -358,7 +358,7 @@ namespace Tests
 
             var charge = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel).Model;
 
-            charge.ResponseCode.Should().Be("10000", "Charge must be 'Approved' first in order to be able to capture");
+            charge.ResponseCode.Should().StartWith("10", "Charge must be 'Approved' first in order to be able to capture");
 
             var chargeCaptureModel = TestHelper.GetChargeCaptureModel(charge.Value);
 
