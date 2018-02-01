@@ -61,7 +61,7 @@ namespace Checkout
                 Timeout = TimeSpan.FromSeconds(AppSettings.RequestTimeout)
             };
             
-            SetHttpRequestHeader("User-Agent",AppSettings.ClientUserAgentName);
+            SetHttpRequestHeader("User-Agent", AppSettings.ClientUserAgentName);
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("Gzip"));
         }
 
@@ -85,7 +85,6 @@ namespace Checkout
 
             return null;
         }
-
 
         public string callerSection = "";
         /// <summary>

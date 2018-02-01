@@ -104,9 +104,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Checkout.ApiClient.Net45\Checkout.ApiClient.Net45.csproj">
-      <Project>{1c69b996-8ab6-4ba2-a5ae-58a350cbb34b}</Project>
-      <Name>Checkout.ApiClient.Net45</Name>
+    <ProjectReference Include="..\Checkout.ApiClient.NetCore\Checkout.ApiClient.NetCore.csproj">
+      <Project>{1315c31b-288a-468e-a6c3-1b8df596ea8f}</Project>
+      <Name>Checkout.ApiClient.NetCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
