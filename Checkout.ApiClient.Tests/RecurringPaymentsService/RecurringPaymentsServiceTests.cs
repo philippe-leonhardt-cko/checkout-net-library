@@ -49,17 +49,19 @@ namespace Tests.RecurringPaymentsService
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
             var chargeResponseModel = chargeResponse.Model.CustomerPaymentPlans.Single();
-            chargeResponseModel.ShouldBeEquivalentTo(createResponseModel,
-                options =>
-                    options.Excluding(o => o.CustomerPlanId)
-                        .Excluding(o => o.CustomerId)
-                        .Excluding(o => o.CardId)
-                        .Excluding(o => o.RecurringCountLeft)
-                        .Excluding(o => o.TotalCollectedCount)
-                        .Excluding(o => o.TotalCollectedValue)
-                        .Excluding(o => o.PreviousRecurringDate)
-                        .Excluding(o => o.NextRecurringDate)
-                        .Excluding(o => o.StartDate));
+            chargeResponseModel.ShouldBeEquivalentTo(
+                createResponseModel,
+                options => options
+                    .Excluding(o => o.CustomerPlanId)
+                    .Excluding(o => o.CustomerId)
+                    .Excluding(o => o.CardId)
+                    .Excluding(o => o.RecurringCountLeft)
+                    .Excluding(o => o.TotalCollectedCount)
+                    .Excluding(o => o.TotalCollectedValue)
+                    .Excluding(o => o.PreviousRecurringDate)
+                    .Excluding(o => o.NextRecurringDate)
+                    .Excluding(o => o.StartDate)
+                    );
         }
 
         [Test]
@@ -96,8 +98,12 @@ namespace Tests.RecurringPaymentsService
             var singlePlanModel = paymentPlanCreateModel.PaymentPlans.Single();
             var responseModel = response.Model.PaymentPlans.Single();
 
-            responseModel.ShouldBeEquivalentTo(singlePlanModel,
-                options => options.Excluding(o => o.PlanId).Excluding(o => o.Status));
+            responseModel.ShouldBeEquivalentTo(
+                singlePlanModel,
+                options => options
+                    .Excluding(o => o.PlanId)
+                    .Excluding(o => o.Status)
+                    );
             responseModel.PlanId.Should().NotBeNullOrEmpty();
             responseModel.Status.Should().NotBeNull();
         }
@@ -129,8 +135,12 @@ namespace Tests.RecurringPaymentsService
             getResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
             var getResponseModel = getResponse.Model;
-            getResponseModel.ShouldBeEquivalentTo(createResponseModel,
-                options => options.Excluding(o => o.PlanId).Excluding(o => o.Status));
+            getResponseModel.ShouldBeEquivalentTo(
+                createResponseModel,
+                options => options
+                    .Excluding(o => o.PlanId)
+                    .Excluding(o => o.Status)
+                    );
             getResponseModel.PlanId.Should().NotBeNullOrEmpty();
             getResponseModel.Status.Should().NotBeNull();
         }

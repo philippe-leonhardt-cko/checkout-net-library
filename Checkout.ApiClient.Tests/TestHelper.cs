@@ -21,7 +21,7 @@ namespace Tests
 
         #region Recurring Plans Helpers
 
-        public static SinglePaymentPlanCreateRequest GetSinglePaymentPlanCreateModel(string value = null, string currency = null)
+        public static SinglePaymentPlanCreateRequest GetSinglePaymentPlanCreateModel(int? value = null, string currency = null)
         {
             return new SinglePaymentPlanCreateRequest
             {
@@ -33,7 +33,7 @@ namespace Tests
                         AutoCapTime = RandomData.GetNumber(0, 168),
                         Currency = currency ?? "USD",
                         PlanTrackId = RandomData.UniqueString,
-                        Value = value ?? RandomData.GetNumber(50, 500).ToString(),
+                        Value = value ?? RandomData.GetNumber(50, 500),
                         RecurringCount = RandomData.GetNumber(1, 19),
                         Cycle = "1d"
                     }
@@ -41,7 +41,7 @@ namespace Tests
             };
         }
 
-        public static PaymentPlanUpdate GetPaymentPlanUpdateModel(string value = null, string currency = null)
+        public static PaymentPlanUpdate GetPaymentPlanUpdateModel(int? value = null, string currency = null)
         {
             return new PaymentPlanUpdate
             {
@@ -49,21 +49,21 @@ namespace Tests
                 AutoCapTime = RandomData.GetNumber(0, 168),
                 Currency = currency ?? "GBP",
                 PlanTrackId = RandomData.UniqueString,
-                Value = value ?? RandomData.GetNumber(50, 500).ToString(),
+                Value = value ?? RandomData.GetNumber(50, 500),
                 RecurringCount = RandomData.GetNumber(1, 19),
                 Cycle = "3d",
                 Status = RecurringPlanStatus.Suspended
             };
         }
 
-        public static CustomerPaymentPlanCreate GetCustomerPaymentPlanCreateModel(string value = null, string currency = null)
+        public static CustomerPaymentPlanCreate GetCustomerPaymentPlanCreateModel(int? value = null, string currency = null)
         {
             return new CustomerPaymentPlanCreate
             {
                 Name = RandomData.String,
                 AutoCapTime = 0,
                 PlanTrackId = RandomData.UniqueString,
-                Value = value ?? RandomData.GetNumber(50, 500).ToString(),
+                Value = value ?? RandomData.GetNumber(50, 500),
                 RecurringCount = RandomData.GetNumber(1, 19),
                 Cycle = "3d"
             };

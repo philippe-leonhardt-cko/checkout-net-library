@@ -11,7 +11,7 @@ namespace Checkout.ApiServices.RecurringPayments.RequestModels
         public string Name { get; set; }
         public string PlanTrackId { get; set; }
         public decimal? AutoCapTime { get; set; }
-        public string Value { get; set; }
+        public int Value { get; set; }
         public string Cycle { get; set; }
         public int? RecurringCount { get; set; }
     }
