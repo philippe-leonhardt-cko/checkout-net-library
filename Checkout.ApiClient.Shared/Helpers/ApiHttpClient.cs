@@ -20,7 +20,11 @@ namespace Checkout
     /// </summary>
     public sealed class ApiHttpClient
     {
+#if (NET40)
+        private WebRequestHandler requestHandler;
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
         private HttpClientHandler requestHandler;
+#endif
         private HttpClient httpClient;
 
         public ApiHttpClient()
@@ -34,8 +38,11 @@ namespace Checkout
             {
                 requestHandler.Dispose();
             }
-
+#if (NET40)
+            requestHandler = new WebRequestHandler
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
             requestHandler = new HttpClientHandler
+#endif
             {
                 AutomaticDecompression = DecompressionMethods.GZip,
                 AllowAutoRedirect = false,
@@ -96,8 +103,11 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-
+#if (NET40)
+            return SendRequest<T>(httpRequestMsg);
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
             return SendRequest<T>(httpRequestMsg).Result;
+#endif
         }
 
         /// <summary>
@@ -114,8 +124,11 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-
+#if (NET40)
+            return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
+#endif
         }
 
         /// <summary>
@@ -132,8 +145,11 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-
+#if (NET40)
+            return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
+#endif
         }
 
         /// <summary>
@@ -151,8 +167,11 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-
-            return SendRequest<T>(httpRequestMsg).Result; 
+#if (NET40)
+            return SendRequest<T>(httpRequestMsg);
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+            return SendRequest<T>(httpRequestMsg).Result;
+#endif
         }
 
         /// <summary>
@@ -160,17 +179,25 @@ namespace Checkout
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
+
+#if (NET40)
+        private HttpResponse<T> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
+            HttpResponse<T> response = null;
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+         private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
+        {       
             Task<HttpResponse<T>> response = null;
+#endif
             HttpResponseMessage responseMessage = null;
             string responseAsString = null;
             string responseCode = null;
 
             try
             {
+#if (NET45 || NETSTANDARD || ARTIFACTNET45)
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-
+#endif
                 responseMessage = httpClient.SendAsync(request).Result; 
                
                 responseCode = responseMessage.StatusCode.ToString();
@@ -194,8 +221,11 @@ namespace Checkout
                         callerSection = "";
                     }
                 }
-
+#if (NET40)
+                response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
+#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
                 response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
+#endif
             }
             catch (Exception ex)
             {

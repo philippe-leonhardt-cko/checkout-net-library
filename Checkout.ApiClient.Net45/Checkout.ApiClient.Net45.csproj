@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ARTIFACTNET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -59,7 +59,9 @@
     <None Include="App.Debug.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config" />
+    <None Include="App.Release.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Checkout.APIClient.nuspec" />
     <None Include="CreateNugetPackage.bat" />
     <None Include="packages.config" />

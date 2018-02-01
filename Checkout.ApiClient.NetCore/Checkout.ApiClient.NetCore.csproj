@@ -1,17 +1,52 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- common NuGet package refs that affect all projects -->
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>Checkout</AssemblyName>
+    <RootNamespace>Checkout</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="2.0.0" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
-
   <Import Project="..\Checkout.ApiClient.Shared\Checkout.ApiClient.Shared.projitems" Label="Shared" />
 
+  <!-- .NET Standard 2.0 references, compilation flags and build options -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <!-- .NET 4.0 and 4.5 references, compilation flags and build options -->
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40'">
+    <DefineConstant>NET40</DefineConstant>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
+    <DefineConstant>NET45</DefineConstant>
+  </PropertyGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40'  or '$(TargetFramework)' == 'net45'">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <!-- .NET 4.0 references, compilation flags and build options -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+  </ItemGroup>
 </Project>
