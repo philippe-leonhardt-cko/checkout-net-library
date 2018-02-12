@@ -20,7 +20,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.ApiClient.NetStand
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Checkout.ApiClient.Shared\Checkout.ApiClient.Shared.projitems*{1c69b996-8ab6-4ba2-a5ae-58a350cbb34b}*SharedItemsImports = 4
 		Checkout.ApiClient.Shared\Checkout.ApiClient.Shared.projitems*{5a5a1659-325c-44fa-84b8-625d92780d50}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

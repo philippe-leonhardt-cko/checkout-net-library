@@ -66,8 +66,12 @@
     <None Include="CreateNugetPackage.bat" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="..\Checkout.ApiClient.Shared\Checkout.ApiClient.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj">
+      <Project>{a84fb683-6e74-4e39-846f-482db6ffec18}</Project>
+      <Name>Checkout.ApiClient.NetStandard</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -49,4 +49,42 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ApiServices\Cards\RequestModels\BaseCard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Cards\RequestModels\CardCreate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Cards\ResponseModels\Card.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Cards\ResponseModels\CardList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\CustomerService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\RequestModels\BaseCustomer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\RequestModels\CustomerCreate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\RequestModels\CustomerGetList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\RequestModels\CustomerUpdate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\ResponseModels\Customer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\Customers\ResponseModels\CustomerList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ApiServices\SharedModels\OkResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
