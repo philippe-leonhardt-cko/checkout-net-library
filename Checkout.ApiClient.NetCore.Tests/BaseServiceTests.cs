@@ -8,6 +8,7 @@ using Checkout;
 using Checkout.ApiServices.Charges.ResponseModels;
 using FluentAssertions;
 using NUnit.Framework;
+using Tests;
 
 namespace Tests
 {
@@ -18,11 +19,12 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            CheckoutClient = new APIClient(); 
+            // Configure this to switch between Sandbox and Live
+            CheckoutClient = new APIClient(AppConfiguration.Sandbox());
         }
-		 
+
         #region Protected methods
- 
+
         /// <summary>
         ///     Creates a new charge with default card and new track id and asserts that is not declined
         /// </summary>
@@ -32,7 +34,7 @@ namespace Tests
         {
             return CreateChargeWithNewTrackId(out string cardNumber);
         }
- 
+
         /// <summary>
         ///     Creates a new charge with default card and new track id and asserts that is not declined
         /// </summary>
@@ -43,7 +45,7 @@ namespace Tests
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);
             cardCreateModel.TrackId = "TRF" + Guid.NewGuid();
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
- 
+
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
@@ -53,11 +55,11 @@ namespace Tests
                 Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));
             };
             chargeResponse.Model.Status.Should().NotBe("Declined", "CreateChargeWithNewTrackId(out string cardNumber) must create an authorized charge, you may re-run this test");
- 
+
             cardNumber = cardCreateModel.Card.Number;
             return chargeResponse.Model;
         }
- 
+
         /// <summary>
         ///     Creates a new charge with provided card and new track id and asserts that is not declined
         /// </summary>
@@ -76,14 +78,14 @@ namespace Tests
             cardCreateModel.Card.ExpiryMonth = expirityMonth;
             cardCreateModel.Card.ExpiryYear = expirityYear;
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
- 
+
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             chargeResponse.Model.Status.Should().NotBe("Declined");
- 
+
             return chargeResponse.Model;
         }
- 
+
         #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace Checkout
     /// <summary>
     /// Holds application settings that is read from the app.config or web.config
     /// </summary>
-    public sealed class AppSettings
+    public class AppSettings
     {
         private static CheckoutEnvironment _environment = CheckoutEnvironment.Undefined;
         private static string _secretKey;

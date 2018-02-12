@@ -22,7 +22,7 @@ namespace Checkout
     {
 #if (NET40)
         private WebRequestHandler requestHandler;
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
         private HttpClientHandler requestHandler;
 #endif
         private HttpClient httpClient;
@@ -40,7 +40,7 @@ namespace Checkout
             }
 #if (NET40)
             requestHandler = new WebRequestHandler
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
             requestHandler = new HttpClientHandler
 #endif
             {
@@ -104,7 +104,7 @@ namespace Checkout
             callerSection = callerFunction;
 #if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
             return SendRequest<T>(httpRequestMsg).Result;
 #endif
         }
@@ -125,7 +125,7 @@ namespace Checkout
             callerSection = callerFunction;
 #if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
 #endif
         }
@@ -146,7 +146,7 @@ namespace Checkout
             callerSection = callerFunction;
 #if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
 #endif
         }
@@ -168,7 +168,7 @@ namespace Checkout
             callerSection = callerFunction;
 #if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
             return SendRequest<T>(httpRequestMsg).Result;
 #endif
         }
@@ -183,7 +183,7 @@ namespace Checkout
         private HttpResponse<T> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
             HttpResponse<T> response = null;
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
          private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {       
             Task<HttpResponse<T>> response = null;
@@ -194,7 +194,7 @@ namespace Checkout
 
             try
             {
-#if (NET45 || NETSTANDARD || ARTIFACTNET45)
+#if (NET45 || NETSTANDARD)
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 #endif
                 responseMessage = httpClient.SendAsync(request).Result; 
@@ -222,7 +222,7 @@ namespace Checkout
                 }
 #if (NET40)
                 response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
-#elif (NET45 || NETSTANDARD || ARTIFACTNET45)
+#elif (NET45 || NETSTANDARD)
                 response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
 #endif
             }
