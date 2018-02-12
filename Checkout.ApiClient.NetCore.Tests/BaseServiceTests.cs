@@ -49,7 +49,7 @@ namespace Tests
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
-            if (AppSettings.DebugMode && chargeResponse.Model.ResponseCode != "10000")
+            if (CheckoutClient.AppSettings.DebugMode && chargeResponse.Model.ResponseCode != "10000")
             {
                 Console.WriteLine(string.Format("\n** Charge status is not 'Approved' **\n** Charge status is '{0}' **", chargeResponse.Model.Status.ToUpper()));
                 Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));

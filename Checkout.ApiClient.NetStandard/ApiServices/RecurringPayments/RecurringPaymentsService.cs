@@ -6,6 +6,13 @@ namespace Checkout.ApiServices.RecurringPayments
 {
     public class RecurringPaymentsService
     {
+        private ApiHttpClient _apiHttpClient;
+        private AppSettings _appSettings;
+        public RecurringPaymentsService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        {
+            _apiHttpClient = apiHttpclient;
+            _appSettings = appSettings;
+        }
         /// <summary>
         /// Creates a Payment Plan that can exist independently and act as template. 
         /// </summary>
@@ -13,7 +20,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<SinglePaymentPlanCreateResponse> CreatePaymentPlan(SinglePaymentPlanCreateRequest requestModel)
         {
-            return new ApiHttpClient().PostRequest<SinglePaymentPlanCreateResponse>(ApiUrls.RecurringPaymentPlans, AppSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<SinglePaymentPlanCreateResponse>(_appSettings.ApiUrls.RecurringPaymentPlans, _appSettings.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -23,7 +30,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<OkResponse> UpdatePaymentPlan(string planId, PaymentPlanUpdate requestModel)
         {
-            return new ApiHttpClient().PutRequest<OkResponse>(string.Format(ApiUrls.RecurringPaymentPlan, planId), AppSettings.SecretKey, requestModel);
+            return _apiHttpClient.PutRequest<OkResponse>(string.Format(_appSettings.ApiUrls.RecurringPaymentPlan, planId), _appSettings.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -33,7 +40,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<OkResponse> CancelPaymentPlan(string planId)
         {
-            return new ApiHttpClient().DeleteRequest<OkResponse>(string.Format(ApiUrls.RecurringPaymentPlan, planId), AppSettings.SecretKey);
+            return _apiHttpClient.DeleteRequest<OkResponse>(string.Format(_appSettings.ApiUrls.RecurringPaymentPlan, planId), _appSettings.SecretKey);
         }
 
         /// <summary>
@@ -43,7 +50,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<PaymentPlan> GetPaymentPlan(string planId)
         {
-            return new ApiHttpClient().GetRequest<PaymentPlan>(string.Format(ApiUrls.RecurringPaymentPlan, planId), AppSettings.SecretKey);
+            return _apiHttpClient.GetRequest<PaymentPlan>(string.Format(_appSettings.ApiUrls.RecurringPaymentPlan, planId), _appSettings.SecretKey);
         }
 
         /// <summary>
@@ -53,7 +60,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<QueryPaymentPlanResponse> QueryPaymentPlan(QueryPaymentPlanRequest requestModel)
         {
-            return new ApiHttpClient().PostRequest<QueryPaymentPlanResponse>(ApiUrls.RecurringPaymentPlanSearch, AppSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<QueryPaymentPlanResponse>(_appSettings.ApiUrls.RecurringPaymentPlanSearch, _appSettings.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -63,7 +70,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<QueryCustomerPaymentPlanResponse> QueryCustomerPaymentPlan(QueryCustomerPaymentPlanRequest requestModel)
         {
-            return new ApiHttpClient().PostRequest<QueryCustomerPaymentPlanResponse>(ApiUrls.RecurringCustomerPaymentPlanSearch, AppSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<QueryCustomerPaymentPlanResponse>(_appSettings.ApiUrls.RecurringCustomerPaymentPlanSearch, _appSettings.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -73,7 +80,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<CustomerPaymentPlan> GetCustomerPaymentPlan(string customerPlanId)
         {
-            return new ApiHttpClient().GetRequest<CustomerPaymentPlan>(string.Format(ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), AppSettings.SecretKey);
+            return _apiHttpClient.GetRequest<CustomerPaymentPlan>(string.Format(_appSettings.ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), _appSettings.SecretKey);
         }
 
         /// <summary>
@@ -83,7 +90,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<OkResponse> CancelCustomerPaymentPlan(string customerPlanId)
         {
-            return new ApiHttpClient().DeleteRequest<OkResponse>(string.Format(ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), AppSettings.SecretKey);
+            return _apiHttpClient.DeleteRequest<OkResponse>(string.Format(_appSettings.ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), _appSettings.SecretKey);
         }
 
         /// <summary>
@@ -93,7 +100,7 @@ namespace Checkout.ApiServices.RecurringPayments
         /// <returns></returns>
         public HttpResponse<OkResponse> UpdateCustomerPaymentPlan(string customerPlanId, CustomerPaymentPlanUpdate requestModel)
         {
-            return new ApiHttpClient().PutRequest<OkResponse>(string.Format(ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), AppSettings.SecretKey, requestModel);
+            return _apiHttpClient.PutRequest<OkResponse>(string.Format(_appSettings.ApiUrls.RecurringCustomerPaymentPlan, customerPlanId), _appSettings.SecretKey, requestModel);
         }
     }
 }

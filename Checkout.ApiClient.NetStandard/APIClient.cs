@@ -11,22 +11,27 @@ namespace Checkout
 {
     public sealed class APIClient
     {
-        private TokenService _tokenService;
-        private CustomerService _customerService;
+        private AppSettings _appSettings;
+        private ApiHttpClient _apiHttpClient;
         private CardService _cardService;
         private ChargeService _chargeService;
-        private ReportingService _reportingService;
+        private CustomerService _customerService;
         private LookupsService _lookupsService;
         private RecurringPaymentsService _recurringPaymentsService;
+        private ReportingService _reportingService;
+        private TokenService _tokenService;
 
-        public ChargeService ChargeService { get { return _chargeService ?? (_chargeService = new ChargeService()); } }
-        public CardService CardService { get { return _cardService ?? (_cardService = new CardService()); } }
-        public CustomerService CustomerService { get { return _customerService ?? (_customerService = new CustomerService()); } }
-        public TokenService TokenService { get { return _tokenService ?? (_tokenService = new TokenService()); } }
-        public ReportingService ReportingService { get { return _reportingService ?? (_reportingService = new ReportingService()); } }
-        public LookupsService LookupsService { get { return _lookupsService ?? (_lookupsService = new LookupsService()); } }
-        public RecurringPaymentsService RecurringPaymentsService { get { return _recurringPaymentsService ?? (_recurringPaymentsService = new RecurringPaymentsService()); } }
+        public AppSettings AppSettings { get { return _appSettings ?? (_appSettings = AppConfiguration.Sandbox()); } set { AppSettings _appSettings = value; } }
+        public ApiHttpClient ApiHttpClient { get { return _apiHttpClient ?? (_apiHttpClient = new ApiHttpClient(AppSettings)); } }
+        public CardService CardService { get { return _cardService ?? (_cardService = new CardService(ApiHttpClient, AppSettings)); } }
+        public ChargeService ChargeService { get { return _chargeService ?? (_chargeService = new ChargeService(ApiHttpClient, AppSettings)); } }
+        public CustomerService CustomerService { get { return _customerService ?? (_customerService = new CustomerService(ApiHttpClient, AppSettings)); } }
+        public LookupsService LookupsService { get { return _lookupsService ?? (_lookupsService = new LookupsService(ApiHttpClient, AppSettings)); } }
+        public RecurringPaymentsService RecurringPaymentsService { get { return _recurringPaymentsService ?? (_recurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings)); } }
+        public ReportingService ReportingService { get { return _reportingService ?? (_reportingService = new ReportingService(ApiHttpClient, AppSettings)); } }
+        public TokenService TokenService { get { return _tokenService ?? (_tokenService = new TokenService(ApiHttpClient, AppSettings)); } }
 
+#if (NET40 || NET45)
         public APIClient()
         {
             if (AppSettings.Environment == Environment.Undefined)
@@ -62,9 +67,17 @@ namespace Checkout
             AppSettings.DebugMode = debugMode;
         }
 
-        public APIClient(string secretKey):this()
+        public APIClient(string secretKey)
+            : this()
         {
             AppSettings.SecretKey = secretKey;
         }
+#elif (NETSTANDARD)
+        public APIClient(AppConfiguration appConfig)
+        {
+            AppSettings = appConfig;
+            ContentAdaptor.Setup();
+        }
+#endif
     }
 }

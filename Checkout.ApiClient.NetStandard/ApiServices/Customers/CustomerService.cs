@@ -3,59 +3,70 @@ using Checkout.ApiServices.Customers.ResponseModels;
 using Checkout.ApiServices.SharedModels;
 using Checkout.Utilities;
 using System;
+
 namespace Checkout.ApiServices.Customers
+
 {
-public class CustomerService  {
-     
-    public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
+    public class CustomerService
     {
-        return new ApiHttpClient().PostRequest<Customer>(ApiUrls.Customers, AppSettings.SecretKey, requestModel);
-    }
-
-    public HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel)
-    {
-        var updateCustomerUri = string.Format(ApiUrls.Customer, customerId);
-        return new ApiHttpClient().PutRequest<OkResponse>(updateCustomerUri, AppSettings.SecretKey, requestModel);
-    }
-
-    public HttpResponse<OkResponse> DeleteCustomer(string customerId)
-    {
-        var deleteCustomerUri = string.Format(ApiUrls.Customer, customerId);
-        return new ApiHttpClient().DeleteRequest<OkResponse>(deleteCustomerUri, AppSettings.SecretKey);
-    }
-
-    public HttpResponse<Customer> GetCustomer(string customerId)
-    {
-        var getCustomerUri = string.Format(ApiUrls.Customer, customerId);
-        return new ApiHttpClient().GetRequest<Customer>(getCustomerUri, AppSettings.SecretKey);
-    }
-
-    public HttpResponse<CustomerList> GetCustomerList(CustomerGetList request)
-    {
-        var getCustomerListUri = ApiUrls.Customers;
-
-        if (request.Count.HasValue)
+        private ApiHttpClient _apiHttpClient;
+        private AppSettings _appSettings;
+        public CustomerService(ApiHttpClient apiHttpclient, AppSettings appSettings)
         {
-            getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "count", request.Count.ToString());
+            _apiHttpClient = apiHttpclient;
+            _appSettings = appSettings;
         }
 
-        if (request.Offset.HasValue)
+        public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
         {
-            getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "offset", request.Offset.ToString());
+
+            return _apiHttpClient.PostRequest<Customer>(_appSettings.ApiUrls.Customers, _appSettings.SecretKey, requestModel);
         }
 
-        if (request.FromDate.HasValue)
+        public HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel)
         {
-            getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "fromDate", DateTimeHelper.FormatAsUtc(request.FromDate.Value));
+            var updateCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
+            return _apiHttpClient.PutRequest<OkResponse>(updateCustomerUri, _appSettings.SecretKey, requestModel);
         }
 
-        if (request.ToDate.HasValue)
+        public HttpResponse<OkResponse> DeleteCustomer(string customerId)
         {
-            getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "toDate", DateTimeHelper.FormatAsUtc(request.ToDate.Value));
+            var deleteCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
+            return _apiHttpClient.DeleteRequest<OkResponse>(deleteCustomerUri, _appSettings.SecretKey);
         }
 
-        return new ApiHttpClient().GetRequest<CustomerList>(getCustomerListUri, AppSettings.SecretKey);
+        public HttpResponse<Customer> GetCustomer(string customerId)
+        {
+            var getCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
+            return _apiHttpClient.GetRequest<Customer>(getCustomerUri, _appSettings.SecretKey);
+        }
+
+        public HttpResponse<CustomerList> GetCustomerList(CustomerGetList request)
+        {
+            var getCustomerListUri = _appSettings.ApiUrls.Customers;
+
+            if (request.Count.HasValue)
+            {
+                getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "count", request.Count.ToString());
+            }
+
+            if (request.Offset.HasValue)
+            {
+                getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "offset", request.Offset.ToString());
+            }
+
+            if (request.FromDate.HasValue)
+            {
+                getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "fromDate", DateTimeHelper.FormatAsUtc(request.FromDate.Value));
+            }
+
+            if (request.ToDate.HasValue)
+            {
+                getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "toDate", DateTimeHelper.FormatAsUtc(request.ToDate.Value));
+            }
+
+            return _apiHttpClient.GetRequest<CustomerList>(getCustomerListUri, _appSettings.SecretKey);
+        }
     }
-}
 
 }

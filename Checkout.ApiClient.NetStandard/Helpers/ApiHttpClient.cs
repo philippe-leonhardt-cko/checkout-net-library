@@ -18,8 +18,11 @@ namespace Checkout
     /// <summary>
     /// Handles http requests and responses
     /// </summary>
+    ///
+
     public sealed class ApiHttpClient
     {
+        private AppSettings _appSettings;
 #if (NET40)
         private WebRequestHandler requestHandler;
 #elif (NET45 || NETSTANDARD)
@@ -27,8 +30,9 @@ namespace Checkout
 #endif
         private HttpClient httpClient;
 
-        public ApiHttpClient()
+        public ApiHttpClient(AppSettings appSettings)
         {
+            _appSettings = appSettings;
             ResetHandler();
         }
 
@@ -57,10 +61,10 @@ namespace Checkout
 
             httpClient = new HttpClient(requestHandler)
             {
-                MaxResponseContentBufferSize = AppSettings.MaxResponseContentBufferSize,
-                Timeout = TimeSpan.FromSeconds(AppSettings.RequestTimeout)
+                MaxResponseContentBufferSize = _appSettings.MaxResponseContentBufferSize,
+                Timeout = TimeSpan.FromSeconds(_appSettings.RequestTimeout)
             };
-            
+
             SetHttpRequestHeader("User-Agent", AppSettings.ClientUserAgentName);
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("Gzip"));
         }
@@ -119,7 +123,7 @@ namespace Checkout
 
             httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, AppSettings.DefaultContentType);
             httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
-            
+
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
@@ -184,8 +188,8 @@ namespace Checkout
         {
             HttpResponse<T> response = null;
 #elif (NET45 || NETSTANDARD)
-         private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
-        {       
+        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
+        {
             Task<HttpResponse<T>> response = null;
 #endif
             HttpResponseMessage responseMessage = null;
@@ -194,11 +198,13 @@ namespace Checkout
 
             try
             {
-#if (NET45 || NETSTANDARD)
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#if NET40
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+#elif NET45 || NETSTANDARD
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 #endif
-                responseMessage = httpClient.SendAsync(request).Result; 
-               
+                responseMessage = httpClient.SendAsync(request).Result;
+
                 responseCode = responseMessage.StatusCode.ToString();
 
                 var responseContent = responseMessage.Content.ReadAsByteArrayAsync().Result;
@@ -207,7 +213,7 @@ namespace Checkout
                 {
                     responseAsString = Encoding.UTF8.GetString(responseContent);
 
-                    if (AppSettings.DebugMode)
+                    if (_appSettings.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
                         Console.WriteLine(string.Format("\n** HttpRequest ** - Type {0}\n\n\t{1}", request.Method.ToString().ToUpper(), request.RequestUri));
@@ -228,13 +234,13 @@ namespace Checkout
             }
             catch (Exception ex)
             {
-                if (AppSettings.DebugMode)
+                if (_appSettings.DebugMode)
                 {
                     Console.WriteLine(string.Format(@"\n** Exception - HttpStatuscode:\n{0}**\n\n 
                         ** ResponseString {1}\n ** Exception Messages{2}\n ", (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString, ExceptionHelper.FlattenExceptionMessages(ex)));
                 }
 
-                responseCode = "Exception" + ex.Message;
+                responseCode = "Exception: " + ex.Message;
 
                 throw;
             }

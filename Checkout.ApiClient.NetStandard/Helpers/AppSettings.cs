@@ -7,67 +7,88 @@ using CheckoutEnvironment = Checkout.Helpers.Environment;
 namespace Checkout
 {
     /// <summary>
-    /// Holds application settings that is read from the app.config or web.config
+    /// Holds application settings that is read from the App.Debug.config or App.Release.config
     /// </summary>
+
     public class AppSettings
     {
-        private static CheckoutEnvironment _environment = CheckoutEnvironment.Undefined;
-        private static string _secretKey;
-        private static string _publicKey;
-        private static string _baseApiUri;
-        private static int? _maxResponseContentBufferSize;
-        private static int? _requestTimeout;
-        private static bool? _debugMode;
+        #region AppConfiguration properties
+        private CheckoutEnvironment _environment = CheckoutEnvironment.Undefined;
+        private ApiUrls _apiUrls;
+        private string _secretKey;
+        private string _publicKey;
+        private string _baseApiUri;
+        private int? _maxResponseContentBufferSize;
+        private int? _requestTimeout;
+        private bool? _debugMode;
         private const string _liveUrl = "https://api2.checkout.com/v2";
         private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
         public const string ClientUserAgentName = "Checkout-DotNetLibraryClient/v1.0";
         public const string DefaultContentType = "application/json";
+        #endregion
 
-        public static string BaseApiUri
+        public AppSettings LoadFromConfig()
         {
-            get { return _baseApiUri; }
-            set { _baseApiUri = value; }
+            return this;
         }
-        public static string SecretKey
+
+        public ApiUrls ApiUrls
+        {
+            get { return _apiUrls ?? (_apiUrls = new ApiUrls(this)); }
+            set { _apiUrls = value; }
+        }
+
+        public string SecretKey
         {
             get { return _secretKey ?? (_secretKey = ReadConfig("Checkout.SecretKey", true)); }
             set { _secretKey = value; }
         }
-        public static string PublicKey
+
+        public string PublicKey
         {
             get { return _publicKey ?? (_publicKey = ReadConfig("Checkout.PublicKey", true)); }
             set { _publicKey = value; }
         }
 
-        public static int RequestTimeout
+        public string BaseApiUri
+        {
+            get { return _baseApiUri; }
+            set { _baseApiUri = value; }
+        }
+
+        public int MaxResponseContentBufferSize
+        {
+            get
+            {
+
+                if (_maxResponseContentBufferSize == null)
+                {
+                    var value = ReadConfig("Checkout.MaxResponseContentBufferSize");
+                    _maxResponseContentBufferSize = (!string.IsNullOrEmpty(value) ? int.Parse(value) : 1000000);
+                }
+
+                return _maxResponseContentBufferSize.Value;
+            }
+
+            set { _maxResponseContentBufferSize = value; }
+        }
+
+        public int RequestTimeout
         {
             get
             {
                 if (_requestTimeout == null)
                 {
-                   var value = ReadConfig("Checkout.RequestTimeout");
-                   _requestTimeout = (!string.IsNullOrEmpty(value) ? int.Parse(value) : 60);
+                    var value = ReadConfig("Checkout.RequestTimeout");
+                    _requestTimeout = (!string.IsNullOrEmpty(value) ? int.Parse(value) : 60);
                 }
 
                 return _requestTimeout.Value;
             }
             set { _requestTimeout = value; }
         }
-        public static int MaxResponseContentBufferSize { 
-            get { 
-                
-                 if (_maxResponseContentBufferSize == null)
-                {
-                   var value = ReadConfig("Checkout.MaxResponseContentBufferSize");
-                   _maxResponseContentBufferSize = (!string.IsNullOrEmpty(value) ? int.Parse(value) : 1000000);
-                }
 
-                return _maxResponseContentBufferSize.Value; 
-            }
-
-            set { _maxResponseContentBufferSize = value; } 
-        }
-        public static bool DebugMode
+        public bool DebugMode
         {
             get
             {
@@ -81,7 +102,8 @@ namespace Checkout
             }
             set { _debugMode = value; }
         }
-        public static CheckoutEnvironment Environment
+
+        public CheckoutEnvironment Environment
         {
             get
             {
@@ -100,12 +122,11 @@ namespace Checkout
                         break;
                 };
                 _environment = value;
-                ApiUrls.ResetApiUrls();
-
+                _apiUrls = new ApiUrls(this);
             }
         }
 
-        public static void SetEnvironmentFromConfig()
+        public void SetEnvironmentFromConfig()
         {
             if (Enum.TryParse<CheckoutEnvironment>(ReadConfig("Checkout.Environment", true), out CheckoutEnvironment selectedEnvironment) && Enum.IsDefined(typeof(CheckoutEnvironment), selectedEnvironment))
             {
@@ -117,7 +138,7 @@ namespace Checkout
             }
         }
 
-        private static string ReadConfig(string key, bool throwIfnotExist = false)
+        private string ReadConfig(string key, bool throwIfnotExist = false)
         {
             try
             {
