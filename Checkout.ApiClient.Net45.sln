@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.ApiClient.Net45.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.ApiClient.NetStandard", "Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj", "{A84FB683-6E74-4E39-846F-482DB6FFEC18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.ApiClient.Net40.Tests", "Checkout.ApiClient.Net40.Tests\Checkout.ApiClient.Net40.Tests.csproj", "{A4E0922A-790C-4036-9EB4-F5AD56356894}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E0922A-790C-4036-9EB4-F5AD56356894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E0922A-790C-4036-9EB4-F5AD56356894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E0922A-790C-4036-9EB4-F5AD56356894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E0922A-790C-4036-9EB4-F5AD56356894}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
