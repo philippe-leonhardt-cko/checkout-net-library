@@ -14,9 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.ApiClient.Net45", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.ApiClient.Net45.Tests", "Checkout.ApiClient.Tests\Checkout.ApiClient.Net45.Tests.csproj", "{EC891A3C-20BF-4AB7-9B39-6C4120F99EB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.ApiClient.NetCore", "Checkout.ApiClient.NetCore\Checkout.ApiClient.NetCore.csproj", "{1315C31B-288A-468E-A6C3-1B8DF596EA8F}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Checkout.ApiClient.Shared", "Checkout.ApiClient.Shared\Checkout.ApiClient.Shared.shproj", "{5A5A1659-325C-44FA-84B8-625D92780D50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.ApiClient.NetStandard", "Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj", "{A84FB683-6E74-4E39-846F-482DB6FFEC18}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -36,10 +36,10 @@ Global
 		{EC891A3C-20BF-4AB7-9B39-6C4120F99EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC891A3C-20BF-4AB7-9B39-6C4120F99EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC891A3C-20BF-4AB7-9B39-6C4120F99EB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1315C31B-288A-468E-A6C3-1B8DF596EA8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1315C31B-288A-468E-A6C3-1B8DF596EA8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1315C31B-288A-468E-A6C3-1B8DF596EA8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1315C31B-288A-468E-A6C3-1B8DF596EA8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84FB683-6E74-4E39-846F-482DB6FFEC18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
