@@ -200,8 +200,10 @@ namespace Checkout
             {
 #if NET40
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-#elif NET45 || NETSTANDARD
+#elif NET45 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#elif NETSTANDARD
+                //TODO: Update README.md which explains why this line has to be done outside of ApiHttpClient
 #endif
                 responseMessage = httpClient.SendAsync(request).Result;
 

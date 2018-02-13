@@ -1,7 +1,6 @@
 ﻿using Checkout.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 
 namespace Checkout
@@ -10,9 +9,59 @@ namespace Checkout
     /// Holds application settings that is read from the App.Debug.config or App.Release.config
     /// </summary>
 
+#if NETSTANDARD
     public class AppSettings
     {
-        #region AppConfiguration properties
+        private const string _liveUrl = "https://api2.checkout.com/v2";
+        private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
+        public const string ClientUserAgentName = "Checkout-DotNetLibraryClient/v1.0";
+        public const string DefaultContentType = "application/json";
+    
+    
+        public ApiUrls ApiUrls { get; private set; }
+        public string SecretKey { get; set; }
+        public string PublicKey { get; set; }
+        public string BaseApiUri { get; private set; }
+        public int MaxResponseContentBufferSize { get; set; } = 1000000;
+        public int RequestTimeout { get; set; } = 60;
+        public bool DebugMode { get; set; }
+
+        private CheckoutEnvironment _environment;
+        public CheckoutEnvironment Environment
+        {
+            get
+            {
+                return _environment;
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    case CheckoutEnvironment.Live:
+                        BaseApiUri = _liveUrl;
+                        break;
+                    case CheckoutEnvironment.Sandbox:
+                        BaseApiUri = _sandboxUrl;
+                        break;
+                };
+                _environment = value;
+                ApiUrls = new ApiUrls(this);
+            }
+        }
+
+        public AppSettings()
+        {
+            ApiUrls = new ApiUrls(this);
+        }
+    }
+
+#else
+
+  using System.Configuration;
+  public class AppSettings
+    {
+    #region AppConfiguration properties
         private CheckoutEnvironment _environment = CheckoutEnvironment.Undefined;
         private ApiUrls _apiUrls;
         private string _secretKey;
@@ -25,7 +74,7 @@ namespace Checkout
         private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
         public const string ClientUserAgentName = "Checkout-DotNetLibraryClient/v1.0";
         public const string DefaultContentType = "application/json";
-        #endregion
+    #endregion
 
         public AppSettings LoadFromConfig()
         {
@@ -155,4 +204,5 @@ namespace Checkout
             }
         }
     }
+#endif
 }

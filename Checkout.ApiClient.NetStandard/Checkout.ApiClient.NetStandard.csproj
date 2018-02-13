@@ -2,7 +2,7 @@
 
   <!-- common NuGet package references that affect all projects -->
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;net45;net40</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>Checkout</AssemblyName>
     <RootNamespace>Checkout</RootNamespace>
@@ -11,13 +11,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <!-- .NET Standard 2.0 references, compilation flags and build options -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+  <!-- .NET Standard 1.3 references, compilation flags and build options -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
-  </ItemGroup>
 
   <!-- .NET 4.0 and 4.5 references, compilation flags and build options -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -47,43 +44,5 @@
   <!-- .NET 4.0 references, compilation flags and build options -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="ApiServices\Cards\RequestModels\BaseCard.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Cards\RequestModels\CardCreate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Cards\ResponseModels\Card.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Cards\ResponseModels\CardList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\CustomerService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\RequestModels\BaseCustomer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\RequestModels\CustomerCreate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\RequestModels\CustomerGetList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\RequestModels\CustomerUpdate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\ResponseModels\Customer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\Customers\ResponseModels\CustomerList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="ApiServices\SharedModels\OkResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

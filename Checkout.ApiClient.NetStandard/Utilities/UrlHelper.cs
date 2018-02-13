@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Checkout.Utilities
 {
@@ -27,7 +26,7 @@ namespace Checkout.Utilities
 
         public static string AddParameterToUrl(string url, string parameterName, string parameterValue)
         {
-            return string.Format("{0}{1}{2}={3}", url, (url.Contains("?") ? "&" : "?"), parameterName, HttpUtility.UrlEncode(parameterValue));
+            return string.Format("{0}{1}{2}={3}", url, (url.Contains("?") ? "&" : "?"), parameterName, Uri.EscapeDataString(parameterValue));
         }
 
         public static string AddParameterToUrl(string url, Dictionary<string,string> parameterList)
