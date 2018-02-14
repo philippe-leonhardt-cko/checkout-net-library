@@ -17,20 +17,8 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <AppConfigForCompiler>App.$(Configuration).config</AppConfigForCompiler>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="App.Debug.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App.Release.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
