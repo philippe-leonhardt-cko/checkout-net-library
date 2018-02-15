@@ -48,13 +48,27 @@ namespace Tests
             response.Model.Message.Should().BeEquivalentTo("Ok");
         }
 
-        [Test]
-        public void GetCustomer()
+        [TestCase("Id")]
+        [TestCase("Email")]
+        public void GetCustomer(string method)
         {
             var customerCreateModel = TestHelper.GetCustomerCreateModelWithCard();
             var customer = CheckoutClient.CustomerService.CreateCustomer(customerCreateModel).Model;
+            string identifier = "";
 
-            var response = CheckoutClient.CustomerService.GetCustomer(customer.Id);
+            switch(method)
+            {
+                case "Id":
+                    identifier = customer.Id;
+                    break;
+                case "Email":
+                    identifier = customer.Email;
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown method for Unit Test GetCustomer(string method). method must be either 'Id' or 'Email'.");
+            }
+
+            var response = CheckoutClient.CustomerService.GetCustomer(identifier);
 
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
@@ -95,9 +109,7 @@ namespace Tests
         [Test]
         public void UpdateCustomer()
         {
-            var customer =
-                CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
-
+            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithCard()).Model;
             var customerUpdateModel = TestHelper.GetCustomerUpdateModel();
             var response = CheckoutClient.CustomerService.UpdateCustomer(customer.Id, customerUpdateModel);
 

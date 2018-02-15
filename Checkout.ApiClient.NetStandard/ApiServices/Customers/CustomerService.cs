@@ -2,7 +2,6 @@ using Checkout.ApiServices.Customers.RequestModels;
 using Checkout.ApiServices.Customers.ResponseModels;
 using Checkout.ApiServices.SharedModels;
 using Checkout.Utilities;
-using System;
 
 namespace Checkout.ApiServices.Customers
 
@@ -19,8 +18,19 @@ namespace Checkout.ApiServices.Customers
 
         public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
         {
-
             return _apiHttpClient.PostRequest<Customer>(_appSettings.ApiUrls.Customers, _appSettings.SecretKey, requestModel);
+        }
+
+        private string GetCustomerURI(string identifier)
+        {
+            // check for an email that contains a + character like: john.smith+checkout@email.com
+            if(identifier.Contains("@") && identifier.Contains("+")) // TODO: Improve with RegEx 
+            {
+                return _appSettings.ApiUrls.CustomerViaEmail;
+            } else
+            {
+                return _appSettings.ApiUrls.Customer;
+            }
         }
 
         public HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel)
@@ -35,9 +45,9 @@ namespace Checkout.ApiServices.Customers
             return _apiHttpClient.DeleteRequest<OkResponse>(deleteCustomerUri, _appSettings.SecretKey);
         }
 
-        public HttpResponse<Customer> GetCustomer(string customerId)
+        public HttpResponse<Customer> GetCustomer(string identifier)
         {
-            var getCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
+            var getCustomerUri = string.Format(GetCustomerURI(identifier), identifier);
             return _apiHttpClient.GetRequest<Customer>(getCustomerUri, _appSettings.SecretKey);
         }
 

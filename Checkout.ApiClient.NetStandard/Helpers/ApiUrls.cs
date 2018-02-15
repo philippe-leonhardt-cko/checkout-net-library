@@ -57,6 +57,9 @@
         public string Customer
             => string.Concat(_appSettings.BaseApiUri, "/customers/{0}");
 
+        public string CustomerViaEmail
+            => string.Concat(_appSettings.BaseApiUri, "/customers?email={0}");
+
         public string Cards
             => string.Concat(_appSettings.BaseApiUri, "/customers/{0}/cards");
 
