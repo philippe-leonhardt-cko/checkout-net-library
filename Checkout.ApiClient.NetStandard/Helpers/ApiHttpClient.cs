@@ -202,8 +202,6 @@ namespace Checkout
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
 #elif NET45 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-#elif NETSTANDARD
-                //TODO: Update README.md which explains why this line has to be done outside of ApiHttpClient
 #endif
                 responseMessage = httpClient.SendAsync(request).Result;
 
@@ -218,12 +216,12 @@ namespace Checkout
                     if (_appSettings.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
-                        Console.WriteLine(string.Format("\n** HttpRequest ** - Type {0}\n\n\t{1}", request.Method.ToString().ToUpper(), request.RequestUri));
+                        Console.WriteLine(string.Format("\n- HttpRequest\n\tof Type:\t\t\t{0}\n\tto API Endpoint:\t\t{1}\n\twith Authorization:\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
                         if (payload != null)
                         {
-                            Console.WriteLine(string.Format("\n** Payload **\n\n\t{0}\n", payload));
+                            Console.WriteLine(string.Format("\twith Payload:\t\t{0}", payload));
                         }
-                        Console.WriteLine(string.Format("\n** HttpResponse ** - Status {0}\n\n\t{1}\n", responseMessage.StatusCode, responseAsString));
+                        Console.WriteLine(string.Format("\n- HttpResponse\n\treturns Status:\t\t{0}\n\twith Payload:\t\t{1}\n", responseMessage.StatusCode, responseAsString));
                         Console.WriteLine(string.Format("</{0}>\n", callerSection));
                         callerSection = "";
                     }
@@ -238,8 +236,7 @@ namespace Checkout
             {
                 if (_appSettings.DebugMode)
                 {
-                    Console.WriteLine(string.Format(@"\n** Exception - HttpStatuscode:\n{0}**\n\n 
-                        ** ResponseString {1}\n ** Exception Messages{2}\n ", (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString, ExceptionHelper.FlattenExceptionMessages(ex)));
+                    Console.WriteLine(string.Format("\n- Exception thrown: {0}\treturns Status:\t{1}\n\twith Payload:\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
                 }
 
                 responseCode = "Exception: " + ex.Message;

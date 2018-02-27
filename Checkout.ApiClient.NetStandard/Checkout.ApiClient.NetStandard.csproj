@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  
   <!-- common NuGet package references that affect all projects -->
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;net45;net40</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>Checkout</AssemblyName>
     <RootNamespace>Checkout</RootNamespace>
+    <PackageId>Checkout.APIClient</PackageId>
+    <PackageVersion>1.4.0</PackageVersion>
+    <PackageLicenseUrl>https://github.com/checkout/checkout-net-library/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/checkout/checkout-net-library</PackageProjectUrl>
+    <PackageTags>payment; card; gateway; checkout; credit; money</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
