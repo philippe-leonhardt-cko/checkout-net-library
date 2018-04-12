@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Checkout.ApiServices.Customers.ResponseModels
 {
-    public class Customer:BaseCustomer
+    public class Customer : BaseCustomer
     {
         public string Id { get; set; }
         public bool LiveMode { get; set; }

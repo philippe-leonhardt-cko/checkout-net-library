@@ -2,6 +2,7 @@
 using Checkout.ApiServices.Charges;
 using Checkout.ApiServices.Customers;
 using Checkout.ApiServices.Lookups;
+using Checkout.ApiServices.Payouts;
 using Checkout.ApiServices.Reporting;
 using Checkout.ApiServices.RecurringPayments;
 using Checkout.ApiServices.Tokens;
@@ -18,6 +19,7 @@ namespace Checkout
         public ChargeService ChargeService { get; private set; }
         public CustomerService CustomerService { get; private set; }
         public LookupsService LookupsService { get; private set; }
+        public PayoutsService PayoutsService { get; private set; }
         public RecurringPaymentsService RecurringPaymentsService { get; private set; }
         public ReportingService ReportingService { get; private set; }
         public TokenService TokenService { get; private set; }
@@ -37,6 +39,7 @@ namespace Checkout
             ChargeService = new ChargeService(ApiHttpClient, AppSettings);
             CustomerService = new CustomerService(ApiHttpClient, AppSettings);
             LookupsService = new LookupsService(ApiHttpClient, AppSettings);
+            PayoutsService = new PayoutsService(ApiHttpClient, AppSettings);
             RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings);
             ReportingService = new ReportingService(ApiHttpClient, AppSettings);
             TokenService = new TokenService(ApiHttpClient, AppSettings);
@@ -84,6 +87,7 @@ namespace Checkout
             ChargeService = new ChargeService(ApiHttpClient, AppSettings);
             CustomerService = new CustomerService(ApiHttpClient, AppSettings);
             LookupsService = new LookupsService(ApiHttpClient, AppSettings);
+            PayoutsService = new PayoutsService(ApiHttpClient, AppSettings);
             RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings);
             ReportingService = new ReportingService(ApiHttpClient, AppSettings);
             TokenService = new TokenService(ApiHttpClient, AppSettings);

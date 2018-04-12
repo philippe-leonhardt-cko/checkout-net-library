@@ -15,12 +15,7 @@ namespace Checkout.ApiServices.Customers
             _apiHttpClient = apiHttpclient;
             _appSettings = appSettings;
         }
-
-        public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
-        {
-            return _apiHttpClient.PostRequest<Customer>(_appSettings.ApiUrls.Customers, _appSettings.SecretKey, requestModel);
-        }
-
+        
         private string GetCustomerURI(string identifier)
         {
             // check for an email that contains a + character like: john.smith+checkout@email.com
@@ -31,6 +26,11 @@ namespace Checkout.ApiServices.Customers
             {
                 return _appSettings.ApiUrls.Customer;
             }
+        }
+
+        public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
+        {
+            return _apiHttpClient.PostRequest<Customer>(_appSettings.ApiUrls.Customers, _appSettings.SecretKey, requestModel);
         }
 
         public HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel)

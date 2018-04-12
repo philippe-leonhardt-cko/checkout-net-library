@@ -16,6 +16,10 @@ namespace Checkout.ApiServices.Lookups.ResponseModels
 
         public string BankName { get; set; }
 
+        public string CardScheme { get; set; }
+
         public string CardType { get; set; }
+
+        public string CardCategory { get; set; }
     }
 }

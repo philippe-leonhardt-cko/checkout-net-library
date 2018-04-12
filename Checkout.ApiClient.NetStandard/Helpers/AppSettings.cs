@@ -22,9 +22,9 @@ namespace Checkout
         public string SecretKey { get; set; }
         public string PublicKey { get; set; }
         public string BaseApiUri { get; private set; }
-        public int MaxResponseContentBufferSize { get; set; } = 1000000;
+        public int MaxResponseContentBufferSize { get; set; } = 10240;
         public int RequestTimeout { get; set; } = 60;
-        public bool DebugMode { get; set; }
+        public bool DebugMode { get; set; } = false;
 
         private CheckoutEnvironment _environment;
         public CheckoutEnvironment Environment

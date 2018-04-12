@@ -1,6 +1,7 @@
 ﻿using Checkout.ApiServices.Cards.RequestModels;
 using Checkout.ApiServices.Charges.RequestModels;
 using Checkout.ApiServices.Customers.RequestModels;
+using Checkout.ApiServices.Payouts.RequestModels;
 using Checkout.ApiServices.Reporting.RequestModels;
 using Checkout.ApiServices.RecurringPayments.RequestModels;
 using Checkout.ApiServices.SharedModels;
@@ -645,6 +646,33 @@ namespace Tests
         }
 
         #endregion
+
+        #region Payouts Helpers
+
+        /// <summary>
+        ///     Creates a model for a BasePayout Request
+        /// </summary>
+        /// <param name="cardId">The destination of the Payout</param>
+        /// <param name="firstName">The customer's first name</param>
+        /// <param name="lastName">The customer's last name</param>
+        /// <returns>
+        ///     An instance of BasePayout with value USD 200.00
+        /// </returns>
+        public static BasePayout GetPayoutModel(string cardId, string firstName, string lastName)
+        {
+            BasePayout basePayout = new BasePayout
+            {
+                Destination = cardId,
+                Value = 200,
+                Currency = "USD",
+                FirstName = firstName,
+                LastName = lastName
+            };
+
+            return basePayout;
+        }
+        #endregion
+
 
         /// <summary>
         /// Masks a card number to query transactions

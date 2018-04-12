@@ -42,5 +42,6 @@
         public string RecurringPaymentPlanSearch => HasUrl("/recurringPayments/plans/search");
         public string RecurringCustomerPaymentPlanSearch => HasUrl("/recurringPayments/customers/search");
         public string RecurringCustomerPaymentPlan => HasUrl("/recurringPayments/customers/{0}");
+        public string Payouts => HasUrl("/payouts");
     }
 }

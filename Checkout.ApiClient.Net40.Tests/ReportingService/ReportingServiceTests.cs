@@ -169,7 +169,6 @@ namespace Tests
 
             response.Should().NotBeNull();
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            response.Model.TotalRecords.Should().BeGreaterThan(0);
 
             if (action == FilterAction.Exclude)
             {
@@ -221,11 +220,11 @@ namespace Tests
             }
         }
 
-        [TestCase("test_2949337f-edda-4b0e-9df6-cbffff33464b@checkouttest.co.uk", null)] // must update with existing customer email from the Hub
+        [TestCase("test_54a5bf26-79a7-433f-828e-ae652ad36ad5@checkouttest.co.uk", null)] // must update with existing customer email from the Hub
         [TestCase("test", Operator.Begins)]
         [TestCase("test", Operator.Contains)]
         [TestCase("@checkouttest.co.uk", Operator.Ends)]
-        [TestCase("test_2949337f-edda-4b0e-9df6-cbffff33464b@checkouttest.co.uk", Operator.Equals)] // must update with existing customer email from the Hub
+        [TestCase("test_54a5bf26-79a7-433f-828e-ae652ad36ad5@checkouttest.co.uk", Operator.Equals)] // must update with existing customer email from the Hub
         public void QueryTransactions_ShouldAllowFilteringWithOperator(string value, Operator? op)
         {
             var filter = new Filter {Value = value, Field = Field.Email, Operator = op};

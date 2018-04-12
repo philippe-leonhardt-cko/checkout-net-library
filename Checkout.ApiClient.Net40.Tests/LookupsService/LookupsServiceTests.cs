@@ -10,6 +10,7 @@ namespace Tests
         [TestCase("123456", HttpStatusCode.NotFound)]
         [TestCase("44", HttpStatusCode.BadRequest)]
         [TestCase(null, HttpStatusCode.NotFound)]
+        [TestCase("465945", HttpStatusCode.OK)]
         public void BinLookup_AssertErrorResponseStatus(string bin, HttpStatusCode code)
         {
             var response = CheckoutClient.LookupsService.GetBinLookup(bin);
@@ -17,6 +18,7 @@ namespace Tests
             if(response != null)
             {
                 response.HttpStatusCode.Should().Be(code);
+                //System.Console.WriteLine(response.Model.CardType);
             }
         }
 

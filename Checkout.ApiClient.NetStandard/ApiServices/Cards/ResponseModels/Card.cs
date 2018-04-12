@@ -1,7 +1,8 @@
 using Checkout.ApiServices.Cards.RequestModels;
+
 namespace Checkout.ApiServices.Cards.ResponseModels
 {
-    public class Card:BaseCard
+    public class Card : BaseCard
     {
         public string Id { get; set; }
         public string CustomerId { get; set; }
