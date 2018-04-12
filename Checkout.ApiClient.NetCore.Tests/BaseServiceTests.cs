@@ -31,7 +31,7 @@ namespace Tests
                 DebugMode = true
             };
 
-            APIClient CheckoutClient = new APIClient(settings);
+            CheckoutClient = new APIClient(settings);
         }
 
         #region Protected methods
