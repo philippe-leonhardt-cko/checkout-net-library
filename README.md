@@ -6,31 +6,31 @@
 
 ### How to use the library
 
-In order to use the Checkout .Net library you have two options:
-- Install the library through Nuget. Search for the nuget package name **Checkout.APIClient** and install it.
-- Alternatively, you can download the sourcode from our master branch and reference it in your solution.
+In order to use the Checkout .NET library you have two options:
+- Install the library through NuGet. Search for the NuGet package name **Checkout.APIClient** and install it.
+- Alternatively, you can download the source code from our master branch and reference it in your solution.
 
 After that add the library namespace **using Checkout;** in your code as below:   
 ```
 using Checkout;
 ```
 
-if you get class name conflicts please use namespace alias as example below:
+if you get class name conflicts, please use namespace alias as example below:
 ```
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
 #### Configuration
-You will be required to **set your secret key** when initialising a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings** of the config file. If you prefer to use config file then you need to have the following configuration in your config file:
+You will be required to **set your secret key** when initializing a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings** of the config file. If you prefer to use config file then you need to have the following configuration in your config file:
 
 - **Checkout.SecretKey**: This is your api secret key 
 - **Checkout.PublicKey**: This is your api public key 
 - **Checkout.RequestTimeout**: Set your default number of seconds to wait before the request times out on the ApiHttpClient. Default is 60.
 - **Checkout.MaxResponseContentBufferSize**: Sets the maximum number of bytes to buffer when reading the response. Default is 10240.
-- **Checkout.DebugMode**: If set to true, the request and response result will be logged to console. Set this option to false when going Live. Default is false;
+- **Checkout.DebugMode**: If set to `true`, the request and response result will be logged to console. Set this option to `false` when going Live. Default is `false`;
 - **Checkout.Environment**: You can set your environment to point to **Sandbox** or **Live**.
 
-```html
+```xml
 <appSettings>
     <add key="Checkout.SecretKey" value="sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d" />
     <add key="Checkout.PublicKey" value="pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a" />
@@ -40,10 +40,11 @@ You will be required to **set your secret key** when initialising a new **APICli
     <add key="Checkout.Environment" value="Sandbox" />
 </appSettings>
 ```
-#### Constructor configuration 
-There are many constructors available for configuring the settings programmatically and you only need to do it once. If you provide settings from constructor it will override the matching setting in the config file otherwise the library will be looking for the settings in config file.
 
-```html
+#### Constructor configuration 
+There are many constructors available for configuring the settings programmatically and you only need to do it once. If you provide settings from constructor, it will override the matching setting in the config file. Otherwise, the library will be looking for the settings in config file.
+
+```c#
 APIClient()
 APIClient(string secretKey, Environment env, bool debugMode, int connectTimeout)
 APIClient(string secretKey, Environment env, bool debugMode)
@@ -63,7 +64,7 @@ There are various API endpoints that the **APIClient** interacts with.
 #### Charges
 
 ##### Charge with card example
-```
+```c#
 // Create payload
 var cardChargeRequestModel = new CardCharge()
 {
@@ -157,7 +158,7 @@ catch (Exception e)
 ```
 
 ##### Charge with card token example
-```
+```c#
 // Create payload
 var cardChargeRequestModel = new CardTokenCharge()
 {
@@ -241,7 +242,7 @@ catch (Exception e)
 
 #### Customers
 ##### Create customer with card example
-```
+```c#
 // Create payload
 var customerCreateRequest = new CustomerCreate()
 {
@@ -305,7 +306,7 @@ catch (Exception e)
 
 #### Cards
 ##### Create card
-```
+```c#
 // Create payload
 var cardCreateRequest = new CardCreate()
 {
@@ -359,7 +360,7 @@ catch (Exception e)
 #### Tokens
 ##### Create payment token example
 
-```
+```c#
 // Create payload
 var paymentTokenRequest = new PaymentTokenCreate()
   {
@@ -432,7 +433,7 @@ catch (Exception e)
 
 ##### Verify charge example
 
-```
+```c#
 // Create payload
 string paymentToken = "pay_tok_e6ef69d3-11b2-473d-bdc0-6b03c8713454";
 
@@ -464,8 +465,8 @@ catch (Exception e)
 
 ### Debug Mode
 
-If you enable debug mode by setting the **Checkout.DebugMode** to true in the config file or in code all the http requests and responses will be logged in the console.   
+If you enable debug mode by setting the **Checkout.DebugMode** to `true` in the config file or in code all the http requests and responses will be logged in the console.   
 
 ### Unit Tests
 
-All the unit test written with NUnit and resides in the test project.
+All the unit tests written with NUnit and resides in the test project.
