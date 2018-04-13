@@ -1,8 +1,11 @@
 # Checkout .NET Standard Library
 
-## Requirements
+## Target Frameworks
 
->.NET Framework 4.6.1 and later
+The library is targeted to the following frameworks: 
+* .NET Standard 1.3 or higher
+* .NET Framework 4.5
+* .NET Framework 4.0
 
 ---
 ## How to use the library
@@ -545,6 +548,11 @@ catch (Exception e)
 ## Debug Mode
 
 If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.
+
+---
+## Build
+
+To build the library for the sources, it requires .NET Framework 4.6.1 or later. 
 
 ---
 ## Tests
