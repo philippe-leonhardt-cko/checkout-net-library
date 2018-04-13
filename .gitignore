@@ -12,3 +12,4 @@ PublishProfiles/
 *.nunit
 packages/
 .vs/
+.vscode/

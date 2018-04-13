@@ -23,7 +23,7 @@ using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
 ### 2. Configuration
-Before initialising a new instance of the `ApiClient(AppSettings settings)` class, you will be required to **specify the settings**.
+Before initializing a new instance of the `ApiClient(AppSettings settings)` class, you will be required to **specify the settings**.
 The `AppSettings` object consists of the following settable parameters:
 
 Parameter|Description|Required|Type|Default Value
@@ -90,7 +90,7 @@ PaymentTokens|`TokenService`
 RecurringPayments|`RecurringPaymentsService`
 Reporting|`ReportingService`
 
->After initialising the `APIClient`, you can make any API Calls by simply writing `{APIClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
+>After initializing the `APIClient`, you can make any API Calls by simply writing `{APIClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
 >
 >Have a look at this example:
 >```csharp
@@ -547,6 +547,6 @@ catch (Exception e)
 If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.
 
 ---
-## Unit Tests
+## Tests
 
-All the unit tests are written with NUnit and reside in the test project.
+All the tests are written with NUnit and reside in the `*.Tests` projects.
