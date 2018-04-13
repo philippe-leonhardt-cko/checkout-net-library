@@ -286,7 +286,7 @@ namespace Tests
             var request = TestHelper.GetQueryRequest(new List<Filter> {filter});
             var firstQueryResponse = CheckoutClient.ReportingService.QueryTransaction(request);
 
-            #region Assert First Query Response
+#region Assert First Query Response
 
             firstQueryResponse.Should().NotBeNull();
 
@@ -314,7 +314,7 @@ namespace Tests
                 firstQueryResponse.HasError.Should().BeTrue();
             }
 
-            #endregion Assert First Query Response
+#endregion Assert First Query Response
 
             // capture charge and query 2nd time
             var chargeCapture = TestHelper.GetChargeCaptureModel(charge.Value);
@@ -326,7 +326,7 @@ namespace Tests
 
             var secondQueryResponse = CheckoutClient.ReportingService.QueryTransaction(request);
 
-            #region Assert Second Query Response
+#region Assert Second Query Response
 
             secondQueryResponse.Should().NotBeNull();
 
@@ -362,7 +362,7 @@ namespace Tests
                 secondQueryResponse.HasError.Should().BeTrue();
             }
 
-            #endregion Assert Second Query Response
+#endregion Assert Second Query Response
         }
 
         private static string GetChargePropertyValueFromField(Charge charge, Field? field, string cardNumber = null)
@@ -540,7 +540,7 @@ namespace Tests
         public void QueryChargebacks()
         {
             DateTime fromDate = DateTime.Now.AddDays(-7); // Looking 7 days in the past
-            var request = TestHelper.GetQueryRequest("", fromDate);
+            var request = TestHelper.GetQueryRequest(fromDate: fromDate);
             var response = CheckoutClient.ReportingService.QueryChargeback(request);
 
             response.Should().NotBeNull();

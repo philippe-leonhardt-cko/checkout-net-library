@@ -279,7 +279,7 @@ namespace Tests
         [Test]
         public void GetChargeHistory()
         {
-            #region setup charge history
+#region setup charge history
 
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);
 
@@ -291,7 +291,7 @@ namespace Tests
 
             var voidResponse = CheckoutClient.ChargeService.VoidCharge(chargeResponse.Model.Id, chargeVoidModel);
 
-            #endregion
+#endregion
 
             var response = CheckoutClient.ChargeService.GetChargeHistory(voidResponse.Model.Id);
 

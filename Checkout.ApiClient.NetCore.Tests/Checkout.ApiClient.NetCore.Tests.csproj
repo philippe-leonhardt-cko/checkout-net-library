@@ -21,4 +21,6 @@
     <ProjectReference Include="..\Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Checkout.ApiClient.Tests.Shared\Checkout.ApiClient.Tests.Shared.projitems" Label="Shared" />
+
 </Project>
