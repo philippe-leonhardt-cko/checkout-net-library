@@ -7,16 +7,23 @@
 ---
 ## How to use the library
 
+<<<<<<< HEAD
 ### 1. Installation
 In order to use the Checkout .Net Standard Library you have two options:
 >1. Either install the library through NuGet by searching for the NuGet package name *Checkout.APIClient* and installing it 
 >2. Or download the source code from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and reference it in your solution.
+=======
+In order to use the Checkout .NET library you have two options:
+- Install the library through NuGet. Search for the NuGet package name **Checkout.APIClient** and install it.
+- Alternatively, you can download the source code from our master branch and reference it in your solution.
+>>>>>>> origin/feature/review
 
 After that add the library namespace `Checkout` in your code like this:   
 ```csharp
 using Checkout;
 ```
 
+<<<<<<< HEAD
 If you get class name conflicts please add a namespace alias as shown below:
 ```csharp
 using CheckoutEnvironment = Checkout.Helpers.Environment;
@@ -223,6 +230,59 @@ Have a look at a few more examples. More detailed information on various Models 
 
 ```csharp
 // Create CardCharge requestModel
+=======
+if you get class name conflicts, please use namespace alias as example below:
+```
+using CheckoutEnvironment = Checkout.Helpers.Environment;
+```
+
+#### Configuration
+You will be required to **set your secret key** when initializing a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings** of the config file. If you prefer to use config file then you need to have the following configuration in your config file:
+
+- **Checkout.SecretKey**: This is your api secret key 
+- **Checkout.PublicKey**: This is your api public key 
+- **Checkout.RequestTimeout**: Set your default number of seconds to wait before the request times out on the ApiHttpClient. Default is 60.
+- **Checkout.MaxResponseContentBufferSize**: Sets the maximum number of bytes to buffer when reading the response. Default is 10240.
+- **Checkout.DebugMode**: If set to `true`, the request and response result will be logged to console. Set this option to `false` when going Live. Default is `false`;
+- **Checkout.Environment**: You can set your environment to point to **Sandbox** or **Live**.
+
+```xml
+<appSettings>
+    <add key="Checkout.SecretKey" value="sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d" />
+    <add key="Checkout.PublicKey" value="pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a" />
+    <add key="Checkout.RequestTimeout" value="60" />
+    <add key="Checkout.MaxResponseContentBufferSize" value="10240" />
+    <add key="Checkout.DebugMode" value="true" />
+    <add key="Checkout.Environment" value="Sandbox" />
+</appSettings>
+```
+
+#### Constructor configuration 
+There are many constructors available for configuring the settings programmatically and you only need to do it once. If you provide settings from constructor, it will override the matching setting in the config file. Otherwise, the library will be looking for the settings in config file.
+
+```c#
+APIClient()
+APIClient(string secretKey, Environment env, bool debugMode, int connectTimeout)
+APIClient(string secretKey, Environment env, bool debugMode)
+APIClient(string secretKey, Environment env)
+APIClient(string secretKey, bool debugMode)
+APIClient(string secretKey)
+```
+
+#### Endpoints 
+There are various API endpoints that the **APIClient** interacts with. 
+
+- Charges
+- Customers
+- Cards
+- Tokens
+
+#### Charges
+
+##### Charge with card example
+```c#
+// Create payload
+>>>>>>> origin/feature/review
 var cardChargeRequestModel = new CardCharge()
 {
 	Email = "myEmail@hotmail.com",
@@ -258,6 +318,7 @@ var cardChargeRequestModel = new CardCharge()
 	},
 	Products = new List<Product>(){
 		new Product{ 
+<<<<<<< HEAD
 			Name = "iPad 3", 
 			Price = 100, 
 			Quantity = 1, 
@@ -266,6 +327,88 @@ var cardChargeRequestModel = new CardCharge()
 			Image = "http://goofle.com/?id=12345", 
 			Sku = "TR12345",
 			TrackingUrl = "http://tracket.com?id=123456"
+=======
+			Name="ipad 3", 
+			Price=100, 
+			Quantity=1, 
+			ShippingCost=10.5M, 
+			Description="Gold edition", 
+			Image="http://goofle.com/?id=12345", 
+			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
+		}
+	},
+	ShippingDetails = new Address()
+	{
+		AddressLine1 = "Flat 1",
+		AddressLine2 = "Glading Fields",
+		Postcode = "N16 2BR",
+		City = "London",
+		State = "Hackney",
+		Country = "GB",
+		Phone = new Phone()
+		{
+			CountryCode = "44",
+			Number = "203 583 44 55"
+		}
+	},
+	Metadata = new Dictionary<string, string>() { { "extraInformation", "EBS travel" } },
+	Udf1 = "udf1 string",
+	Udf2 = "udf2 string",
+	Udf3 = "udf3 string",
+	Udf4 = "udf4 string",
+	Udf5 = "udf5 string"
+};
+
+try
+{
+	// Create APIClient instance with your secret key
+	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+
+	// Submit your request and receive an apiResponse
+	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.ChargeWithCard(cardChargeRequestModel);
+
+	if (!apiResponse.HasError)
+	{
+		// Access the response object retrieved from the api
+		var charge = apiResponse.Model;
+	}
+	else
+	{
+		// Api has returned an error object. You can access the details in the error property of the apiResponse.
+		// apiResponse.error
+	}
+}
+catch (Exception e)
+{
+	//... Handle exception
+}
+```
+
+##### Charge with card token example
+```c#
+// Create payload
+var cardChargeRequestModel = new CardTokenCharge()
+{
+	Email = "myEmail@hotmail.com",
+	AutoCapture = "Y",
+	AutoCapTime = 0,
+	Currency = "Usd",
+	TrackId = "TRK12345",
+	TransactionIndicator = "1",
+	CustomerIp = "82.23.168.254",
+	Description = "Ipad for Ebs travel",
+	Value = "100",
+	CardToken = "card_tok_************************************",
+	Products = new List<Product>(){
+		new Product{ 
+			Name="ipad 3", 
+			Price=100, 
+			Quantity=1, 
+			ShippingCost=10.5M, 
+			Description="Gold edition", 
+			Image="http://goofle.com/?id=12345", 
+			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
+>>>>>>> origin/feature/review
 		}
 	},
 	ShippingDetails = new Address()
@@ -319,9 +462,15 @@ catch (Exception e)
 
 ### Customers
 
+<<<<<<< HEAD
 #### Create customer with card example
 
 ```csharp
+=======
+#### Customers
+##### Create customer with card example
+```c#
+>>>>>>> origin/feature/review
 // Create payload
 var customerCreateRequest = new CustomerCreate()
 {
@@ -385,7 +534,11 @@ catch (Exception e)
 
 #### Cards
 ##### Create card
+<<<<<<< HEAD
 ```csharp
+=======
+```c#
+>>>>>>> origin/feature/review
 // Create payload
 var cardCreateRequest = new CardCreate()
 {
@@ -439,7 +592,11 @@ catch (Exception e)
 #### Tokens
 ##### Create payment token example
 
+<<<<<<< HEAD
 ```csharp
+=======
+```c#
+>>>>>>> origin/feature/review
 // Create payload
 var paymentTokenRequest = new PaymentTokenCreate()
   {
@@ -512,7 +669,11 @@ catch (Exception e)
 
 ##### Verify charge example
 
+<<<<<<< HEAD
 ```csharp
+=======
+```c#
+>>>>>>> origin/feature/review
 // Create payload
 string paymentToken = "pay_tok_e6ef69d3-11b2-473d-bdc0-6b03c8713454";
 
@@ -544,9 +705,19 @@ catch (Exception e)
 ---
 ## Debug Mode
 
+<<<<<<< HEAD
 If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.
+=======
+### Debug Mode
+
+If you enable debug mode by setting the **Checkout.DebugMode** to `true` in the config file or in code all the http requests and responses will be logged in the console.   
+>>>>>>> origin/feature/review
 
 ---
 ## Unit Tests
 
+<<<<<<< HEAD
 All the unit tests are written with NUnit and reside in the test project.
+=======
+All the unit tests written with NUnit and resides in the test project.
+>>>>>>> origin/feature/review
