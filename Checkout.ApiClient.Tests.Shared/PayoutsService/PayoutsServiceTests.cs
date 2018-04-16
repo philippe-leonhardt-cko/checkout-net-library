@@ -18,8 +18,8 @@ namespace Tests
             var customerId = customer.Id;
             var cardId = customer.Cards.Data[0].Id;
             var cardholderName = customer.Cards.Data[0].Name;
-            var cardholderFirstName = cardholderName.Split(" ").First();
-            var cardholderLastName = cardholderName.Split(" ").Last();
+            var cardholderFirstName = cardholderName.Split(' ').First();
+            var cardholderLastName = cardholderName.Split(' ').Last();
 
             // Make Payout
             var payoutsCreateModel = TestHelper.GetPayoutModel(cardId, cardholderFirstName, cardholderLastName);

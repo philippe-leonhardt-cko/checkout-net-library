@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CustomerService\CustomerServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ErrorResponse\ErrorResponseTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LookupsService\LookupsServiceTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PayoutsService\PayoutsServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RecurringPaymentsService\RecurringPaymentsServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReportingService\ReportingServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHelper.cs" />
