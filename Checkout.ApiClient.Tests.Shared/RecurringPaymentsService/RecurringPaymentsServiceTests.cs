@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using Checkout.ApiServices.RecurringPayments.RequestModels;
+using Checkout.ApiServices.RecurringPayments.ResponseModels;
+using Checkout.ApiServices.SharedModels;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -26,9 +28,8 @@ namespace Tests.RecurringPaymentsService
         public void CancelPaymentPlan_ShouldReturnOk()
         {
             var paymentPlanModel = TestHelper.GetSinglePaymentPlanCreateModel();
-            var createResponseModel =
-                CheckoutClient.RecurringPaymentsService.CreatePaymentPlan(paymentPlanModel).Model.PaymentPlans.Single();
-            var cancelResponse = CheckoutClient.RecurringPaymentsService.CancelPaymentPlan(createResponseModel.PlanId);
+            PaymentPlan createResponseModel = CheckoutClient.RecurringPaymentsService.CreatePaymentPlan(paymentPlanModel).Model.PaymentPlans.Single();
+            HttpResponse<OkResponse> cancelResponse = CheckoutClient.RecurringPaymentsService.CancelPaymentPlan(createResponseModel.PlanId);
 
             cancelResponse.Should().NotBeNull();
             cancelResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
