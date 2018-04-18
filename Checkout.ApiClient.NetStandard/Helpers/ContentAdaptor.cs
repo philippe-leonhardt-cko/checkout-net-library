@@ -18,9 +18,9 @@ namespace Checkout.Helpers
         public static T JsonStringToObject<T>(string jsonString)
         {
             // Sanitizes JSON Response: Converts Response Field "value" incorrectly returning as stringified float to stringified int
-            string pattern = @"^(?<prepend>.*""value"":)(?<value>\d*)(?<decimals>[.]{1}[0]+)(?<append>[,]{1}.*)$";
-            jsonString = System.Text.RegularExpressions.Regex.Replace(jsonString, pattern, m => m.Groups["prepend"].Value + m.Groups["value"].Value + m.Groups["append"].Value);
-            
+            string pattern = @"(?<field>""value"":)(?<int>\d*)(?<decimals>[.]?[0]*)";
+            jsonString = System.Text.RegularExpressions.Regex.Replace(jsonString, pattern, m => m.Groups["field"].Value + m.Groups["int"].Value);
+
             return Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(jsonString)).Result;
             //return JsonConvert.DeserializeObjectAsync<T>(jsonString).Result;
         }
