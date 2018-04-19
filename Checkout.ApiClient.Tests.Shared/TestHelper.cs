@@ -34,7 +34,7 @@ namespace Tests
                         AutoCapTime = RandomData.GetNumber(0, 168),
                         Currency = currency ?? "USD",
                         PlanTrackId = RandomData.UniqueString,
-                        Value = value ?? RandomData.GetNumber(50, 500),
+                        Value = value ?? 100,
                         RecurringCount = RandomData.GetNumber(1, 19),
                         Cycle = "1d"
                     }
@@ -50,7 +50,7 @@ namespace Tests
                 AutoCapTime = RandomData.GetNumber(0, 168),
                 Currency = currency ?? "GBP",
                 PlanTrackId = RandomData.UniqueString,
-                Value = value ?? RandomData.GetNumber(50, 500),
+                Value = value ?? 100,
                 RecurringCount = RandomData.GetNumber(1, 19),
                 Cycle = "3d",
                 Status = RecurringPlanStatus.Suspended
@@ -64,7 +64,7 @@ namespace Tests
                 Name = RandomData.String,
                 AutoCapTime = 0,
                 PlanTrackId = RandomData.UniqueString,
-                Value = value ?? RandomData.GetNumber(50, 500),
+                Value = value ?? 100,
                 RecurringCount = RandomData.GetNumber(1, 19),
                 Cycle = "3d"
             };
@@ -92,7 +92,7 @@ namespace Tests
                 TransactionIndicator = "1",
                 CustomerIp = "82.23.168.254",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Card = GetCardCreateModel(),
                 Descriptor = new BillingDescriptor { Name = "Amigo ltd.", City = "London" },
                 Products = GetProducts(),
@@ -121,7 +121,7 @@ namespace Tests
                 TransactionIndicator = "1",
                 CustomerIp = "82.23.168.254",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Card = GetCardCreateModel(),
                 Descriptor = new BillingDescriptor { Name = "Amigo ltd.", City = "London" },
                 Products = GetProducts(),
@@ -186,7 +186,7 @@ namespace Tests
             return new PaymentTokenCreate()
             {
                 Currency = currency,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 AutoCapTime = 1,
                 AutoCapture = "N",
                 ChargeMode = chargeMode,
@@ -365,7 +365,7 @@ namespace Tests
                 TransactionIndicator = "1",
                 CustomerIp = "82.23.168.254",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Descriptor = new BillingDescriptor { Name = "Amigo ltd.", City = "London" },
                 Products = GetProducts(),
                 ShippingDetails = GetAddress(),
@@ -395,7 +395,7 @@ namespace Tests
                 TransactionIndicator = "1",
                 CustomerIp = "82.23.168.254",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Card = GetCardCreateModel(),
                 Descriptor = new BillingDescriptor { Name = "Amigo ltd.", City = "London" },
                 Products = GetProducts(),
@@ -461,7 +461,7 @@ namespace Tests
                 AutoCapTime = 10,
                 Currency = "Usd",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Products = GetProducts(),
                 ShippingDetails = GetAddress(),
                 Metadata = new Dictionary<string, string>() { { "extraInformation", RandomData.CompanyName } },
@@ -480,7 +480,7 @@ namespace Tests
                 AutoCapTime = 10,
                 Currency = "Usd",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString(),
+                Value = "100",
                 Descriptor = new BillingDescriptor { Name = "Amigo ltd.", City = "London" }
             };
         }
@@ -495,7 +495,7 @@ namespace Tests
                 AutoCapTime = 10,
                 Currency = "Usd",
                 Description = RandomData.String,
-                Value = RandomData.GetNumber(50, 500).ToString()
+                Value = "100"
             };
         }
 
