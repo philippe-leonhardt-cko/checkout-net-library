@@ -48,9 +48,9 @@ namespace Checkout.ApiServices.RecurringPayments
         /// </summary>
         /// <param name="planId"></param>
         /// <returns></returns>
-        public HttpResponse<PaymentPlan> GetPaymentPlan(string planId)
+        public HttpResponse<ResponsePaymentPlan> GetPaymentPlan(string planId)
         {
-            return _apiHttpClient.GetRequest<PaymentPlan>(string.Format(_appSettings.ApiUrls.RecurringPaymentPlan, planId), _appSettings.SecretKey);
+            return _apiHttpClient.GetRequest<ResponsePaymentPlan>(string.Format(_appSettings.ApiUrls.RecurringPaymentPlan, planId), _appSettings.SecretKey);
         }
 
         /// <summary>

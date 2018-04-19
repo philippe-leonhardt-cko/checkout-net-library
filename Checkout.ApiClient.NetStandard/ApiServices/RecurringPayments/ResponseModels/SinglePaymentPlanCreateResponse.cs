@@ -9,7 +9,7 @@ namespace Checkout.ApiServices.RecurringPayments.ResponseModels
 {
     public class SinglePaymentPlanCreateResponse
     {
-        public List<PaymentPlan> PaymentPlans { get; set; }
+        public List<ResponsePaymentPlan> PaymentPlans { get; set; }
 
         public long TotalCollectionCount { get; set; }
 
