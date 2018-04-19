@@ -28,7 +28,7 @@ namespace Tests.RecurringPaymentsService
         public void CancelPaymentPlan_ShouldReturnOk()
         {
             var paymentPlanModel = TestHelper.GetSinglePaymentPlanCreateModel();
-            PaymentPlan createResponseModel = CheckoutClient.RecurringPaymentsService.CreatePaymentPlan(paymentPlanModel).Model.PaymentPlans.Single();
+            ResponsePaymentPlan createResponseModel = CheckoutClient.RecurringPaymentsService.CreatePaymentPlan(paymentPlanModel).Model.PaymentPlans.Single();
             HttpResponse<OkResponse> cancelResponse = CheckoutClient.RecurringPaymentsService.CancelPaymentPlan(createResponseModel.PlanId);
 
             cancelResponse.Should().NotBeNull();
@@ -104,6 +104,7 @@ namespace Tests.RecurringPaymentsService
                 options => options
                     .Excluding(o => o.PlanId)
                     .Excluding(o => o.Status)
+                    .Excluding(o => o._privateValue)
                     );
             responseModel.PlanId.Should().NotBeNullOrEmpty();
             responseModel.Status.Should().NotBeNull();

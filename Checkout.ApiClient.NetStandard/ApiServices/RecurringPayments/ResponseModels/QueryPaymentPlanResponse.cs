@@ -16,6 +16,6 @@ namespace Checkout.ApiServices.RecurringPayments.ResponseModels
 
         public int TotalRows { get; set; }
 
-        public List<PaymentPlan> Data { get; set; }
+        public List<ResponsePaymentPlan> Data { get; set; }
     }
 }
