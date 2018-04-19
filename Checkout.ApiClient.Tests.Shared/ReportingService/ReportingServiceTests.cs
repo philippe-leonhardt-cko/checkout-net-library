@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Checkout.ApiServices.Charges.ResponseModels;
+using Checkout.ApiServices.Charges.RequestModels;
 using Checkout.ApiServices.Reporting.ResponseModels;
+using Checkout.ApiServices.Tokens.RequestModels;
+using Checkout.ApiServices.Tokens.ResponseModels;
 using Checkout.ApiServices.SharedModels;
 using FluentAssertions;
 using NUnit.Framework;
@@ -220,11 +223,20 @@ namespace Tests
             }
         }
 
-        [TestCase("test_54a5bf26-79a7-433f-828e-ae652ad36ad5@checkouttest.co.uk", null)] // must update with existing customer email from the Hub
+        [TestCase(null)]
+        [TestCase(Operator.Equals)]
+        public void QueryTransactions_ShouldAllowFilteringWithOperator_ForEmailWithTransactionHistory(Operator? op)
+        {
+            TokenCard cardCreateModel = TestHelper.GetTokenCardModel();
+            HttpResponse<CardTokenCreate> cardTokenResponse = CheckoutClient.TokenService.GetCardToken(cardCreateModel);
+            CardTokenCharge cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardTokenResponse.Model.Id, TestHelper.RandomData.Email);
+            HttpResponse<Charge> chargeResponse = CheckoutClient.ChargeService.ChargeWithCardToken(cardTokenChargeModel);
+            QueryTransactions_ShouldAllowFilteringWithOperator(chargeResponse.Model.Email, op);
+        }
+
         [TestCase("test", Operator.Begins)]
         [TestCase("test", Operator.Contains)]
         [TestCase("@checkouttest.co.uk", Operator.Ends)]
-        [TestCase("test_54a5bf26-79a7-433f-828e-ae652ad36ad5@checkouttest.co.uk", Operator.Equals)] // must update with existing customer email from the Hub
         public void QueryTransactions_ShouldAllowFilteringWithOperator(string value, Operator? op)
         {
             var filter = new Filter {Value = value, Field = Field.Email, Operator = op};
