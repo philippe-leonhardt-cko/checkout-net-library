@@ -18,7 +18,18 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            CheckoutClient = new APIClient(); 
+            // Configure this to switch between Sandbox and Live
+            AppSettings settings = new AppSettings()
+            {
+                SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad",
+                PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b",
+                Environment = Checkout.Helpers.Environment.Sandbox,
+                MaxResponseContentBufferSize = 10240,
+                RequestTimeout = 60,
+                DebugMode = true
+            };
+
+            CheckoutClient = new APIClient(settings); 
         }
 		 
         #region Protected methods

@@ -39,9 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <!--Custom Solution Configuration Support for console applications for e.g. Debug.config and Release.config -->
-  <PropertyGroup>
-    <AppConfig>App.$(Configuration).config</AppConfig>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Faker.NET4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Faker.Net.1.0.3\lib\net40\Faker.NET4.dll</HintPath>
@@ -65,10 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Debug.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="App.Release.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -24,60 +24,6 @@ namespace Checkout
         public ReportingService ReportingService { get; private set; }
         public TokenService TokenService { get; private set; }
 
-
-#if (NET40 || NET45)
-        public APIClient()
-        {
-            AppSettings = new AppSettings();
-            if (AppSettings.Environment == Environment.Undefined)
-            {
-                AppSettings.SetEnvironmentFromConfig();
-            }
-
-            ApiHttpClient = new ApiHttpClient(AppSettings);
-            CardService = new CardService(ApiHttpClient, AppSettings);
-            ChargeService = new ChargeService(ApiHttpClient, AppSettings);
-            CustomerService = new CustomerService(ApiHttpClient, AppSettings);
-            LookupsService = new LookupsService(ApiHttpClient, AppSettings);
-            PayoutsService = new PayoutsService(ApiHttpClient, AppSettings);
-            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings);
-            ReportingService = new ReportingService(ApiHttpClient, AppSettings);
-            TokenService = new TokenService(ApiHttpClient, AppSettings);
-
-            ContentAdaptor.Setup();
-        }
-
-        public APIClient(string secretKey, Environment env, bool debugMode, int connectTimeout)
-            : this(secretKey, env, debugMode)
-        {
-            AppSettings.RequestTimeout = connectTimeout;
-        }
-
-        public APIClient(string secretKey, Environment env, bool debugMode)
-            : this(secretKey, env)
-        {
-            AppSettings.DebugMode = debugMode;
-        }
-
-        public APIClient(string secretKey, Environment env)
-        {
-            AppSettings.SecretKey = secretKey;
-            AppSettings.Environment = env;
-            ContentAdaptor.Setup();
-        }
-
-        public APIClient(string secretKey, bool debugMode)
-            : this(secretKey)
-        {
-            AppSettings.DebugMode = debugMode;
-        }
-
-        public APIClient(string secretKey)
-            : this()
-        {
-            AppSettings.SecretKey = secretKey;
-        }
-#elif (NETSTANDARD)
         public APIClient(AppSettings appSettings)
         {
             AppSettings = appSettings;
@@ -94,6 +40,5 @@ namespace Checkout
 
             ContentAdaptor.Setup();
         }
-#endif
     }
 }
