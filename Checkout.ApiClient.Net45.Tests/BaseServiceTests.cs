@@ -23,9 +23,6 @@ namespace Tests
             {
                 SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad",
                 PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b",
-                Environment = Checkout.Helpers.Environment.Sandbox,
-                MaxResponseContentBufferSize = 10240,
-                RequestTimeout = 60,
                 DebugMode = true
             };
 

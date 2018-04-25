@@ -16,12 +16,12 @@ namespace Checkout
         public ApiUrls ApiUrls { get; private set; }
         public string SecretKey { get; set; }
         public string PublicKey { get; set; }
-        public string BaseApiUri { get; private set; }
+        public string BaseApiUri { get; private set; } = _sandboxUrl;
         public int MaxResponseContentBufferSize { get; set; } = 10240;
         public int RequestTimeout { get; set; } = 60;
         public bool DebugMode { get; set; } = false;
 
-        private CheckoutEnvironment _environment;
+        private CheckoutEnvironment _environment = CheckoutEnvironment.Sandbox;
         public CheckoutEnvironment Environment
         {
             get
