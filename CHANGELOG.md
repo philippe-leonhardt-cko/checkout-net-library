@@ -3,17 +3,19 @@ Starting with version 1.4.0 this project adheres to [Semantic Versioning](http:/
 
 # [Unreleased]
 
-# [1.4.0](https://github.com/checkout/checkout-net-library/tree/1.4.0.0) (2018-02-xx)
+# [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-04-xx)
 
 This release is a port to **.NET Standard 1.3** and closes [#23](https://github.com/checkout/checkout-net-library/issues/23)
 
 ## BREAKING CHANGES
 - **deprecated:** <a name="security_1"></a>.NET 4.0 for only supporting early TLS 1.0
     > The Payment Card Industry Security Standards Council (PCI SSC) is extending the migration completion date to 30 June 2018 for transitioning from SSL and TLS 1.0 to a secure version of TLS (currently v1.1 or higher)... [more](https://blog.pcisecuritystandards.org/migrating-from-ssl-and-early-tls)
-- **changed:** `RecurringPaymentsService.Value` from type *string* to type *int*
+
+## Features
+- **added:** availability of the **Payouts** API Endpoint through the SDK
 
 ## Changes
-- **added:** support for passing `AppSettings` to the `APIClient(AppSettings settings)` constructor in favor of configuring `AppSettings` via custom App Configuration files `App.Debug.config` and `App.Release.config`
+- **added:** support for passing `AppSettings` to the `APIClient(AppSettings settings)` constructor instead of configuring `AppSettings` via custom App Configuration files `App.Debug.config` and `App.Release.config`
     ```csharp
     AppSettings settings = new AppSettings()
     {
@@ -38,8 +40,14 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
     [more](https://mavenlink.zendesk.com/hc/en-us/articles/115007653028-Transport-Layer-Security-TLS)
 
 ## Bug Fixes
-[TODO]:
+
 - **added:** logic to `CustomerService.UpdateCustomer(string identifier, CustomerUpdate requestModel)` to support identifier being an email address
+
+- **added:** ResponseModels in the `ApiServices.RecurringPayments` namespace to handle API Responses returning stringified floats in the value field
+  - `ApiServices.RecurringPayments.ResponseModels.BaseResponseRecurringPlan`
+  - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlan`
+  - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanCreate`
+  - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanUpdate`
 
 
 # [1.3.0.9](https://github.com/checkout/checkout-net-library/tree/1.3.0.9) (2018-01-22)

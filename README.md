@@ -33,10 +33,10 @@ Parameter|Description|Required|Type|Default Value
 :---|---|:---:|---|---
 SecretKey|Your SecretKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/the-hub/system-administration/business-level-settings#view-api-keys).|true|`string`|`null`
 PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/the-hub/system-administration/business-level-settings#view-api-keys).|true|`string`|`null`
-Environment|You must set this to either `Checkout.Helpers.Environment.Sandbox` or `Checkout.Helpers.Environment.Live`.|true|`enum`|`null`
-MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when reading the response. Default is `10240`.|false|`int`|`10240`
-RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient. Default is `60`.|false|`int`| `60`
-DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.|false|`bool`|`false`
+Environment|You may set this to either `Checkout.Helpers.Environment.Sandbox` or `Checkout.Helpers.Environment.Live`.<br /><br />Default is `Checkout.Helpers.Environment.Sandbox`|false|`enum`|`null`
+MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when reading the response.<br /><br />Default is `10240`.|false|`int`|`10240`
+RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient.<br /><br />Default is `60`.|false|`int`| `60`
+DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live.<br /><br />Default is `false`.|false|`bool`|`false`
 
 E.g. specifying your settings for Sandbox could look like this:
 ```csharp
