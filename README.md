@@ -31,8 +31,8 @@ The `AppSettings` object consists of the following settable parameters:
 
 Parameter|Description|Required|Type|Default Value
 :---|---|:---:|---|---
-SecretKey|Your SecretKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/the-hub/system-administration/business-level-settings#view-api-keys).|true|`string`|`null`
-PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/the-hub/system-administration/business-level-settings#view-api-keys).|true|`string`|`null`
+SecretKey|Your SecretKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|true|`string`|`null`
+PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|true|`string`|`null`
 Environment|You may set this to either `Checkout.Helpers.Environment.Sandbox` or `Checkout.Helpers.Environment.Live`.<br /><br />Default is `Checkout.Helpers.Environment.Sandbox`|false|`enum`|`null`
 MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when reading the response.<br /><br />Default is `10240`.|false|`int`|`10240`
 RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient.<br /><br />Default is `60`.|false|`int`| `60`
@@ -59,12 +59,10 @@ APIClient CheckoutClient = new APIClient(settings);
 ---
 ## Endpoints 
 There are various API endpoints that the `APIClient` interacts with.
->Make sure you visit our [Docs](https://beta.docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://beta.docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
+>Make sure you visit our [Docs](https://docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
 
 Supporting Docs:
-- [Errors](https://docs.checkout.com/reference/merchant-api-reference/errors/api-validation-errors)
-- [Response Codes](https://docs.checkout.com/reference/response-codes)
-- [Useful Codes](https://docs.checkout.com/reference/useful-codes/country-iso-and-codes)
+- [Codes](https://docs.checkout.com/docs/codes)
 
 ---
 ## API Methods
@@ -232,7 +230,7 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 
 ## Examples
 
-Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/reference/merchant-api-reference/introduction). It is assumed that you already have instantiated your `APIClient`.
+Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `APIClient`.
 
 ### Charges
 
