@@ -12,7 +12,7 @@
     <Title>Checkout.APIClient</Title>
     <Description>
       API wrapper for the Checkout.com Payment Gateway
-      Docs: https://beta.docs.checkout.com/docs/api-quickstart
+      Docs: https://docs.checkout.com/docs/api-quickstart
       GitHub: https://github.com/checkout/checkout-net-library
     </Description>
     <Copyright>Copyright (c) 2018 Checkout.com</Copyright>
