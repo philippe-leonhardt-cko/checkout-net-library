@@ -2,7 +2,7 @@
 
 ## Target Frameworks
 
-The library is targeted to the following frameworks: 
+The library targets the following frameworks: 
 * .NET Standard 1.3 or higher
 * .NET Framework 4.5
 * .NET Framework 4.0
@@ -44,9 +44,6 @@ AppSettings settings = new AppSettings()
 {
 	SecretKey = "sk_test_{your_secret_key}",
 	PublicKey = "pk_test_{your_public_key}",
-	Environment = Checkout.Helpers.Environment.Sandbox,
-	MaxResponseContentBufferSize = 10240,
-	RequestTimeout = 60,
 	DebugMode = true
 };
 ```
@@ -57,21 +54,12 @@ APIClient CheckoutClient = new APIClient(settings);
 ```
 ... and you are set up to be using our various API endpoints.
 
->Congratulations for installing and configuring the Checkout .NET Standard Library! You totally have earned yourself a piece of cake :cake:. If you want to learn what's next, continue reading about our API endpoints.
+>Congratulations for installing and configuring the Checkout .NET Standard Library! If you want to learn what's next, continue reading about our API endpoints.
 
 ---
 ## Endpoints 
 There are various API endpoints that the `APIClient` interacts with.
->Make sure you visit our [Docs](https://docs.checkout.com/reference/merchant-api-reference/introduction) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/getting-started/frames) and more goodness of our fully proprietory solutions that are worth checking out.
-
-Endpoints:
-- [Cards](https://docs.checkout.com/reference/merchant-api-reference/cards)
-- [Charges](https://docs.checkout.com/reference/merchant-api-reference/charges)
-- [Customers](https://docs.checkout.com/reference/merchant-api-reference/customers)
-- [Lookups](https://docs.checkout.com/reference/merchant-api-reference/lookups/bin)
-- [PaymentTokens](https://docs.checkout.com/reference/merchant-api-reference/payment-tokens/create-payment-token)
-- [RecurringPayments](https://docs.checkout.com/reference/merchant-api-reference/recurring-payments)
-- [Reporting](https://docs.checkout.com/reference/merchant-api-reference/reporting)
+>Make sure you visit our [Docs](https://beta.docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://beta.docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
 
 Supporting Docs:
 - [Errors](https://docs.checkout.com/reference/merchant-api-reference/errors/api-validation-errors)
@@ -81,7 +69,7 @@ Supporting Docs:
 ---
 ## API Methods
 
-Each Endpoint has its own service and each service respectively cointains methods.
+Each Endpoint has its own Service and each Service respectively contains methods.
 
 Endpoint|Service
 ---|---
@@ -93,9 +81,9 @@ PaymentTokens|`TokenService`
 RecurringPayments|`RecurringPaymentsService`
 Reporting|`ReportingService`
 
->After initializing the `APIClient`, you can make any API Calls by simply writing `{APIClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
+> After initializing the `APIClient`, you can make any API Calls by simply writing `{APIClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
 >
->Have a look at this example:
+> Have a look at this example:
 >```csharp
 >// Adding the Checkout namespace
 >using Checkout;
@@ -105,9 +93,6 @@ Reporting|`ReportingService`
 >{
 >	SecretKey = "sk_test_{your_secret_key}",
 >	PublicKey = "pk_test_{your_public_key}",
->	Environment = Checkout.Helpers.Environment.Sandbox,
->	MaxResponseContentBufferSize = 10240,
->	RequestTimeout = 60,
 >	DebugMode = true
 >};
 >
@@ -149,16 +134,19 @@ Reporting|`ReportingService`
 
 ### CardService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `CreateCard(string customerId, CardCreate requestModel)`|`Card`
 `GetCard(string customerId, string cardId)`|`Card`
 `UpdateCard(string customerId, string cardId, CardUpdate requestModel)`|`OkResponse`
 `DeleteCard(string customerId, string cardId)`|`OkResponse`
 `GetCardList(string customerId)`|`CardList`
 
+<br />
+<br />
+
 ### ChargeService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `ChargeWithCard(CardCharge requestModel)`|`Charge`
 `ChargeWithCardId(CardIdCharge requestModel)`|`Charge`
 `ChargeWithCardToken(CardTokenCharge requestModel)`|`Charge`
@@ -172,32 +160,41 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 `GetChargeHistory(string chargeId)`|`ChargeHistory`
 `VerifyCharge(string paymentToken)`|`Charge`
 
+<br />
+<br />
+
 ### CustomerService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `CreateCustomer(CustomerCreate requestModel)`|`Customer`
 `UpdateCustomer(string customerId, CustomerUpdate requestModel)`|`OkResponse`
 `DeleteCustomer(string customerId)`|`OkResponse`
 `GetCustomer(string identifier)` - identifier being either customerId or customerEmail|`Customer`
 `GetCustomerList(CustomerGetList request)`|`CustomerList`
 
+<br />
+<br />
+
 ### LookupsService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `GetBinLookup(string bin)`|`CountryInfo`
 `GetLocalPaymentIssuerIds(string lppId)`|`LocalPaymentData`
 
-### TokenService
+<br />
+<br />
+
+### PayoutsService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
-`CreatePaymentToken(PaymentTokenCreate requestModel)`|`PaymentToken`
-`UpdatePaymentToken(string paymentToken, PaymentTokenUpdate requestModel)`|`OkResponse`
-`CreateVisaCheckoutCardToken(VisaCheckoutTokenCreate requestModel)`|`CardTokenResponse`
-`GetCardToken(TokenCard requestModel)`|`CardTokenCreate`
+---|---:
+`MakePayout(BasePayout requestModel)`|`Payout`
+
+<br />
+<br />
 
 ### RecurringPaymentsService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `CreatePaymentPlan(SinglePaymentPlanCreateRequest requestModel)`|`SinglePaymentPlanCreateResponse`
 `UpdatePaymentPlan(string planId, PaymentPlanUpdate requestModel)`|`OkResponse`
 `CancelPaymentPlan(string planId)`|`OkResponse`
@@ -208,11 +205,30 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 `CancelCustomerPaymentPlan(string customerPlanId)`|`OkResponse`
 `UpdateCustomerPaymentPlan(string customerPlanId, CustomerPaymentPlanUpdate requestModel)`|`OkResponse`
 
+<br />
+<br />
+
 ### ReportingService
 Method|HttpResponse<{__GenericTypeParameter__}>
----|---
+---|---:
 `QueryTransaction(QueryRequest requestModel)`|`QueryTransactionResponse`
 `QueryChargeback(QueryRequest requestModel)`|`QueryChargebackResponse`
+
+<br />
+<br />
+
+### TokenService
+Method|HttpResponse<{__GenericTypeParameter__}>
+---|---:
+`CreatePaymentToken(PaymentTokenCreate requestModel)`|`PaymentToken`
+`UpdatePaymentToken(string paymentToken, PaymentTokenUpdate requestModel)`|`OkResponse`
+`CreateVisaCheckoutCardToken(VisaCheckoutTokenCreate requestModel)`|`CardTokenResponse`
+`GetCardToken(TokenCard requestModel)`|`CardTokenCreate`
+
+<br />
+<br />
+
+---
 
 ## Examples
 
@@ -552,7 +568,7 @@ If you enable the debug mode the HttpRequests and HttpResponses will be logged t
 ---
 ## Build
 
-To build the library for the sources, it requires .NET Framework 4.6.1 or later. 
+To build the library from source, .NET Framework 4.6.1 or later is required. 
 
 ---
 ## Tests
