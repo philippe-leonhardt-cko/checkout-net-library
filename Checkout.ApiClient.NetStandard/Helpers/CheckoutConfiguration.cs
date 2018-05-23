@@ -5,7 +5,7 @@ using CheckoutEnvironment = Checkout.Helpers.Environment;
 
 namespace Checkout
 {
-    public class AppSettings
+    public class CheckoutConfiguration
     {
         private const string _liveUrl = "https://api2.checkout.com/v2";
         private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
@@ -45,7 +45,7 @@ namespace Checkout
             }
         }
 
-        public AppSettings()
+        public CheckoutConfiguration()
         {
             ApiUrls = new ApiUrls(this);
         }

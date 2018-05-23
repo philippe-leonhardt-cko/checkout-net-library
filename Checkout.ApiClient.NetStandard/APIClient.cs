@@ -12,7 +12,7 @@ namespace Checkout
 {
     public sealed class ApiClient
     {
-        public AppSettings AppSettings { get; private set; }
+        public CheckoutConfiguration CheckoutConfiguration { get; private set; }
         public ApiHttpClient ApiHttpClient { get; private set; }
 
         public CardService CardService { get; private set; }
@@ -24,19 +24,19 @@ namespace Checkout
         public ReportingService ReportingService { get; private set; }
         public TokenService TokenService { get; private set; }
 
-        public ApiClient(AppSettings appSettings)
+        public ApiClient(CheckoutConfiguration configuration)
         {
-            AppSettings = appSettings;
+            CheckoutConfiguration = configuration;
 
-            ApiHttpClient = new ApiHttpClient(AppSettings);
-            CardService = new CardService(ApiHttpClient, AppSettings);
-            ChargeService = new ChargeService(ApiHttpClient, AppSettings);
-            CustomerService = new CustomerService(ApiHttpClient, AppSettings);
-            LookupsService = new LookupsService(ApiHttpClient, AppSettings);
-            PayoutsService = new PayoutsService(ApiHttpClient, AppSettings);
-            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings);
-            ReportingService = new ReportingService(ApiHttpClient, AppSettings);
-            TokenService = new TokenService(ApiHttpClient, AppSettings);
+            ApiHttpClient = new ApiHttpClient(CheckoutConfiguration);
+            CardService = new CardService(ApiHttpClient, CheckoutConfiguration);
+            ChargeService = new ChargeService(ApiHttpClient, CheckoutConfiguration);
+            CustomerService = new CustomerService(ApiHttpClient, CheckoutConfiguration);
+            LookupsService = new LookupsService(ApiHttpClient, CheckoutConfiguration);
+            PayoutsService = new PayoutsService(ApiHttpClient, CheckoutConfiguration);
+            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, CheckoutConfiguration);
+            ReportingService = new ReportingService(ApiHttpClient, CheckoutConfiguration);
+            TokenService = new TokenService(ApiHttpClient, CheckoutConfiguration);
 
             ContentAdaptor.Setup();
         }

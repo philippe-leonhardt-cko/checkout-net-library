@@ -7,17 +7,17 @@ namespace Checkout.ApiServices.Payouts
     public class PayoutsService
     {
         private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public PayoutsService (ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private CheckoutConfiguration _configuration;
+        public PayoutsService (ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _configuration = configuration;
         }
 
         public HttpResponse<Payout> MakePayout(BasePayout requestModel)
         {
-            var createPayoutsUri = string.Format(_appSettings.ApiUrls.Payouts);
-            return _apiHttpClient.PostRequest<Payout>(createPayoutsUri, _appSettings.SecretKey, requestModel);
+            var createPayoutsUri = string.Format(_configuration.ApiUrls.Payouts);
+            return _apiHttpClient.PostRequest<Payout>(createPayoutsUri, _configuration.SecretKey, requestModel);
         }
     }
 }
