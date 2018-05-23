@@ -14,7 +14,7 @@ namespace Tests
 {
     public class BaseServiceTests
     {
-        protected APIClient CheckoutClient;
+        protected ApiClient CheckoutClient;
 
         [SetUp]
         public void Init()
@@ -27,7 +27,7 @@ namespace Tests
                 DebugMode = true
             };
 
-            CheckoutClient = new APIClient(settings);
+            CheckoutClient = new ApiClient(settings);
         }
 
         #region Protected methods

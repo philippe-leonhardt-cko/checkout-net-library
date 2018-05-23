@@ -10,7 +10,7 @@ using Checkout.Helpers;
 
 namespace Checkout
 {
-    public sealed class APIClient
+    public sealed class ApiClient
     {
         public AppSettings AppSettings { get; private set; }
         public ApiHttpClient ApiHttpClient { get; private set; }
@@ -24,7 +24,7 @@ namespace Checkout
         public ReportingService ReportingService { get; private set; }
         public TokenService TokenService { get; private set; }
 
-        public APIClient(AppSettings appSettings)
+        public ApiClient(AppSettings appSettings)
         {
             AppSettings = appSettings;
 
