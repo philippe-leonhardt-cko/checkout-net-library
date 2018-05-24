@@ -10,19 +10,19 @@ using Checkout.Helpers;
 
 namespace Checkout
 {
-    public sealed class ApiClient
+    public sealed class ApiClient : IApiClient
     {
         public CheckoutConfiguration CheckoutConfiguration { get; private set; }
         public IApiHttpClient ApiHttpClient { get; private set; }
 
-        public CardService CardService { get; private set; }
-        public ChargeService ChargeService { get; private set; }
-        public CustomerService CustomerService { get; private set; }
-        public LookupsService LookupsService { get; private set; }
-        public PayoutsService PayoutsService { get; private set; }
-        public RecurringPaymentsService RecurringPaymentsService { get; private set; }
-        public ReportingService ReportingService { get; private set; }
-        public TokenService TokenService { get; private set; }
+        public ICardService CardService { get; private set; }
+        public IChargeService ChargeService { get; private set; }
+        public ICustomerService CustomerService { get; private set; }
+        public ILookupsService LookupsService { get; private set; }
+        public IPayoutsService PayoutsService { get; private set; }
+        public IRecurringPaymentsService RecurringPaymentsService { get; private set; }
+        public IReportingService ReportingService { get; private set; }
+        public ITokenService TokenService { get; private set; }
 
         public ApiClient(CheckoutConfiguration configuration)
         {

@@ -4,7 +4,7 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Cards
 {
-    public class CardService
+    public class CardService : ICardService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

@@ -3,7 +3,7 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Lookups
 {
-    public class LookupsService
+    public class LookupsService : ILookupsService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

@@ -4,7 +4,7 @@ using Checkout.ApiServices.Tokens.ResponseModels;
 
 namespace Checkout.ApiServices.Tokens
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

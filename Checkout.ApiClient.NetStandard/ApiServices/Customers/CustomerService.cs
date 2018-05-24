@@ -6,7 +6,7 @@ using Checkout.Utilities;
 namespace Checkout.ApiServices.Customers
 
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

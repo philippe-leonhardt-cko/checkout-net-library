@@ -4,7 +4,7 @@ using Checkout.ApiServices.SharedModels;
 using Checkout.Utilities;
 namespace Checkout.ApiServices.Charges
 {
-    public class ChargeService
+    public class ChargeService : IChargeService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

@@ -4,7 +4,7 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Reporting
 {
-    public class ReportingService
+    public class ReportingService : IReportingService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

@@ -4,7 +4,7 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.RecurringPayments
 {
-    public class RecurringPaymentsService
+    public class RecurringPaymentsService : IRecurringPaymentsService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;

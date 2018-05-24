@@ -4,7 +4,7 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Payouts
 {
-    public class PayoutsService
+    public class PayoutsService : IPayoutsService
     {
         private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
