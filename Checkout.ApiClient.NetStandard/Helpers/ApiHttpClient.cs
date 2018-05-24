@@ -36,7 +36,7 @@ namespace Checkout
             ResetHandler();
         }
 
-        public void ResetHandler()
+        private void ResetHandler()
         {
             if (requestHandler != null)
             {
@@ -106,11 +106,7 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
@@ -127,11 +123,7 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
@@ -148,11 +140,7 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
@@ -170,11 +158,7 @@ namespace Checkout
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
@@ -183,15 +167,9 @@ namespace Checkout
         /// <param name="request"></param>
         /// <returns></returns>
 
-#if (NET40)
         private HttpResponse<T> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
             HttpResponse<T> response = null;
-#elif (NET45 || NETSTANDARD)
-        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
-        {
-            Task<HttpResponse<T>> response = null;
-#endif
             HttpResponseMessage responseMessage = null;
             string responseAsString = null;
             string responseCode = null;
@@ -226,11 +204,7 @@ namespace Checkout
                         callerSection = "";
                     }
                 }
-#if (NET40)
                 response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
-#elif (NET45 || NETSTANDARD)
-                response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
-#endif
             }
             catch (Exception ex)
             {
@@ -282,6 +256,5 @@ namespace Checkout
         {
             return ContentAdaptor.JsonStringToObject<T>(responseAsString);
         }
-
     }
 }
