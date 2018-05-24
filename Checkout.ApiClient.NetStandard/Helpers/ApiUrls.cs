@@ -2,16 +2,16 @@
 {
     public class ApiUrls
     {
-        private AppSettings _appSettings;
+        private CheckoutConfiguration _configuration;
 
-        public ApiUrls(AppSettings appSettings)
+        public ApiUrls(CheckoutConfiguration configuration)
         {
-            _appSettings = appSettings;
+            _configuration = configuration;
         }
 
         private string HasUrl(string endpoint)
         {
-            return string.Concat(_appSettings.BaseApiUri, endpoint);
+            return string.Concat(_configuration.BaseApiUri, endpoint);
         }
 
         public string Charges => HasUrl("/charges");

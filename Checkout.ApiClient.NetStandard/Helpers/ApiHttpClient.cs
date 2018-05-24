@@ -20,9 +20,9 @@ namespace Checkout
     /// </summary>
     ///
 
-    public sealed class ApiHttpClient
+    public sealed class ApiHttpClient : IApiHttpClient
     {
-        private AppSettings _appSettings;
+        public CheckoutConfiguration configuration;
 #if (NET40)
         private WebRequestHandler requestHandler;
 #elif (NET45 || NETSTANDARD)
@@ -30,13 +30,13 @@ namespace Checkout
 #endif
         private HttpClient httpClient;
 
-        public ApiHttpClient(AppSettings appSettings)
+        public ApiHttpClient(CheckoutConfiguration configuration)
         {
-            _appSettings = appSettings;
+            this.configuration = configuration;
             ResetHandler();
         }
 
-        public void ResetHandler()
+        private void ResetHandler()
         {
             if (requestHandler != null)
             {
@@ -61,11 +61,11 @@ namespace Checkout
 
             httpClient = new HttpClient(requestHandler)
             {
-                MaxResponseContentBufferSize = _appSettings.MaxResponseContentBufferSize,
-                Timeout = TimeSpan.FromSeconds(_appSettings.RequestTimeout)
+                MaxResponseContentBufferSize = configuration.MaxResponseContentBufferSize,
+                Timeout = TimeSpan.FromSeconds(configuration.RequestTimeout)
             };
 
-            SetHttpRequestHeader("User-Agent", AppSettings.ClientUserAgentName);
+            SetHttpRequestHeader("User-Agent", CheckoutConfiguration.ClientUserAgentName);
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("Gzip"));
         }
 
@@ -101,16 +101,12 @@ namespace Checkout
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(requestUri)
             };
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
@@ -121,17 +117,13 @@ namespace Checkout
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Post, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
 
-            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, AppSettings.DefaultContentType);
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, CheckoutConfiguration.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
@@ -142,17 +134,13 @@ namespace Checkout
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Put, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
 
-            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, AppSettings.DefaultContentType);
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, CheckoutConfiguration.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
@@ -165,16 +153,12 @@ namespace Checkout
                 Method = HttpMethod.Delete,
                 RequestUri = new Uri(requestUri)
             };
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
@@ -183,15 +167,9 @@ namespace Checkout
         /// <param name="request"></param>
         /// <returns></returns>
 
-#if (NET40)
         private HttpResponse<T> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
             HttpResponse<T> response = null;
-#elif (NET45 || NETSTANDARD)
-        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
-        {
-            Task<HttpResponse<T>> response = null;
-#endif
             HttpResponseMessage responseMessage = null;
             string responseAsString = null;
             string responseCode = null;
@@ -213,7 +191,7 @@ namespace Checkout
                 {
                     responseAsString = Encoding.UTF8.GetString(responseContent);
 
-                    if (_appSettings.DebugMode)
+                    if (configuration.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
                         Console.WriteLine(string.Format("\n- HttpRequest\n\tof Type:\t\t\t{0}\n\tto API Endpoint:\t\t{1}\n\twith Authorization:\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
@@ -226,15 +204,11 @@ namespace Checkout
                         callerSection = "";
                     }
                 }
-#if (NET40)
                 response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
-#elif (NET45 || NETSTANDARD)
-                response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
-#endif
             }
             catch (Exception ex)
             {
-                if (_appSettings.DebugMode)
+                if (configuration.DebugMode)
                 {
                     Console.WriteLine(string.Format("\n- Exception thrown: {0}\treturns Status:\t{1}\n\twith Payload:\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
                 }
@@ -282,6 +256,5 @@ namespace Checkout
         {
             return ContentAdaptor.JsonStringToObject<T>(responseAsString);
         }
-
     }
 }

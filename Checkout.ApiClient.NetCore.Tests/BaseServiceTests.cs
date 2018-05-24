@@ -14,20 +14,20 @@ namespace Tests
 {
     public class BaseServiceTests
     {
-        protected APIClient CheckoutClient;
+        protected ApiClient CheckoutClient;
 
         [SetUp]
         public void Init()
         {
             // Configure this to switch between Sandbox and Live
-            AppSettings settings = new AppSettings()
+            CheckoutConfiguration configuration = new CheckoutConfiguration()
             {
                 SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad",
                 PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b",
                 DebugMode = true
             };
 
-            CheckoutClient = new APIClient(settings);
+            CheckoutClient = new ApiClient(configuration);
         }
 
         #region Protected methods
@@ -56,7 +56,7 @@ namespace Tests
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
-            if (CheckoutClient.AppSettings.DebugMode && chargeResponse.Model.ResponseCode != "10000")
+            if (CheckoutClient.CheckoutConfiguration.DebugMode && chargeResponse.Model.ResponseCode != "10000")
             {
                 Console.WriteLine(string.Format("\n** Charge status is not 'Approved' **\n** Charge status is '{0}' **", chargeResponse.Model.Status.ToUpper()));
                 Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));

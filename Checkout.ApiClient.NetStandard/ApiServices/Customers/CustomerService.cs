@@ -6,14 +6,14 @@ using Checkout.Utilities;
 namespace Checkout.ApiServices.Customers
 
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public CustomerService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private IApiHttpClient _apiHttpClient;
+        private CheckoutConfiguration _configuration;
+        public CustomerService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _configuration = configuration;
         }
         
         private string GetCustomerURI(string identifier)
@@ -21,39 +21,39 @@ namespace Checkout.ApiServices.Customers
             // check for an email that contains a + character like: john.smith+checkout@email.com
             if(identifier.Contains("@") && identifier.Contains("+")) // TODO: Improve with RegEx 
             {
-                return _appSettings.ApiUrls.CustomerViaEmail;
+                return _configuration.ApiUrls.CustomerViaEmail;
             } else
             {
-                return _appSettings.ApiUrls.Customer;
+                return _configuration.ApiUrls.Customer;
             }
         }
 
         public HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel)
         {
-            return _apiHttpClient.PostRequest<Customer>(_appSettings.ApiUrls.Customers, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Customer>(_configuration.ApiUrls.Customers, _configuration.SecretKey, requestModel);
         }
 
         public HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel)
         {
-            var updateCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
-            return _apiHttpClient.PutRequest<OkResponse>(updateCustomerUri, _appSettings.SecretKey, requestModel);
+            var updateCustomerUri = string.Format(_configuration.ApiUrls.Customer, customerId);
+            return _apiHttpClient.PutRequest<OkResponse>(updateCustomerUri, _configuration.SecretKey, requestModel);
         }
 
         public HttpResponse<OkResponse> DeleteCustomer(string customerId)
         {
-            var deleteCustomerUri = string.Format(_appSettings.ApiUrls.Customer, customerId);
-            return _apiHttpClient.DeleteRequest<OkResponse>(deleteCustomerUri, _appSettings.SecretKey);
+            var deleteCustomerUri = string.Format(_configuration.ApiUrls.Customer, customerId);
+            return _apiHttpClient.DeleteRequest<OkResponse>(deleteCustomerUri, _configuration.SecretKey);
         }
 
         public HttpResponse<Customer> GetCustomer(string identifier)
         {
             var getCustomerUri = string.Format(GetCustomerURI(identifier), identifier);
-            return _apiHttpClient.GetRequest<Customer>(getCustomerUri, _appSettings.SecretKey);
+            return _apiHttpClient.GetRequest<Customer>(getCustomerUri, _configuration.SecretKey);
         }
 
         public HttpResponse<CustomerList> GetCustomerList(CustomerGetList request)
         {
-            var getCustomerListUri = _appSettings.ApiUrls.Customers;
+            var getCustomerListUri = _configuration.ApiUrls.Customers;
 
             if (request.Count.HasValue)
             {
@@ -75,7 +75,7 @@ namespace Checkout.ApiServices.Customers
                 getCustomerListUri = UrlHelper.AddParameterToUrl(getCustomerListUri, "toDate", DateTimeHelper.FormatAsUtc(request.ToDate.Value));
             }
 
-            return _apiHttpClient.GetRequest<CustomerList>(getCustomerListUri, _appSettings.SecretKey);
+            return _apiHttpClient.GetRequest<CustomerList>(getCustomerListUri, _configuration.SecretKey);
         }
     }
 

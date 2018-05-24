@@ -10,33 +10,50 @@ using Checkout.Helpers;
 
 namespace Checkout
 {
-    public sealed class APIClient
+    public sealed class ApiClient : IApiClient
     {
-        public AppSettings AppSettings { get; private set; }
-        public ApiHttpClient ApiHttpClient { get; private set; }
+        public CheckoutConfiguration CheckoutConfiguration { get; private set; }
+        public IApiHttpClient ApiHttpClient { get; private set; }
 
-        public CardService CardService { get; private set; }
-        public ChargeService ChargeService { get; private set; }
-        public CustomerService CustomerService { get; private set; }
-        public LookupsService LookupsService { get; private set; }
-        public PayoutsService PayoutsService { get; private set; }
-        public RecurringPaymentsService RecurringPaymentsService { get; private set; }
-        public ReportingService ReportingService { get; private set; }
-        public TokenService TokenService { get; private set; }
+        public ICardService CardService { get; private set; }
+        public IChargeService ChargeService { get; private set; }
+        public ICustomerService CustomerService { get; private set; }
+        public ILookupsService LookupsService { get; private set; }
+        public IPayoutsService PayoutsService { get; private set; }
+        public IRecurringPaymentsService RecurringPaymentsService { get; private set; }
+        public IReportingService ReportingService { get; private set; }
+        public ITokenService TokenService { get; private set; }
 
-        public APIClient(AppSettings appSettings)
+        public ApiClient(CheckoutConfiguration configuration)
         {
-            AppSettings = appSettings;
+            CheckoutConfiguration = configuration;
 
-            ApiHttpClient = new ApiHttpClient(AppSettings);
-            CardService = new CardService(ApiHttpClient, AppSettings);
-            ChargeService = new ChargeService(ApiHttpClient, AppSettings);
-            CustomerService = new CustomerService(ApiHttpClient, AppSettings);
-            LookupsService = new LookupsService(ApiHttpClient, AppSettings);
-            PayoutsService = new PayoutsService(ApiHttpClient, AppSettings);
-            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, AppSettings);
-            ReportingService = new ReportingService(ApiHttpClient, AppSettings);
-            TokenService = new TokenService(ApiHttpClient, AppSettings);
+            ApiHttpClient = new ApiHttpClient(CheckoutConfiguration);
+            CardService = new CardService(ApiHttpClient, CheckoutConfiguration);
+            ChargeService = new ChargeService(ApiHttpClient, CheckoutConfiguration);
+            CustomerService = new CustomerService(ApiHttpClient, CheckoutConfiguration);
+            LookupsService = new LookupsService(ApiHttpClient, CheckoutConfiguration);
+            PayoutsService = new PayoutsService(ApiHttpClient, CheckoutConfiguration);
+            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, CheckoutConfiguration);
+            ReportingService = new ReportingService(ApiHttpClient, CheckoutConfiguration);
+            TokenService = new TokenService(ApiHttpClient, CheckoutConfiguration);
+
+            ContentAdaptor.Setup();
+        }
+
+        public ApiClient(CheckoutConfiguration configuration, IApiHttpClient httpClient)
+        {
+            CheckoutConfiguration = configuration;
+
+            ApiHttpClient = httpClient;
+            CardService = new CardService(ApiHttpClient, CheckoutConfiguration);
+            ChargeService = new ChargeService(ApiHttpClient, CheckoutConfiguration);
+            CustomerService = new CustomerService(ApiHttpClient, CheckoutConfiguration);
+            LookupsService = new LookupsService(ApiHttpClient, CheckoutConfiguration);
+            PayoutsService = new PayoutsService(ApiHttpClient, CheckoutConfiguration);
+            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, CheckoutConfiguration);
+            ReportingService = new ReportingService(ApiHttpClient, CheckoutConfiguration);
+            TokenService = new TokenService(ApiHttpClient, CheckoutConfiguration);
 
             ContentAdaptor.Setup();
         }

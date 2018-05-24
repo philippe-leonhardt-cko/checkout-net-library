@@ -4,14 +4,14 @@ using Checkout.ApiServices.SharedModels;
 using Checkout.Utilities;
 namespace Checkout.ApiServices.Charges
 {
-    public class ChargeService
+    public class ChargeService : IChargeService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public ChargeService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private IApiHttpClient _apiHttpClient;
+        private CheckoutConfiguration _configuration;
+        public ChargeService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> ChargeWithCard(CardCharge requestModel)
         {
-            return _apiHttpClient.PostRequest<Charge>(_appSettings.ApiUrls.CardCharge, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Charge>(_configuration.ApiUrls.CardCharge, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> ChargeWithCardId(CardIdCharge requestModel)
         {
-            return _apiHttpClient.PostRequest<Charge>(_appSettings.ApiUrls.CardCharge, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Charge>(_configuration.ApiUrls.CardCharge, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> ChargeWithCardToken(CardTokenCharge requestModel)
         {
-            return _apiHttpClient.PostRequest<Charge>(_appSettings.ApiUrls.CardTokenCharge, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Charge>(_configuration.ApiUrls.CardTokenCharge, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> ChargeWithDefaultCustomerCard(DefaultCardCharge requestModel)
         {
-            return _apiHttpClient.PostRequest<Charge>(_appSettings.ApiUrls.DefaultCardCharge, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Charge>(_configuration.ApiUrls.DefaultCardCharge, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Checkout.ApiServices.Charges
         /// <returns></returns>
         public HttpResponse<Charge> ChargeWithLocalPayment(LocalPaymentCharge requestModel)
         {
-            return _apiHttpClient.PostRequest<Charge>(_appSettings.ApiUrls.LocalPaymentCharge, _appSettings.SecretKey, requestModel);
+            return _apiHttpClient.PostRequest<Charge>(_configuration.ApiUrls.LocalPaymentCharge, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Void> VoidCharge(string chargeId, ChargeVoid requestModel)
         {
-            var voidChargeApiUri = string.Format(_appSettings.ApiUrls.VoidCharge, chargeId);
-            return _apiHttpClient.PostRequest<Void>(voidChargeApiUri, _appSettings.SecretKey, requestModel);
+            var voidChargeApiUri = string.Format(_configuration.ApiUrls.VoidCharge, chargeId);
+            return _apiHttpClient.PostRequest<Void>(voidChargeApiUri, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Refund> RefundCharge(string chargeId, ChargeRefund requestModel)
         {
-            var chargeRefundsApiUri = string.Format(_appSettings.ApiUrls.RefundCharge, chargeId);
-            return _apiHttpClient.PostRequest<Refund>(chargeRefundsApiUri, _appSettings.SecretKey, requestModel);
+            var chargeRefundsApiUri = string.Format(_configuration.ApiUrls.RefundCharge, chargeId);
+            return _apiHttpClient.PostRequest<Refund>(chargeRefundsApiUri, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Capture> CaptureCharge(string chargeId, ChargeCapture requestModel)
         {
-            var captureChargesApiUri = string.Format(_appSettings.ApiUrls.CaptureCharge, chargeId);
-            return _apiHttpClient.PostRequest<Capture>(captureChargesApiUri, _appSettings.SecretKey, requestModel);
+            var captureChargesApiUri = string.Format(_configuration.ApiUrls.CaptureCharge, chargeId);
+            return _apiHttpClient.PostRequest<Capture>(captureChargesApiUri, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<OkResponse> UpdateCharge(string chargeId, ChargeUpdate requestModel)
         {
-            var updateChargesApiUri = string.Format(_appSettings.ApiUrls.Charge, chargeId);
-            return _apiHttpClient.PutRequest<OkResponse>(updateChargesApiUri, _appSettings.SecretKey, requestModel);
+            var updateChargesApiUri = string.Format(_configuration.ApiUrls.Charge, chargeId);
+            return _apiHttpClient.PutRequest<OkResponse>(updateChargesApiUri, _configuration.SecretKey, requestModel);
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> GetCharge(string chargeId)
         {
-            var getChargeUri = string.Format(_appSettings.ApiUrls.Charge, chargeId);
-            return _apiHttpClient.GetRequest<Charge>(getChargeUri, _appSettings.SecretKey);
+            var getChargeUri = string.Format(_configuration.ApiUrls.Charge, chargeId);
+            return _apiHttpClient.GetRequest<Charge>(getChargeUri, _configuration.SecretKey);
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<ChargeHistory> GetChargeHistory(string chargeId)
         {
-            var getChargeHistoryUri = string.Format(_appSettings.ApiUrls.ChargeHistory, chargeId);
-            return _apiHttpClient.GetRequest<ChargeHistory>(getChargeHistoryUri, _appSettings.SecretKey);
+            var getChargeHistoryUri = string.Format(_configuration.ApiUrls.ChargeHistory, chargeId);
+            return _apiHttpClient.GetRequest<ChargeHistory>(getChargeHistoryUri, _configuration.SecretKey);
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace Checkout.ApiServices.Charges
         /// </summary>
         public HttpResponse<Charge> VerifyCharge(string paymentToken)
         {
-            string chargeVerifyApiUri = string.Format(_appSettings.ApiUrls.Charge, paymentToken);
+            string chargeVerifyApiUri = string.Format(_configuration.ApiUrls.Charge, paymentToken);
 
-            return _apiHttpClient.GetRequest<Charge>(chargeVerifyApiUri, _appSettings.SecretKey);
+            return _apiHttpClient.GetRequest<Charge>(chargeVerifyApiUri, _configuration.SecretKey);
         }
     }
 }
