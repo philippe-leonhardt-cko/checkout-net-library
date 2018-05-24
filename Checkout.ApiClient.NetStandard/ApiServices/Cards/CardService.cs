@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.Cards
 {
     public class CardService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public CardService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public CardService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

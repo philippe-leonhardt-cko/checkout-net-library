@@ -20,9 +20,9 @@ namespace Checkout
     /// </summary>
     ///
 
-    public sealed class ApiHttpClient
+    public sealed class ApiHttpClient : IApiHttpClient
     {
-        private CheckoutConfiguration _configuration;
+        public CheckoutConfiguration configuration;
 #if (NET40)
         private WebRequestHandler requestHandler;
 #elif (NET45 || NETSTANDARD)
@@ -32,7 +32,7 @@ namespace Checkout
 
         public ApiHttpClient(CheckoutConfiguration configuration)
         {
-            _configuration = configuration;
+            this.configuration = configuration;
             ResetHandler();
         }
 
@@ -61,8 +61,8 @@ namespace Checkout
 
             httpClient = new HttpClient(requestHandler)
             {
-                MaxResponseContentBufferSize = _configuration.MaxResponseContentBufferSize,
-                Timeout = TimeSpan.FromSeconds(_configuration.RequestTimeout)
+                MaxResponseContentBufferSize = configuration.MaxResponseContentBufferSize,
+                Timeout = TimeSpan.FromSeconds(configuration.RequestTimeout)
             };
 
             SetHttpRequestHeader("User-Agent", CheckoutConfiguration.ClientUserAgentName);
@@ -213,7 +213,7 @@ namespace Checkout
                 {
                     responseAsString = Encoding.UTF8.GetString(responseContent);
 
-                    if (_configuration.DebugMode)
+                    if (configuration.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
                         Console.WriteLine(string.Format("\n- HttpRequest\n\tof Type:\t\t\t{0}\n\tto API Endpoint:\t\t{1}\n\twith Authorization:\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
@@ -234,7 +234,7 @@ namespace Checkout
             }
             catch (Exception ex)
             {
-                if (_configuration.DebugMode)
+                if (configuration.DebugMode)
                 {
                     Console.WriteLine(string.Format("\n- Exception thrown: {0}\treturns Status:\t{1}\n\twith Payload:\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
                 }

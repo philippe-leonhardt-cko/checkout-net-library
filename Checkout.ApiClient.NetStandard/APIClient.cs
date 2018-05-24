@@ -13,7 +13,7 @@ namespace Checkout
     public sealed class ApiClient
     {
         public CheckoutConfiguration CheckoutConfiguration { get; private set; }
-        public ApiHttpClient ApiHttpClient { get; private set; }
+        public IApiHttpClient ApiHttpClient { get; private set; }
 
         public CardService CardService { get; private set; }
         public ChargeService ChargeService { get; private set; }
@@ -29,6 +29,23 @@ namespace Checkout
             CheckoutConfiguration = configuration;
 
             ApiHttpClient = new ApiHttpClient(CheckoutConfiguration);
+            CardService = new CardService(ApiHttpClient, CheckoutConfiguration);
+            ChargeService = new ChargeService(ApiHttpClient, CheckoutConfiguration);
+            CustomerService = new CustomerService(ApiHttpClient, CheckoutConfiguration);
+            LookupsService = new LookupsService(ApiHttpClient, CheckoutConfiguration);
+            PayoutsService = new PayoutsService(ApiHttpClient, CheckoutConfiguration);
+            RecurringPaymentsService = new RecurringPaymentsService(ApiHttpClient, CheckoutConfiguration);
+            ReportingService = new ReportingService(ApiHttpClient, CheckoutConfiguration);
+            TokenService = new TokenService(ApiHttpClient, CheckoutConfiguration);
+
+            ContentAdaptor.Setup();
+        }
+
+        public ApiClient(CheckoutConfiguration configuration, IApiHttpClient httpClient)
+        {
+            CheckoutConfiguration = configuration;
+
+            ApiHttpClient = httpClient;
             CardService = new CardService(ApiHttpClient, CheckoutConfiguration);
             ChargeService = new ChargeService(ApiHttpClient, CheckoutConfiguration);
             CustomerService = new CustomerService(ApiHttpClient, CheckoutConfiguration);

@@ -8,9 +8,9 @@ namespace Checkout.ApiServices.Customers
 {
     public class CustomerService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public CustomerService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public CustomerService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

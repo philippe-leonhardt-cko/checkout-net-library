@@ -5,9 +5,9 @@ namespace Checkout.ApiServices.Lookups
 {
     public class LookupsService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public LookupsService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public LookupsService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

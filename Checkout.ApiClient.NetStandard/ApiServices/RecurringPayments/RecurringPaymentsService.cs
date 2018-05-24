@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.RecurringPayments
 {
     public class RecurringPaymentsService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public RecurringPaymentsService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public RecurringPaymentsService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

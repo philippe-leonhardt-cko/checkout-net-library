@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.Charges
 {
     public class ChargeService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public ChargeService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public ChargeService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

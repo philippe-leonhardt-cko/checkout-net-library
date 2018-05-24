@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.Tokens
 {
     public class TokenService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public TokenService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public TokenService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

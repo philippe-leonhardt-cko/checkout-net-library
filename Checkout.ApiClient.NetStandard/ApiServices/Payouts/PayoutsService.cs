@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.Payouts
 {
     public class PayoutsService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public PayoutsService (ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public PayoutsService (IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;

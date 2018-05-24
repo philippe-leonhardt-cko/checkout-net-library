@@ -6,9 +6,9 @@ namespace Checkout.ApiServices.Reporting
 {
     public class ReportingService
     {
-        private ApiHttpClient _apiHttpClient;
+        private IApiHttpClient _apiHttpClient;
         private CheckoutConfiguration _configuration;
-        public ReportingService(ApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
+        public ReportingService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
             _apiHttpClient = apiHttpclient;
             _configuration = configuration;
