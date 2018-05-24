@@ -27,13 +27,7 @@ namespace Tests
                 DebugMode = true
             };
 
-            // Instantiate exposed ApiHttpClient
-            IApiHttpClient httpClient = new ApiHttpClient(configuration);
-            // modify httpClient
-            // httpClient.SetHttpRequestHeader("Content-Type", "application/json");
-            
-
-            CheckoutClient = new ApiClient(configuration, httpClient);
+            CheckoutClient = new ApiClient(configuration);
         }
 
         #region Protected methods

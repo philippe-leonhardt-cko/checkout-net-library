@@ -14,7 +14,6 @@ namespace Checkout
         IApiHttpClient ApiHttpClient { get; }
         ICardService CardService { get; }
         IChargeService ChargeService { get; }
-      
         ICustomerService CustomerService { get; }
         ILookupsService LookupsService { get; }
         IPayoutsService PayoutsService { get; }
