@@ -1,20 +1,28 @@
 # CHANGELOG
-Starting with version 1.4.0 this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+> Starting with version 2.0.0 this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-# [Unreleased]
+---
+## [Unreleased](#) (yyyy-mm-dd)
 
-# [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-04-xx)
+---
+## [2.0.2](https://github.com/checkout/checkout-net-library/tree/2.0.2) (2018-05-dd)
+
+---
+## [2.0.1](https://github.com/checkout/checkout-net-library/tree/2.0.1) (2018-05-dd)
+
+---
+## [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-05-dd)
 
 This release is a port to **.NET Standard 1.3** and closes [#23](https://github.com/checkout/checkout-net-library/issues/23)
 
-## BREAKING CHANGES
+### BREAKING CHANGES
 - **deprecated:** <a name="security_1"></a>.NET 4.0 for only supporting early TLS 1.0
     > The Payment Card Industry Security Standards Council (PCI SSC) is extending the migration completion date to 30 June 2018 for transitioning from SSL and TLS 1.0 to a secure version of TLS (currently v1.1 or higher)... [more](https://blog.pcisecuritystandards.org/migrating-from-ssl-and-early-tls)
 
-## Features
+### Features
 - **added:** availability of the **Payouts** API Endpoint through the SDK
 
-## Changes
+### Changes
 - **added:** support for passing `AppSettings` to the `APIClient(AppSettings settings)` constructor instead of configuring `AppSettings` via custom App Configuration files `App.Debug.config` and `App.Release.config`
     ```csharp
     AppSettings settings = new AppSettings()
@@ -39,7 +47,7 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
     .NET 3.5|:x:|Microsoft has released a patch for .NET 3.5 that enables support for system-default SSL and TLS versions
     [more](https://mavenlink.zendesk.com/hc/en-us/articles/115007653028-Transport-Layer-Security-TLS)
 
-## Bug Fixes
+### Bug Fixes
 
 - **added:** logic to `CustomerService.UpdateCustomer(string identifier, CustomerUpdate requestModel)` to support identifier being an email address
 
@@ -49,21 +57,23 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
   - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanCreate`
   - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanUpdate`
 
+---
+## [1.3.0.9](https://github.com/checkout/checkout-net-library/tree/1.3.0.9) (2018-01-22)
 
-# [1.3.0.9](https://github.com/checkout/checkout-net-library/tree/1.3.0.9) (2018-01-22)
-
-## Features
+### Features
 - **added:** support for dynamic redirect URLs in Charge Requests
 
-# [1.3.0.7](https://github.com/checkout/checkout-net-library/tree/1.3.0.7) (2017-10-19)
+---
+## [1.3.0.7](https://github.com/checkout/checkout-net-library/tree/1.3.0.7) (2017-10-19)
 
-## Bug Fixes
+### Bug Fixes
 - **added:** support for Billing Details in Charge with Card Token, closes [#24](https://github.com/checkout/checkout-net-library/issues/24)
 
-## Features
+### Features
 - **added:** support for Attempt Non 3D in Charge Request
 
-# [1.3.0.6](https://github.com/checkout/checkout-net-library/tree/1.3.0.6) (2016-10-26)
+---
+## [1.3.0.6](https://github.com/checkout/checkout-net-library/tree/1.3.0.6) (2016-10-26)
 
-## Features
+### Features
 - **added:** *Bin* property to `ApiServices.Cards.ResponseModels.Card`
