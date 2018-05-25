@@ -5,13 +5,31 @@
 ## [Unreleased](#) (yyyy-mm-dd)
 
 ---
-## [2.0.2](https://github.com/checkout/checkout-net-library/tree/2.0.2) (2018-05-dd)
+## [2.0.2](https://github.com/checkout/checkout-net-library/tree/2.0.2) (2018-05-24)
+
+### BREAKING CHANGES
+- **changed:** naming conventions for more consistency
+  - ~~`APIClient()`~~ → **`ApiClient()`**
+  - ~~`AppSettings()`~~ → **`CheckoutConfiguration()`**
+
+### Changes
+- **added:** Interfaces for `ApiClient()`, `ApiHttpClient()` and API Service Classes
+  - `IApiClient()`
+  - `IApiHttpClient()`
+  - `ICardService()`
+  - `IChargeService()`
+  - `ICustomerService()`
+  - `ILookupsService()`
+  - `IPayoutsService()`
+  - `IRecurringPaymentsService()`
+  - `IReportingService()`
+  - `ITokenService()`
 
 ---
-## [2.0.1](https://github.com/checkout/checkout-net-library/tree/2.0.1) (2018-05-dd)
+## [2.0.1](https://github.com/checkout/checkout-net-library/tree/2.0.1) (2018-05-05)
 
 ---
-## [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-05-dd)
+## [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-05-04)
 
 This release is a port to **.NET Standard 1.3** and closes [#23](https://github.com/checkout/checkout-net-library/issues/23)
 
