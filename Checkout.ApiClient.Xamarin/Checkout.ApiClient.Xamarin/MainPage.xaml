@@ -4,11 +4,85 @@
              xmlns:local="clr-namespace:Checkout.ApiClient.Xamarin"
              x:Class="Checkout.ApiClient.Xamarin.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+    <RelativeLayout
+        x:Name="container"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        BackgroundColor="{StaticResource ckoMidnightBlue}">
+        <FlexLayout
+            Direction="Column"
+            AlignContent="SpaceEvenly"
+            AlignItems="End"
+            JustifyContent="SpaceEvenly"
+            Wrap="Wrap">
+            <BoxView
+                FlexLayout.Basis="25%"/>
+            <Label
+                Text="Checkout.com"
+                TextColor="White"
+                FlexLayout.AlignSelf="Center"
+                FontSize="26"
+                FlexLayout.Basis="10%">
+                <Label.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.Platforms>
+                            <On Platform="Android" Value="serif"/>
+                        </OnPlatform.Platforms>
+                    </OnPlatform>
+                </Label.FontFamily>
+            </Label>
+            <FlexLayout
+                Direction="Row"
+                JustifyContent="SpaceBetween"
+                FlexLayout.Basis="10%"
+                FlexLayout.AlignSelf="Stretch"
+                WidthRequest="300">
+                <Entry
+                    x:Name="creditCardNumber"
+                    PlaceholderColor="{StaticResource ckoDoveGrey}"
+                    TextColor="White"
+                    Placeholder="Credit Card"
+                    FlexLayout.Grow="1"
+                    FlexLayout.AlignSelf="Center"/>
+                <Image
+                    x:Name="creditCardIcon"
+                    WidthRequest="30"
+                    HeightRequest="16"
+                    BackgroundColor="{StaticResource ckoMidnightBlue}"
+                    FlexLayout.AlignSelf="Center"/>
+            </FlexLayout>
+            <FlexLayout
+                Direction="Row"
+                JustifyContent="SpaceBetween"
+                FlexLayout.Basis="10%"
+                FlexLayout.AlignSelf="Stretch"
+                WidthRequest="300">
+                <Entry
+                    x:Name="expiryDate"
+                    Placeholder="MM/YY"
+                    PlaceholderColor="{StaticResource ckoDoveGrey}"
+                    TextColor="White"/>
+                <Entry
+                    x:Name="cvv"
+                    Placeholder="CVV"
+                    PlaceholderColor="{StaticResource ckoDoveGrey}"
+                    TextColor="White"/>
+            </FlexLayout>
+            <Button
+                x:Name="payNowButton"
+                Text="Pay Now"
+                TextColor="White"
+                BackgroundColor="{StaticResource ckoBrightGreen}"
+                FlexLayout.AlignSelf="End"/>
+            <BoxView
+                FlexLayout.Basis="30%"/>
+        </FlexLayout>
+        <RelativeLayout
+            x:Name="paymentForm"
+            
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill">
+        </RelativeLayout>
+    </RelativeLayout>
 
 </ContentPage>
