@@ -7,6 +7,7 @@ namespace Checkout.ApiServices.Cards
     public interface ICardService
     {
         HttpResponse<Card> CreateCard(string customerId, CardCreate requestModel);
+        HttpResponse<Card> CreateCard(string customerId, string cardToken);
         HttpResponse<OkResponse> DeleteCard(string customerId, string cardId);
         HttpResponse<Card> GetCard(string customerId, string cardId);
         HttpResponse<CardList> GetCardList(string customerId);
