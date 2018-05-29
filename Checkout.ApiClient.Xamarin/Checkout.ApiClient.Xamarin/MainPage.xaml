@@ -25,9 +25,7 @@
                 FlexLayout.Basis="10%">
                 <Label.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
-                        <OnPlatform.Platforms>
-                            <On Platform="Android" Value="serif"/>
-                        </OnPlatform.Platforms>
+                        <On Platform="Android" Value="serif"/>
                     </OnPlatform>
                 </Label.FontFamily>
             </Label>
@@ -37,18 +35,25 @@
                 FlexLayout.Basis="10%"
                 FlexLayout.AlignSelf="Stretch"
                 WidthRequest="300">
-                <Entry
+                <local:CreditCardEntry
                     x:Name="creditCardNumber"
-                    PlaceholderColor="{StaticResource ckoDoveGrey}"
+                    PlaceholderColor="{StaticResource ckoStormBlue}"
                     TextColor="White"
-                    Placeholder="Credit Card"
+                    Placeholder="e.g. 1234 5678 9012 3456"
                     FlexLayout.Grow="1"
-                    FlexLayout.AlignSelf="Center"/>
+                    FlexLayout.AlignSelf="Center"
+                    Keyboard="Numeric">
+                    <local:CreditCardEntry.Behaviors>
+                        <local:ExpiryDateValidationBehavior MaxLength="16"/>
+                    </local:CreditCardEntry.Behaviors>
+                </local:CreditCardEntry>
+                <BoxView
+                    FlexLayout.Grow="0"/>
                 <Image
                     x:Name="creditCardIcon"
                     WidthRequest="30"
                     HeightRequest="16"
-                    BackgroundColor="{StaticResource ckoMidnightBlue}"
+                    BackgroundColor="{StaticResource ckoStormBlue}"
                     FlexLayout.AlignSelf="Center"/>
             </FlexLayout>
             <FlexLayout
@@ -57,16 +62,30 @@
                 FlexLayout.Basis="10%"
                 FlexLayout.AlignSelf="Stretch"
                 WidthRequest="300">
-                <Entry
+                <local:CreditCardEntry
                     x:Name="expiryDate"
                     Placeholder="MM/YY"
-                    PlaceholderColor="{StaticResource ckoDoveGrey}"
-                    TextColor="White"/>
-                <Entry
+                    PlaceholderColor="{StaticResource ckoStormBlue}"
+                    TextColor="White"
+                    FlexLayout.Grow="0"
+                    Keyboard="Numeric">
+                    <local:CreditCardEntry.Behaviors>
+                        <local:ExpiryDateValidationBehavior MaxLength="4"/>
+                    </local:CreditCardEntry.Behaviors>
+                </local:CreditCardEntry>
+                <BoxView
+                    FlexLayout.Grow="4"/>
+                <local:CreditCardEntry
                     x:Name="cvv"
                     Placeholder="CVV"
-                    PlaceholderColor="{StaticResource ckoDoveGrey}"
-                    TextColor="White"/>
+                    PlaceholderColor="{StaticResource ckoStormBlue}"
+                    TextColor="White"
+                    FlexLayout.Grow="2"
+                    Keyboard="Numeric">
+                    <local:CreditCardEntry.Behaviors>
+                        <local:ExpiryDateValidationBehavior MaxLength="4"/>
+                    </local:CreditCardEntry.Behaviors>
+                </local:CreditCardEntry>
             </FlexLayout>
             <Button
                 x:Name="payNowButton"

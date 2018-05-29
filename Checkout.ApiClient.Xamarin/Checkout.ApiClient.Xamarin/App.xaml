@@ -4,7 +4,7 @@
              x:Class="Checkout.ApiClient.Xamarin.App">
     <Application.Resources>
         <Color x:Key="ckoDune">#ddd6d0</Color>
-        <Color x:Key="ckoDoveGrey">#f8</Color>
+        <Color x:Key="ckoDoveGrey">#f8f8f8</Color>
         <Color x:Key="ckoDeepGreen">#038b61</Color>
         <Color x:Key="ckoBrightGreen">#00e59e</Color>
         <Color x:Key="ckoMidnightBlue">#013a51</Color>
