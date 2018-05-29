@@ -7,4 +7,8 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Checkout.ApiClient.NetStandard\Checkout.ApiClient.NetStandard.csproj" />
+  </ItemGroup>
 </Project>
