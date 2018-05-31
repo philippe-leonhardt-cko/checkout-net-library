@@ -12,7 +12,7 @@ The library targets the following frameworks:
 
 ### 1. Installation
 In order to use the Checkout .Net Standard Library you have two options:
->1. Either install the library through NuGet by searching for the NuGet package name *Checkout.APIClient* and installing it 
+>1. Either install the library through NuGet by searching for the NuGet package name *Checkout.ApiClient* and installing it 
 >2. Or download the source code from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and reference it in your solution.
 
 After that add the library namespace `Checkout` in your code like this:   
@@ -26,8 +26,8 @@ using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
 ### 2. Configuration
-Before initializing a new instance of the `ApiClient(AppSettings settings)` class, you will be required to **specify the settings**.
-The `AppSettings` object consists of the following settable parameters:
+Before initializing a new instance of the `ApiClient(CheckoutConfiguration configuration)` class, you will be required to **specify the configuration**.
+The `CheckoutConfiguration` object consists of the following settable parameters:
 
 Parameter|Description|Required|Type|Default Value
 :---|---|:---:|---|---
@@ -40,7 +40,7 @@ DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to
 
 E.g. specifying your settings for Sandbox could look like this:
 ```csharp
-AppSettings settings = new AppSettings()
+CheckoutConfiguration settings = new CheckoutConfiguration()
 {
 	SecretKey = "sk_test_{your_secret_key}",
 	PublicKey = "pk_test_{your_public_key}",
@@ -48,9 +48,9 @@ AppSettings settings = new AppSettings()
 };
 ```
 
-Then, you can pass the settings to the constructor of the `ApiClient` class ...
+Then, you can pass the configuration to the constructor of the `ApiClient` class ...
 ```csharp
-APIClient CheckoutClient = new APIClient(settings);
+ApiClient CheckoutClient = new ApiClient(settings);
 ```
 ... and you are set up to be using our various API endpoints.
 
@@ -58,7 +58,7 @@ APIClient CheckoutClient = new APIClient(settings);
 
 ---
 ## Endpoints 
-There are various API endpoints that the `APIClient` interacts with.
+There are various API endpoints that the `ApiClient` interacts with.
 >Make sure you visit our [Docs](https://docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
 
 Supporting Docs:
@@ -79,15 +79,15 @@ PaymentTokens|`TokenService`
 RecurringPayments|`RecurringPaymentsService`
 Reporting|`ReportingService`
 
-> After initializing the `APIClient`, you can make any API Calls by simply writing `{APIClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
+> After initializing the `ApiClient`, you can make any API Calls by simply writing `{ApiClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
 >
 > Have a look at this example:
 >```csharp
 >// Adding the Checkout namespace
 >using Checkout;
 >
->// Creating an instance of AppSettings with configurations for Sandbox
->AppSettings sandbox_settings = new AppSettings()
+>// Creating an instance of CheckoutConfiguration with configurations for Sandbox
+>CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
 >{
 >	SecretKey = "sk_test_{your_secret_key}",
 >	PublicKey = "pk_test_{your_public_key}",
@@ -96,8 +96,8 @@ Reporting|`ReportingService`
 >
 >try
 >{
->	// Initializing the APIClient using the Sandbox settings
->	APIClient CheckoutClient = new APIClient(sandbox_settings);
+>	// Initializing the ApiClient using the Sandbox configuration
+>	ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
 >
 >	// Making an API Call to find details about the bank with Bank Identification Number (BIN) 465945
 >	string bin = "465945";
@@ -230,7 +230,7 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 
 ## Examples
 
-Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `APIClient`.
+Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `ApiClient`.
 
 ### Charges
 
@@ -377,8 +377,8 @@ var customerCreateRequest = new CustomerCreate()
 
 try
 {
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+	// Create ApiClient instance with your secret key
+	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
 
 	// Submit your request and receive an apiResponse
 	HttpResponse<Customer> apiResponse = ckoAPIClient.CustomerService.CreateCustomer(customerCreateRequest);
@@ -430,8 +430,8 @@ var cardCreateRequest = new CardCreate()
 
 try
 {
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+	// Create ApiClient instance with your secret key
+	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
 
 	// Submit your request and receive an apiResponse
 	HttpResponse<Card> apiResponse = ckoAPIClient.CardService.CreateCard("cust_9DECF6A8-DBF7-46F3-927D-BA6C3CE1F501", cardCreateRequest);
@@ -504,8 +504,8 @@ var paymentTokenRequest = new PaymentTokenCreate()
 
 try
 {
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+	// Create ApiClient instance with your secret key
+	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
 
 	// Submit your request and receive an apiResponse
 	HttpResponse<PaymentToken> apiResponse = ckoAPIClient.TokenService.CreatePaymentToken(paymentTokenRequest);
@@ -535,8 +535,8 @@ string paymentToken = "pay_tok_e6ef69d3-11b2-473d-bdc0-6b03c8713454";
 
 try
 {
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+	// Create ApiClient instance with your secret key
+	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
 
 	// Submit your request and receive an apiResponse
 	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.VerifyCharge(paymentToken);
