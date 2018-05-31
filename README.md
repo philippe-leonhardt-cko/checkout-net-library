@@ -1,4 +1,8 @@
+[![Checkout.com](https://cdn.checkout.com/img/checkout-logo-online-payments.jpg)](https://checkout.com/)
+
 # Checkout .NET Standard Library
+
+[Checkout.com](https://checkout.com/) is a software platform that has integrated 100% of the value chain to create payment infrastructures that truly make a difference.
 
 ## Target Frameworks
 
@@ -7,7 +11,6 @@ The library targets the following frameworks:
 * .NET Framework 4.5
 * .NET Framework 4.0
 
----
 ## How to use the library
 
 ### 1. Installation
@@ -56,7 +59,6 @@ ApiClient CheckoutClient = new ApiClient(settings);
 
 >Congratulations for installing and configuring the Checkout .NET Standard Library! If you want to learn what's next, continue reading about our API endpoints.
 
----
 ## Endpoints 
 There are various API endpoints that the `ApiClient` interacts with.
 >Make sure you visit our [Docs](https://docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
@@ -64,7 +66,6 @@ There are various API endpoints that the `ApiClient` interacts with.
 Supporting Docs:
 - [Codes](https://docs.checkout.com/docs/codes)
 
----
 ## API Methods
 
 Each Endpoint has its own Service and each Service respectively contains methods.
@@ -225,8 +226,6 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 
 <br />
 <br />
-
----
 
 ## Examples
 
@@ -558,17 +557,30 @@ catch (Exception e)
 	//... Handle exception
 }
 ```
----
 ## Debug Mode
 
 If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.
 
----
 ## Build
 
 To build the library from source, .NET Framework 4.6.1 or later is required. 
 
----
 ## Tests
 
 All the tests are written with NUnit and reside in the `*.Tests` projects.
+
+## Going Live
+
+- In the _Account Keys_ section of the configuration options, place your **live** keys ([where to find them](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys))
+- In the _Basic_ section of the configuration options, switch the _Environment_ to **live**
+- Ensure that you have correctly configured the Redirection URLs and Webhooks in your **live** Checkout.com HUB
+
+
+## Reference 
+
+You can find our complete Documentation [here](http://docs.checkout.com/ "here").  
+If you would like to get an account manager, please contact us at sales@checkout.com  
+For help during the integration process you can contact us at integration@checkout.com  
+For support, you can contact us at support@checkout.com
+
+_Checkout.com is authorised and regulated as a Payment institution by the UK Financial Conduct Authority._
