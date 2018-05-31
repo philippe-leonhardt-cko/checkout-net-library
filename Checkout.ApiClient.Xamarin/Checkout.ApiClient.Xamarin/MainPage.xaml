@@ -19,7 +19,6 @@
                 FlexLayout.Basis="25%"/>
             <Label
                 Text="Checkout.com"
-                TextColor="White"
                 FlexLayout.AlignSelf="Center"
                 FontSize="26"
                 FlexLayout.Basis="10%">
@@ -37,14 +36,12 @@
                 WidthRequest="300">
                 <local:CreditCardEntry
                     x:Name="creditCardNumber"
-                    PlaceholderColor="{StaticResource ckoStormBlue}"
-                    TextColor="White"
-                    Placeholder="e.g. 1234 5678 9012 3456"
+                    Placeholder="eg. 1234 5678 9012 3456"
                     FlexLayout.Grow="1"
                     FlexLayout.AlignSelf="Center"
                     Keyboard="Numeric">
                     <local:CreditCardEntry.Behaviors>
-                        <local:ExpiryDateValidationBehavior MaxLength="16"/>
+                        <local:EntryLengtheValidationBehavior MaxLength="16"/>
                     </local:CreditCardEntry.Behaviors>
                 </local:CreditCardEntry>
                 <BoxView
@@ -62,35 +59,27 @@
                 FlexLayout.Basis="10%"
                 FlexLayout.AlignSelf="Stretch"
                 WidthRequest="300">
-                <local:CreditCardEntry
+                <local:ExpiryDatePicker
                     x:Name="expiryDate"
-                    Placeholder="MM/YY"
-                    PlaceholderColor="{StaticResource ckoStormBlue}"
-                    TextColor="White"
+                    Format="MM/yy"
                     FlexLayout.Grow="0"
-                    Keyboard="Numeric">
-                    <local:CreditCardEntry.Behaviors>
-                        <local:ExpiryDateValidationBehavior MaxLength="4"/>
-                    </local:CreditCardEntry.Behaviors>
-                </local:CreditCardEntry>
+                    TextColor="White">
+                </local:ExpiryDatePicker>
                 <BoxView
                     FlexLayout.Grow="4"/>
-                <local:CreditCardEntry
+                <local:CvvEntry
                     x:Name="cvv"
                     Placeholder="CVV"
-                    PlaceholderColor="{StaticResource ckoStormBlue}"
-                    TextColor="White"
                     FlexLayout.Grow="2"
                     Keyboard="Numeric">
-                    <local:CreditCardEntry.Behaviors>
-                        <local:ExpiryDateValidationBehavior MaxLength="4"/>
-                    </local:CreditCardEntry.Behaviors>
-                </local:CreditCardEntry>
+                    <local:CvvEntry.Behaviors>
+                        <local:EntryLengtheValidationBehavior MaxLength="4"/>
+                    </local:CvvEntry.Behaviors>
+                </local:CvvEntry>
             </FlexLayout>
             <Button
                 x:Name="payNowButton"
                 Text="Pay Now"
-                TextColor="White"
                 BackgroundColor="{StaticResource ckoBrightGreen}"
                 FlexLayout.AlignSelf="End"/>
             <BoxView

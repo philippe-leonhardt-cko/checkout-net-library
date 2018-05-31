@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Checkout.ApiClient.Xamarin"
              x:Class="Checkout.ApiClient.Xamarin.App">
     <Application.Resources>
         <Color x:Key="ckoDune">#ddd6d0</Color>
@@ -13,5 +14,19 @@
         <Color x:Key="ckoSkyBlue">#d8e8ed</Color>
         <Color x:Key="ckoCoral">#fd755f</Color>
         <Color x:Key="ckoRose">#fcbab0</Color>
+        <ResourceDictionary>
+            <Style x:Key="entryStyle" TargetType="{x:Type Entry}">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="PlaceholderColor" Value="#aab3c2" />
+            </Style>
+            <Style TargetType="local:CreditCardEntry" BasedOn="{StaticResource entryStyle}" />
+            <Style TargetType="local:CvvEntry" BasedOn="{StaticResource entryStyle}" />
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

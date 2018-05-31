@@ -4,12 +4,12 @@ using CustomRenderer.Android;
 using Checkout.ApiClient.Xamarin;
 using Android.Content;
 
-[assembly: ExportRenderer(typeof(CreditCardEntry), typeof(CreditCardEntryRenderer))]
+[assembly: ExportRenderer(typeof(CvvEntry), typeof(CvvEntryRenderer))]
 namespace CustomRenderer.Android
 {
-    class CreditCardEntryRenderer : EntryRenderer
+    class CvvEntryRenderer : EntryRenderer
     {
-        public CreditCardEntryRenderer(Context context) : base(context)
+        public CvvEntryRenderer(Context context) : base(context)
         {
         }
 

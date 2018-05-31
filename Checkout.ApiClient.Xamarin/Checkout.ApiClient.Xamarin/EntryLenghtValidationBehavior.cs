@@ -2,7 +2,7 @@
 
 namespace Checkout.ApiClient.Xamarin
 {
-    public class ExpiryDateValidationBehavior : Behavior<Entry>
+    public class EntryLengtheValidationBehavior : Behavior<Entry>
     {
         public int MaxLength { private get; set; }
 
