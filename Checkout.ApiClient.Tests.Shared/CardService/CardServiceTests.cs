@@ -10,7 +10,7 @@ namespace Tests
     public class CardServiceTests : BaseServiceTests
     {
         [Test]
-        public void CreateCardFromFullCardDetails()
+        public void CreateCard()
         {
             var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
             var cardCreateModel = TestHelper.GetCardCreateModel();
@@ -26,23 +26,6 @@ namespace Tests
             response.Model.Bin.Should().Be(cardCreateModel.Number.Substring(0, 6));
             cardCreateModel.Number.Should().EndWith(response.Model.Last4);
             cardCreateModel.BillingDetails.ShouldBeEquivalentTo(response.Model.BillingDetails);
-        }
-
-        [Test]
-        public void CreateCardFromCardToken()
-        {
-            string cardToken = null; // provide a valid Card Token, generated within the last 15min
-            if (cardToken == null)
-            {
-                Assert.Ignore("Test is ignored.\nYou have to provide a valid Card Token, generated within the last 15min.");
-            }
-            var customer = CheckoutClient.CustomerService.CreateCustomer(TestHelper.GetCustomerCreateModelWithNoCard()).Model;
-            var response = CheckoutClient.CardService.CreateCard(customer.Id, cardToken);
-
-            response.Should().NotBeNull();
-            response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
-            response.Model.Id.Should().StartWith("card_");
-            response.Model.CustomerId.Should().BeEquivalentTo(customer.Id);
         }
 
         [Test]
