@@ -41,9 +41,9 @@ MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when rea
 RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient.<br /><br />Default is `60`.|false|`int`| `60`
 DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live.<br /><br />Default is `false`.|false|`bool`|`false`
 
-E.g. specifying your settings for Sandbox could look like this:
+E.g. specifying your configuration for Sandbox could look like this:
 ```csharp
-CheckoutConfiguration settings = new CheckoutConfiguration()
+CheckoutConfiguration configuration = new CheckoutConfiguration()
 {
 	SecretKey = "sk_test_{your_secret_key}",
 	PublicKey = "pk_test_{your_public_key}",
@@ -53,7 +53,7 @@ CheckoutConfiguration settings = new CheckoutConfiguration()
 
 Then, you can pass the configuration to the constructor of the `ApiClient` class ...
 ```csharp
-ApiClient CheckoutClient = new ApiClient(settings);
+ApiClient CheckoutClient = new ApiClient(configuration);
 ```
 ... and you are set up to be using our various API endpoints.
 
@@ -229,7 +229,7 @@ Method|HttpResponse<{__GenericTypeParameter__}>
 
 ## Examples
 
-Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `ApiClient`.
+Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `ApiClient` with name **CheckoutClient**.
 
 ### Charges
 
@@ -376,11 +376,8 @@ var customerCreateRequest = new CustomerCreate()
 
 try
 {
-	// Create ApiClient instance with your secret key
-	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
-
 	// Submit your request and receive an apiResponse
-	HttpResponse<Customer> apiResponse = ckoAPIClient.CustomerService.CreateCustomer(customerCreateRequest);
+	HttpResponse<Customer> apiResponse = CheckoutClient.CustomerService.CreateCustomer(customerCreateRequest);
 
 	if (!apiResponse.HasError)
 	{
@@ -429,11 +426,8 @@ var cardCreateRequest = new CardCreate()
 
 try
 {
-	// Create ApiClient instance with your secret key
-	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
-
 	// Submit your request and receive an apiResponse
-	HttpResponse<Card> apiResponse = ckoAPIClient.CardService.CreateCard("cust_9DECF6A8-DBF7-46F3-927D-BA6C3CE1F501", cardCreateRequest);
+	HttpResponse<Card> apiResponse = CheckoutClient.CardService.CreateCard("cust_9DECF6A8-DBF7-46F3-927D-BA6C3CE1F501", cardCreateRequest);
 
 	if (!apiResponse.HasError)
 	{
@@ -503,11 +497,8 @@ var paymentTokenRequest = new PaymentTokenCreate()
 
 try
 {
-	// Create ApiClient instance with your secret key
-	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
-
 	// Submit your request and receive an apiResponse
-	HttpResponse<PaymentToken> apiResponse = ckoAPIClient.TokenService.CreatePaymentToken(paymentTokenRequest);
+	HttpResponse<PaymentToken> apiResponse = CheckoutClient.TokenService.CreatePaymentToken(paymentTokenRequest);
 
 	if (!apiResponse.HasError)
 	{
@@ -534,11 +525,8 @@ string paymentToken = "pay_tok_e6ef69d3-11b2-473d-bdc0-6b03c8713454";
 
 try
 {
-	// Create ApiClient instance with your secret key
-	ApiClient ckoAPIClient = new ApiClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.ApiClient.Helpers.Environment.Sandbox);
-
 	// Submit your request and receive an apiResponse
-	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.VerifyCharge(paymentToken);
+	HttpResponse<Charge> apiResponse = CheckoutClient.ChargeService.VerifyCharge(paymentToken);
 
 	if (!apiResponse.HasError)
 	{
