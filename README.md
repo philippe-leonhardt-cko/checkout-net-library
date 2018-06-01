@@ -68,17 +68,18 @@ Supporting Docs:
 
 ## API Methods
 
-Each Endpoint has its own Service and each Service respectively contains methods.
+Each Endpoint has its own **Service** and each Service respectively contains methods. There are **Interfaces** for all Services.
 
-Endpoint|Service
----|---
-Cards|`CardService`
-Charges|`ChargeService`
-Customers|`CustomerService`
-Lookups|`LookupsService`
-PaymentTokens|`TokenService`
-RecurringPayments|`RecurringPaymentsService`
-Reporting|`ReportingService`
+Endpoint|Service|Interface
+---|---|---
+Cards|`CardService`|[ICardService](#IcardService)
+Charges|`ChargeService`|[IChargeService](#IChargeService)
+Customers|`CustomerService`|[ICustomerService](#ICustomerService)
+Lookups|`LookupsService`|[ILookupsService](#ILookupsService)
+Payouts|`PayoutsService`|[IPayoutsService](#IPayoutsService)
+RecurringPayments|`RecurringPaymentsService`|[IRecurringPaymentsService](#IRecurringPaymentsService)
+Reporting|`ReportingService`|[IReportingService](#IReportingService)
+Tokens|`TokenService`|[ITokenService](#ITokenService)
 
 > After initializing the `ApiClient`, you can make any API Calls by simply writing `{ApiClient_instance}.{Service}.{Method}`. Every API Call is a RESTful HttpRequest that returns an HttpResponse<T> with a corresponding Generic Type Object. The properties of the Generic Type Object are accessible through the HttpResponse<T\>.Model property.
 >
@@ -129,102 +130,156 @@ Reporting|`ReportingService`
 >}
 >```
 
-### Available methods and their respective return types:
-
-### CardService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`CreateCard(string customerId, CardCreate requestModel)`|`Card`
-`GetCard(string customerId, string cardId)`|`Card`
-`UpdateCard(string customerId, string cardId, CardUpdate requestModel)`|`OkResponse`
-`DeleteCard(string customerId, string cardId)`|`OkResponse`
-`GetCardList(string customerId)`|`CardList`
-
 <br />
 <br />
 
-### ChargeService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`ChargeWithCard(CardCharge requestModel)`|`Charge`
-`ChargeWithCardId(CardIdCharge requestModel)`|`Charge`
-`ChargeWithCardToken(CardTokenCharge requestModel)`|`Charge`
-`ChargeWithDefaultCustomerCard(DefaultCardCharge requestModel)`|`Charge`
-`ChargeWithLocalPayment(LocalPaymentCharge requestModel)`|`Charge`
-`VoidCharge(string chargeId, ChargeVoid requestModel)`|`Void`
-`RefundCharge(string chargeId, ChargeRefund requestModel)`|`Refund`
-`CaptureCharge(string chargeId, ChargeCapture requestModel)`|`Capture`
-`UpdateCharge(string chargeId, ChargeUpdate requestModel)`|`OkResponse`
-`GetCharge(string chargeId)`|`Charge`
-`GetChargeHistory(string chargeId)`|`ChargeHistory`
-`VerifyCharge(string paymentToken)`|`Charge`
+### Available methods on the Interfaces:
 
-<br />
-<br />
+<div id="ICardService" />
 
-### CustomerService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`CreateCustomer(CustomerCreate requestModel)`|`Customer`
-`UpdateCustomer(string customerId, CustomerUpdate requestModel)`|`OkResponse`
-`DeleteCustomer(string customerId)`|`OkResponse`
-`GetCustomer(string identifier)` - identifier being either customerId or customerEmail|`Customer`
-`GetCustomerList(CustomerGetList request)`|`CustomerList`
-
-<br />
+#### ICardService
+```csharp
+namespace Checkout.ApiServices.Cards
+{
+    public interface ICardService
+    {
+        HttpResponse<Card> CreateCard(string customerId, CardCreate requestModel);
+        HttpResponse<Card> CreateCard(string customerId, string cardToken);
+        HttpResponse<OkResponse> DeleteCard(string customerId, string cardId);
+        HttpResponse<Card> GetCard(string customerId, string cardId);
+        HttpResponse<CardList> GetCardList(string customerId);
+        HttpResponse<OkResponse> UpdateCard(string customerId, string cardId, CardUpdate requestModel);
+    }
+}
+```
 <br />
 
-### LookupsService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`GetBinLookup(string bin)`|`CountryInfo`
-`GetLocalPaymentIssuerIds(string lppId)`|`LocalPaymentData`
+<div id="IChargeService" />
 
-<br />
-<br />
-
-### PayoutsService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`MakePayout(BasePayout requestModel)`|`Payout`
-
-<br />
-<br />
-
-### RecurringPaymentsService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`CreatePaymentPlan(SinglePaymentPlanCreateRequest requestModel)`|`SinglePaymentPlanCreateResponse`
-`UpdatePaymentPlan(string planId, PaymentPlanUpdate requestModel)`|`OkResponse`
-`CancelPaymentPlan(string planId)`|`OkResponse`
-`GetPaymentPlan(string planId)`|`PaymentPlan`
-`QueryPaymentPlan(QueryPaymentPlanRequest requestModel)`|`QueryPaymentPlanResponse`
-`QueryCustomerPaymentPlan(QueryCustomerPaymentPlanRequest requestModel)`|`QueryCustomerPaymentPlanResponse`
-`GetCustomerPaymentPlan(string customerPlanId)`|`CustomerPaymentPlan`
-`CancelCustomerPaymentPlan(string customerPlanId)`|`OkResponse`
-`UpdateCustomerPaymentPlan(string customerPlanId, CustomerPaymentPlanUpdate requestModel)`|`OkResponse`
-
-<br />
+#### IChargeService
+```csharp
+namespace Checkout.ApiServices.Charges
+{
+    public interface IChargeService
+    {
+        HttpResponse<Capture> CaptureCharge(string chargeId, ChargeCapture requestModel);
+        HttpResponse<Charge> ChargeWithCard(CardCharge requestModel);
+        HttpResponse<Charge> ChargeWithCardId(CardIdCharge requestModel);
+        HttpResponse<Charge> ChargeWithCardToken(CardTokenCharge requestModel);
+        HttpResponse<Charge> ChargeWithDefaultCustomerCard(DefaultCardCharge requestModel);
+        HttpResponse<Charge> ChargeWithLocalPayment(LocalPaymentCharge requestModel);
+        HttpResponse<Charge> GetCharge(string chargeId);
+        HttpResponse<ChargeHistory> GetChargeHistory(string chargeId);
+        HttpResponse<Refund> RefundCharge(string chargeId, ChargeRefund requestModel);
+        HttpResponse<OkResponse> UpdateCharge(string chargeId, ChargeUpdate requestModel);
+        HttpResponse<Charge> VerifyCharge(string paymentToken);
+        HttpResponse<Void> VoidCharge(string chargeId, ChargeVoid requestModel);
+    }
+}
+```
 <br />
 
-### ReportingService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`QueryTransaction(QueryRequest requestModel)`|`QueryTransactionResponse`
-`QueryChargeback(QueryRequest requestModel)`|`QueryChargebackResponse`
+<div id="ICustomerService" />
+
+#### ICustomerService
+```csharp
+namespace Checkout.ApiServices.Customers
+{
+    public interface ICustomerService
+    {
+        HttpResponse<Customer> CreateCustomer(CustomerCreate requestModel);
+        HttpResponse<OkResponse> DeleteCustomer(string customerId);
+        HttpResponse<Customer> GetCustomer(string identifier);
+        HttpResponse<CustomerList> GetCustomerList(CustomerGetList request);
+        HttpResponse<OkResponse> UpdateCustomer(string customerId, CustomerUpdate requestModel);
+    }
+}
+```
 
 <br />
+
+<div id="ILookupsService" />
+
+#### ILookupsService
+```csharp
+namespace Checkout.ApiServices.Lookups
+{
+    public interface ILookupsService
+    {
+        HttpResponse<CountryInfo> GetBinLookup(string bin);
+        HttpResponse<LocalPaymentData> GetLocalPaymentIssuerIds(string lppId);
+    }
+}
+```
+
 <br />
 
-### TokenService
-Method|HttpResponse<{__GenericTypeParameter__}>
----|---:
-`CreatePaymentToken(PaymentTokenCreate requestModel)`|`PaymentToken`
-`UpdatePaymentToken(string paymentToken, PaymentTokenUpdate requestModel)`|`OkResponse`
-`CreateVisaCheckoutCardToken(VisaCheckoutTokenCreate requestModel)`|`CardTokenResponse`
-`GetCardToken(TokenCard requestModel)`|`CardTokenCreate`
+<div id="IPayoutsService" />
+
+#### IPayoutsService
+```csharp
+namespace Checkout.ApiServices.Payouts
+{
+    public interface IPayoutsService
+    {
+        HttpResponse<Payout> MakePayout(BasePayout requestModel);
+    }
+}
+```
+<br />
+
+<div id="IRecurringPaymentsService" />
+
+#### IRecurringPaymentsService 
+```csharp
+namespace Checkout.ApiServices.RecurringPayments
+{
+    public interface IRecurringPaymentsService
+    {
+        HttpResponse<OkResponse> CancelCustomerPaymentPlan(string customerPlanId);
+        HttpResponse<OkResponse> CancelPaymentPlan(string planId);
+        HttpResponse<SinglePaymentPlanCreateResponse> CreatePaymentPlan(SinglePaymentPlanCreateRequest requestModel);
+        HttpResponse<CustomerPaymentPlan> GetCustomerPaymentPlan(string customerPlanId);
+        HttpResponse<ResponsePaymentPlan> GetPaymentPlan(string planId);
+        HttpResponse<QueryCustomerPaymentPlanResponse> QueryCustomerPaymentPlan(QueryCustomerPaymentPlanRequest requestModel);
+        HttpResponse<QueryPaymentPlanResponse> QueryPaymentPlan(QueryPaymentPlanRequest requestModel);
+        HttpResponse<OkResponse> UpdateCustomerPaymentPlan(string customerPlanId, CustomerPaymentPlanUpdate requestModel);
+        HttpResponse<OkResponse> UpdatePaymentPlan(string planId, PaymentPlanUpdate requestModel);
+    }
+}
+```
 
 <br />
+
+<div id="IReportingService" />
+
+#### IReportingService
+```csharp
+namespace Checkout.ApiServices.Reporting
+{
+    public interface IReportingService
+    {
+        HttpResponse<QueryChargebackResponse> QueryChargeback(QueryRequest requestModel);
+        HttpResponse<QueryTransactionResponse> QueryTransaction(QueryRequest requestModel);
+    }
+}
+```
+
+<br />
+
+<div id="ITokenService" />
+
+#### ITokenService
+```csharp
+namespace Checkout.ApiServices.Reporting
+{
+    public interface IReportingService
+    {
+        HttpResponse<QueryChargebackResponse> QueryChargeback(QueryRequest requestModel);
+        HttpResponse<QueryTransactionResponse> QueryTransaction(QueryRequest requestModel);
+    }
+}
+```
 <br />
 
 ## Examples
@@ -547,7 +602,7 @@ catch (Exception e)
 ```
 ## Debug Mode
 
-If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live. Default is `false`.
+If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going live. Default is `false`.
 
 ## Build
 

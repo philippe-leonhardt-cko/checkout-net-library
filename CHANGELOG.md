@@ -37,11 +37,7 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
 - **deprecated:** <a name="security_1"></a>.NET 4.0 for only supporting early TLS 1.0
     > The Payment Card Industry Security Standards Council (PCI SSC) is extending the migration completion date to 30 June 2018 for transitioning from SSL and TLS 1.0 to a secure version of TLS (currently v1.1 or higher)... [more](https://blog.pcisecuritystandards.org/migrating-from-ssl-and-early-tls)
 
-### Features
-- **added:** availability of the **Payouts** API Endpoint through the SDK
-
-### Changes
-- **added:** support for passing `AppSettings` to the `APIClient(AppSettings settings)` constructor instead of configuring `AppSettings` via custom App Configuration files `App.Debug.config` and `App.Release.config`
+- **added:** requirement for passing `AppSettings` to the `APIClient(AppSettings settings)` constructor instead of configuring `AppSettings` via custom App Configuration files `App.Debug.config` and `App.Release.config`
     ```csharp
     AppSettings settings = new AppSettings()
     {
@@ -55,6 +51,11 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
 
     CheckoutClient = new APIClient(settings);
     ```
+
+### Features
+- **added:** availability of the **Payouts** API Endpoint through the SDK
+
+### Changes
 - **removed:** setting `ServicePointManager.SecurityProtocol`
 
     Framework|TLS 1.2 is default|TLS 1.2 can be added via
