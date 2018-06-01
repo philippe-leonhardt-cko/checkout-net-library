@@ -16,66 +16,77 @@
             JustifyContent="SpaceEvenly"
             Wrap="Wrap">
             <BoxView
-                FlexLayout.Basis="25%"/>
-            <Label
-                Text="Checkout.com"
-                FlexLayout.AlignSelf="Center"
-                FontSize="26"
-                FlexLayout.Basis="10%">
-                <Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="Android" Value="serif"/>
-                    </OnPlatform>
-                </Label.FontFamily>
-            </Label>
+                FlexLayout.Basis="10%"/>
+            <Image Source="logo.png"
+                   Scale="0.8"
+                   FlexLayout.AlignSelf="Center"
+                   FlexLayout.Basis="25%"/>
             <FlexLayout
                 Direction="Row"
-                JustifyContent="SpaceBetween"
+                JustifyContent="Start"
                 FlexLayout.Basis="10%"
                 FlexLayout.AlignSelf="Stretch"
-                WidthRequest="300">
+                WidthRequest="300"
+                Wrap="Wrap">
                 <local:CreditCardEntry
                     x:Name="creditCardNumber"
-                    Placeholder="eg. 1234 5678 9012 3456"
-                    FlexLayout.Grow="1"
+                    Placeholder="1234 5678 9012 3456"
                     FlexLayout.AlignSelf="Center"
+                    FlexLayout.Basis="80%"
                     Keyboard="Numeric">
                     <local:CreditCardEntry.Behaviors>
                         <local:EntryLengtheValidationBehavior MaxLength="16"/>
                     </local:CreditCardEntry.Behaviors>
                 </local:CreditCardEntry>
-                <BoxView
-                    FlexLayout.Grow="0"/>
                 <Image
                     x:Name="creditCardIcon"
-                    WidthRequest="30"
-                    HeightRequest="16"
-                    BackgroundColor="{StaticResource ckoStormBlue}"
+                    WidthRequest="40"
+                    FlexLayout.Basis="20%"
+                    Source="logo_visa.png"
                     FlexLayout.AlignSelf="Center"/>
+                <Label Text="Credit Card"
+                       TranslationX="5"
+                       TextColor="{StaticResource ckoBrightGreen}"
+                       FlexLayout.Basis="100%"
+                       FlexLayout.AlignSelf="Center"/>
             </FlexLayout>
             <FlexLayout
                 Direction="Row"
                 JustifyContent="SpaceBetween"
                 FlexLayout.Basis="10%"
                 FlexLayout.AlignSelf="Stretch"
-                WidthRequest="300">
+                FlexLayout.Grow="1"
+                WidthRequest="300"
+                Wrap="Wrap">
                 <local:ExpiryDatePicker
                     x:Name="expiryDate"
                     Format="MM/yy"
-                    FlexLayout.Grow="0"
-                    TextColor="White">
+                    TextColor="White"
+                    FlexLayout.Basis="40%"
+                    FlexLayout.Grow="1">
                 </local:ExpiryDatePicker>
                 <BoxView
-                    FlexLayout.Grow="4"/>
+                    FlexLayout.Grow="3"/>
                 <local:CvvEntry
                     x:Name="cvv"
-                    Placeholder="CVV"
-                    FlexLayout.Grow="2"
+                    Placeholder="1234"
+                    FlexLayout.Basis="20%"
+                    FlexLayout.Grow="1"
                     Keyboard="Numeric">
                     <local:CvvEntry.Behaviors>
                         <local:EntryLengtheValidationBehavior MaxLength="4"/>
                     </local:CvvEntry.Behaviors>
                 </local:CvvEntry>
+                <Label Text="Expiry Date"
+                       TranslationX="5"
+                       TextColor="{StaticResource ckoBrightGreen}"
+                       FlexLayout.Basis="80%"
+                       FlexLayout.AlignSelf="Center"/>
+                <Label Text="CVV"
+                       TranslationX="5"
+                       TextColor="{StaticResource ckoBrightGreen}"
+                       FlexLayout.Basis="20%"
+                       FlexLayout.AlignSelf="Center"/>
             </FlexLayout>
             <Button
                 x:Name="payNowButton"
