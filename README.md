@@ -35,7 +35,7 @@ The `CheckoutConfiguration` object consists of the following settable parameters
 Parameter|Description|Required|Type|Default Value
 :---|---|:---:|---|---
 SecretKey|Your SecretKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|true|`string`|`null`
-PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|true|`string`|`null`
+PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|false|`string`|`null`
 Environment|You may set this to either `Checkout.Helpers.Environment.Sandbox` or `Checkout.Helpers.Environment.Live`.<br /><br />Default is `Checkout.Helpers.Environment.Sandbox`|false|`enum`|`null`
 MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when reading the response.<br /><br />Default is `10240`.|false|`int`|`10240`
 RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient.<br /><br />Default is `60`.|false|`int`| `60`
@@ -43,7 +43,7 @@ DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to
 
 E.g. specifying your configuration for Sandbox could look like this:
 ```csharp
-CheckoutConfiguration configuration = new CheckoutConfiguration()
+CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
 {
 	SecretKey = "sk_test_{your_secret_key}",
 	PublicKey = "pk_test_{your_public_key}",
@@ -53,7 +53,7 @@ CheckoutConfiguration configuration = new CheckoutConfiguration()
 
 Then, you can pass the configuration to the constructor of the `ApiClient` class ...
 ```csharp
-ApiClient CheckoutClient = new ApiClient(configuration);
+ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
 ```
 ... and you are set up to be using our various API endpoints.
 
@@ -72,7 +72,7 @@ Each Endpoint has its own **Service** and each Service respectively contains met
 
 Endpoint|Service|Interface
 ---|---|---
-Cards|`CardService`|[ICardService](#IcardService)
+Cards|`CardService`|[ICardService](#ICardService)
 Charges|`ChargeService`|[IChargeService](#IChargeService)
 Customers|`CustomerService`|[ICustomerService](#ICustomerService)
 Lookups|`LookupsService`|[ILookupsService](#ILookupsService)
