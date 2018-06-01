@@ -9,7 +9,13 @@ using Android.OS;
 
 namespace Checkout.ApiClient.Xamarin.Droid
 {
-    [Activity(Label = "Checkout.ApiClient.Xamarin", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(
+        Label = "Checkout.ApiClient.Xamarin",
+        Icon = "@mipmap/icon",
+        RoundIcon ="@mipmap/ic_launcher",
+        Theme = "@style/MainTheme",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
