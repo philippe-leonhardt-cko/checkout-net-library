@@ -7,18 +7,25 @@
 ## Target Frameworks
 
 The library targets the following frameworks: 
-* .NET Standard 1.3 or higher
-* .NET Framework 4.5
-* .NET Framework 4.0
+- .NET Standard 1.3 or higher (that includes .NET Core)
+- .NET Framework 4.5
+- .NET Framework 4.0
 
-## How to use the library
-
-### 1. Installation
-In order to use the Checkout .Net Standard Library you have two options:
->1. Either install the library through NuGet by searching for the NuGet package name *Checkout.ApiClient* and installing it 
+## Installation
+In order to use the Checkout.com .NET Standard Library you have two installation options:
+>1. Either install the library through NuGet by searching for the NuGet package name [*Checkout.ApiClient*](https://www.nuget.org/packages/Checkout.APIClient/) and installing it;
 >2. Or download the source code from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and reference it in your solution.
 
-After that add the library namespace `Checkout` in your code like this:   
+## Initial Setup
+
+### Pre requirements:
+- Before using the *Checkout.ApiClient* SDK, you require your *Secret Key* that you can get [here](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys) from your Merchant Account a.k.a *The Hub*;
+  > If you do not have access to *The Hub* yet, simply go to https://checkout.com and click the "Get Sandbox" button to create a Sandbox Account.
+- You have the *Checkout.ApiClient* SDK installed either from [NuGet](https://www.nuget.org/packages/Checkout.APIClient/) or from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and you have referenced it in your project.
+
+### Using the SDK
+
+Add the library namespace `Checkout` to your solution like this:   
 ```csharp
 using Checkout;
 ```
@@ -28,15 +35,16 @@ If you get class name conflicts please add a namespace alias as shown below:
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
-### 2. Configuration
+## Configuration
+
 Before initializing a new instance of the `ApiClient(CheckoutConfiguration configuration)` class, you will be required to **specify the configuration**.
 The `CheckoutConfiguration` object consists of the following settable parameters:
 
 Parameter|Description|Required|Type|Default Value
 :---|---|:---:|---|---
-SecretKey|Your SecretKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|true|`string`|`null`
-PublicKey|Your PublicKey is provided to you in The Hub - see [where to find it](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys).|false|`string`|`null`
-Environment|You may set this to either `Checkout.Helpers.Environment.Sandbox` or `Checkout.Helpers.Environment.Live`.<br /><br />Default is `Checkout.Helpers.Environment.Sandbox`|false|`enum`|`null`
+SecretKey|Your SecretKey is provided to you in The Hub|true|`string`|`null`
+:x: PublicKey|Your PublicKey is provided to you in The Hub|false|`string`|`null`
+Environment|Sets the Environment to either `Sandbox` or `Live`.<br /><br />Default is `Sandbox`.|false|`enum`: [ `Sandbox`, `Live` ]|`null`
 MaxResponseContentBufferSize|Sets the maximum number of bytes to buffer when reading the response.<br /><br />Default is `10240`.|false|`int`|`10240`
 RequestTimeout|Set your default number of seconds to wait before the request times out on the ApiHttpClient.<br /><br />Default is `60`.|false|`int`| `60`
 DebugMode|If set to `true`, the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going Live.<br /><br />Default is `false`.|false|`bool`|`false`
@@ -46,7 +54,6 @@ E.g. specifying your configuration for Sandbox could look like this:
 CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
 {
 	SecretKey = "sk_test_{your_secret_key}",
-	PublicKey = "pk_test_{your_public_key}",
 	DebugMode = true
 };
 ```
@@ -62,9 +69,6 @@ ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
 ## Endpoints 
 There are various API endpoints that the `ApiClient` interacts with.
 >Make sure you visit our [Docs](https://docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
-
-Supporting Docs:
-- [Codes](https://docs.checkout.com/docs/codes)
 
 ## API Methods
 
@@ -92,7 +96,6 @@ Tokens|`TokenService`|[ITokenService](#ITokenService)
 >CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
 >{
 >	SecretKey = "sk_test_{your_secret_key}",
->	PublicKey = "pk_test_{your_public_key}",
 >	DebugMode = true
 >};
 >
@@ -606,22 +609,26 @@ If you enable the debug mode the HttpRequests and HttpResponses will be logged t
 
 ## Build
 
-To build the library from source, .NET Framework 4.6.1 or later is required. 
-
-## Tests
-
-All the tests are written with NUnit and reside in the `*.Tests` projects.
+To build the library from source, .NET Framework 4.6.1 or later is required.
 
 ## Going Live
 
-- In the _Account Keys_ section of the configuration options, place your **live** keys ([where to find them](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys))
+- In the _Account Keys_ section of the configuration options, place your **live** keys
 - In the _Basic_ section of the configuration options, switch the _Environment_ to **live**
 - Ensure that you have correctly configured the Redirection URLs and Webhooks in your **live** Checkout.com HUB
 
 
 ## Reference 
 
-You can find our complete Documentation [here](http://docs.checkout.com/ "here").  
+You can find our complete Documentation [here](http://docs.checkout.com/ "here").
+
+### Useful URIs
+- [Codes](https://docs.checkout.com/docs/codes)
+
+<br />
+
+---
+
 If you would like to get an account manager, please contact us at sales@checkout.com  
 For help during the integration process you can contact us at integration@checkout.com  
 For support, you can contact us at support@checkout.com
