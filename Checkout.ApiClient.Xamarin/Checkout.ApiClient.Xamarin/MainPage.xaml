@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Checkout.ApiClient.Xamarin"
              x:Class="Checkout.ApiClient.Xamarin.MainPage">
+    <ContentPage.Resources>
+        <local:CcNumToSchemeConverter x:Key="CcNumToSchemeConverter" />
+    </ContentPage.Resources>
 
     <RelativeLayout
         x:Name="container"
@@ -39,10 +42,11 @@
                     </local:CreditCardEntry.Behaviors>
                 </local:CreditCardEntry>
                 <Image
+                    BindingContext="{x:Reference creditCardNumber}"
                     x:Name="creditCardIcon"
                     WidthRequest="40"
                     FlexLayout.Basis="20%"
-                    Source="logo_visa.png"
+                    Source="{Binding Text, Converter={StaticResource CcNumToSchemeConverter}}"
                     FlexLayout.AlignSelf="Center"/>
                 <Label Text="Credit Card"
                        TranslationX="5"
