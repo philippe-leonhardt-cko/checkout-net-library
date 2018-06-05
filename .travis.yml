@@ -6,3 +6,4 @@ script:
   - cd Checkout.ApiClient.NetCore.Tests
   - dotnet restore
   - dotnet build
+  - dotnet test
