@@ -1,6 +1,7 @@
 [![Checkout.com](https://cdn.checkout.com/img/checkout-logo-online-payments.jpg)](https://checkout.com/)
 
-# Checkout .NET Standard Library [![Build Status](https://travis-ci.org/philippe-leonhardt-cko/checkout-net-library.svg?branch=develop)](https://travis-ci.org/philippe-leonhardt-cko/checkout-net-library)
+# Checkout .NET Standard Library
+[![Build Status](https://travis-ci.org/philippe-leonhardt-cko/checkout-net-library.svg?branch=develop)](https://travis-ci.org/philippe-leonhardt-cko/checkout-net-library)
 
 [Checkout.com](https://checkout.com/) is a software platform that has integrated 100% of the value chain to create payment infrastructures that truly make a difference.
 
@@ -18,7 +19,7 @@ In order to use the Checkout.com .NET Standard Library you have two installation
 
 ## Initial Setup
 
-### Pre requirements:
+### Pre requirements
 - Before using the *Checkout.ApiClient* SDK, you require your *Secret Key* that you can get [here](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys) from your Merchant Account a.k.a *The Hub*;
   > If you do not have access to *The Hub* yet, simply go to https://checkout.com and click the "Get Sandbox" button to create a Sandbox Account.
 - You have the *Checkout.ApiClient* SDK installed either from [NuGet](https://www.nuget.org/packages/Checkout.APIClient/) or from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and you have referenced it in your project.
@@ -70,7 +71,7 @@ ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
 There are various API endpoints that the `ApiClient` interacts with.
 >Make sure you visit our [Docs](https://docs.checkout.com/docs/api-quickstart) if you want to learn in more detail about the endpoints and how they interact. There is even full [examples for transaction lifecycles](https://docs.checkout.com/docs/integration-options) and more details about our fully proprietory solutions that are worth checking out.
 
-## API Methods
+## (:x:) API Methods
 
 Each Endpoint has its own **Service** and each Service respectively contains methods. There are **Interfaces** for all Services.
 
@@ -285,7 +286,7 @@ namespace Checkout.ApiServices.Reporting
 ```
 <br />
 
-## Examples
+## :x: Examples
 
 Have a look at a few more examples. More detailed information on various Models to be passed in the API Methods are available in our [Merchant API Reference](https://docs.checkout.com/docs/additional-apis). It is assumed that you already have instantiated your `ApiClient` with name **CheckoutClient**.
 
@@ -624,6 +625,7 @@ You can find our complete Documentation [here](http://docs.checkout.com/ "here")
 
 ### Useful URIs
 - [Codes](https://docs.checkout.com/docs/codes)
+- [Test Credit Card Numbers](https://docs.checkout.com/docs/testing#section-test-card-numbers)
 
 <br />
 
