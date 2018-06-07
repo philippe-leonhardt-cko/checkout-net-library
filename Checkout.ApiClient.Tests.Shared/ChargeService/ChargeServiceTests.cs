@@ -11,7 +11,7 @@ using Tests.Utils;
 namespace Tests
 {
     [TestFixture(Category = "ChargesApi")]
-    public class ChargeService : BaseServiceTests
+    public class ChargeServiceTests : BaseServiceTests
     {
         [Test]
         public void CaptureCharge()
