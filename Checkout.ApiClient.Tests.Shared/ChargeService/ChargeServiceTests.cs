@@ -69,11 +69,9 @@ namespace Tests
         [Test]
         public void CreateZeroAuthorisationCharge()
         {
-            var cardCreateModel = TestHelper.GetTokenCardModel();
-            var cardToken = CheckoutClient.TokenService.GetCardToken(cardCreateModel).Model.Id;
-            var cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardToken, TestHelper.RandomData.Email);
+            CardCharge cardChargeRequestModel = TestHelper.GetCardChargeCreateModel(customerEmail: TestHelper.RandomData.Email);
 
-            var response = CheckoutClient.ChargeService.ChargeWithCardToken(cardTokenChargeModel);
+            var response = CheckoutClient.ChargeService.ChargeWithCard(cardChargeRequestModel);
 
             response.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             response.Model.Id.Should().StartWith("charge_test_");
@@ -194,6 +192,8 @@ namespace Tests
         public void CreateChargeWithCardToken()
         {
             var cardCreateModel = TestHelper.GetTokenCardModel();
+
+            // Do not use the GetCardToken() method in live production. The cardToken is part of the response when you Checkout.com solutions like Checkout.js and Frames in your shop.
             var cardToken = CheckoutClient.TokenService.GetCardToken(cardCreateModel).Model.Id;
 
             var cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardToken, TestHelper.RandomData.Email);
