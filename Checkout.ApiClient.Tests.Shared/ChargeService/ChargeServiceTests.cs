@@ -193,7 +193,6 @@ namespace Tests
         {
             var cardCreateModel = TestHelper.GetTokenCardModel();
 
-            // Do not use the GetCardToken() method in live production. The cardToken is part of the response when you Checkout.com solutions like Checkout.js and Frames in your shop.
             var cardToken = CheckoutClient.TokenService.GetCardToken(cardCreateModel).Model.Id;
 
             var cardTokenChargeModel = TestHelper.GetCardTokenChargeCreateModel(cardToken, TestHelper.RandomData.Email);
