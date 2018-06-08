@@ -7,7 +7,7 @@ using Tests.Utils;
 namespace Tests
 {
     [TestFixture(Category = "PayoutsApi")]
-    public class PayoutsService : BaseServiceTests
+    public class PayoutsServiceTests : BaseServiceTests
     {
         [Test]
         public void MakePayout()

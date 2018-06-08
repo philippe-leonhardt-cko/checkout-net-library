@@ -29,6 +29,10 @@ namespace Checkout.ApiServices.Tokens
             return _apiHttpClient.PostRequest<CardTokenResponse>(_configuration.ApiUrls.VisaCheckout, _configuration.PublicKey, requestModel);
         }
 
+        /// <summary>
+        ///     <para>Do not use the <c>GetCardTokenAsync</c> method in live production.</para>
+        ///     <para>The cardToken is part of the response when you use Checkout.com solutions like Checkout.js and Frames in your shop.</para>
+        /// </summary>
         public HttpResponse<CardTokenCreate> GetCardToken(TokenCard requestModel)
         {
             return _apiHttpClient.PostRequest<CardTokenCreate>(_configuration.ApiUrls.CardToken, _configuration.PublicKey, requestModel);
