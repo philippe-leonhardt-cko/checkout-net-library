@@ -7,7 +7,7 @@
     <RootNamespace>Checkout</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageId>Checkout.APIClient</PackageId>
-    <PackageVersion>2.0.2</PackageVersion>
+    <PackageVersion>2.1.0</PackageVersion>
     <Authors>Checkout.com Integration Team</Authors>
     <Title>Checkout.APIClient</Title>
     <Description>
