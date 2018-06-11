@@ -42,30 +42,43 @@ Once you are done with the [Initial Setup](#initial-setup), you are only a few l
 1. Create a `CheckoutConfiguration` object with your **Secret Key** obtained from *The Hub*
 2. Initialize the `ApiClient` by passing it the `CheckoutConfiguration` object
 
+![Initialize the ApiClient](/img/init_ApiClient.gif)
+
+<br />
+
+Here's the code for the demo from above:
+
 ```csharp
 // Adding the Checkout namespace
 using Checkout;
 
-// Creating an instance of CheckoutConfiguration with configurations for Sandbox
-CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
+namespace Tests
 {
-	SecretKey = "sk_test_{your_secret_key}",
-	DebugMode = true
-};
+	public class BaseServiceTests
+	{
+		protected ApiClient CheckoutClient;
 
-try
-{
-	// Initializing the ApiClient using the Sandbox configuration
-	ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
-}
-catch (Exception e)
-{
-	// ... Handle exception
+		public void Init()
+		{
+			// Creating an instance of CheckoutConfiguration with configurations for Sandbox
+			CheckoutConfiguration configuration = new CheckoutConfiguration()
+			{
+				Secret Key = "sk_test_{your_secret_key}",
+				DebugMode = true
+			};
+			// Initializing the ApiClient using the Sandbox configuration
+			CheckoutClient = new ApiClient(configuration);
+		}
+	}
 }
 ```
 
-![Initialize the ApiClient](/img/init_ApiClient.gif)
+<br />
 
+> ## That's it! Congratulations on setting up your *Checkout .NET Standard SDK*! :tada:
+> ## From here on you may explore all **Services** and their **Methods** in our [Wiki](/wiki).
+
+<br />
 
 ## Debug Mode
 
