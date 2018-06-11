@@ -25,7 +25,7 @@ In order to use the Checkout.com .NET Standard Library you have two installation
   > If you do not have access to *The Hub* yet, simply go to https://checkout.com and click the "Get Sandbox" button to create a Sandbox Account.
 - You have the *Checkout.ApiClient* SDK installed either from [NuGet](https://www.nuget.org/packages/Checkout.APIClient/) or from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and you have referenced it in your project.
 
-### Using the SDK
+### Adding the SDK to your Solution
 
 Add the library namespace `Checkout` to your solution like this:   
 ```csharp
@@ -36,6 +36,36 @@ If you get class name conflicts please add a namespace alias as shown below:
 ```csharp
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
+
+## How to use the SDK
+Once you are done with the [Initial Setup](#initial-setup), you are only a few lines of code away from tapping into the power of Checkout.com.
+1. Create a `CheckoutConfiguration` object with your **Secret Key** obtained from *The Hub*
+2. Initialize the `ApiClient` by passing it the `CheckoutConfiguration` object
+
+```csharp
+// Adding the Checkout namespace
+using Checkout;
+
+// Creating an instance of CheckoutConfiguration with configurations for Sandbox
+CheckoutConfiguration sandbox_configuration = new CheckoutConfiguration()
+{
+	SecretKey = "sk_test_{your_secret_key}",
+	DebugMode = true
+};
+
+try
+{
+	// Initializing the ApiClient using the Sandbox configuration
+	ApiClient CheckoutClient = new ApiClient(sandbox_configuration);
+}
+catch (Exception e)
+{
+	// ... Handle exception
+}
+```
+
+![Initialize the ApiClient](#)
+
 
 ## Debug Mode
 
