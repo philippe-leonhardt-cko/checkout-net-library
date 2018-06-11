@@ -37,7 +37,8 @@ If you get class name conflicts please add a namespace alias as shown below:
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
-## How to use the SDK
+## Configuration
+
 Once you are done with the [Initial Setup](#initial-setup), you are only a few lines of code away from tapping into the power of Checkout.com.
 1. Create a `CheckoutConfiguration` object with your **Secret Key** obtained from *The Hub*
 2. Initialize the `ApiClient` by passing it the `CheckoutConfiguration` object
@@ -75,10 +76,26 @@ namespace Tests
 
 <br />
 
-> That's it! Congratulations on setting up your *Checkout .NET Standard SDK*! :tada:  
-> From here on you may explore all **Services** and their **Methods** in our [Wiki](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki).
+> Congratulations for installing and configuring the *Checkout .NET Standard Library!* :tada:  
+From here on you may explore all **Services** and their **Methods** in our [Wiki](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki).
 
 <br />
+
+## How to use the SDK
+
+After initializing the ApiClient, you can make any API Calls by simply writing `{ApiClient_instance}.{Service}.{Method}`.
+
+e.g.:
+
+```csharp
+...
+// Making an API Call to find details about the bank with Bank Identification Number (BIN) 465945
+string bin = "465945";
+var response = CheckoutClient.LookupService.GetBinLookup(bin);
+...
+```
+
+> The full example is available on our [How to use the SDK Wiki entry](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki/Endpoints#how-to-use-the-sdk).
 
 ## Debug Mode
 
