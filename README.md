@@ -64,7 +64,7 @@ catch (Exception e)
 }
 ```
 
-![Initialize the ApiClient](#)
+![Initialize the ApiClient](/img/init_ApiClient.gif)
 
 
 ## Debug Mode
