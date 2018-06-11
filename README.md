@@ -75,8 +75,8 @@ namespace Tests
 
 <br />
 
-> ## That's it! Congratulations on setting up your *Checkout .NET Standard SDK*! :tada:
-> ## From here on you may explore all **Services** and their **Methods** in our [Wiki](/wiki).
+> That's it! Congratulations on setting up your *Checkout .NET Standard SDK*! :tada:
+> From here on you may explore all **Services** and their **Methods** in our [Wiki](/wiki).
 
 <br />
 
