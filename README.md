@@ -64,7 +64,7 @@ namespace Tests
 			// Creating an instance of CheckoutConfiguration with configurations for Sandbox
 			CheckoutConfiguration configuration = new CheckoutConfiguration()
 			{
-				Secret Key = "sk_test_{your_secret_key}",
+				SecretKey = "sk_test_{your_secret_key}",
 				DebugMode = true
 			};
 			// Initializing the ApiClient using the Sandbox configuration
