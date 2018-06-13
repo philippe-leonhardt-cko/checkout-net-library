@@ -4,6 +4,8 @@
 
 [Checkout.com](https://checkout.com/) is a software platform that has integrated 100% of the value chain to create payment infrastructures that truly make a difference.
 
+<br />
+
 ## Target Frameworks
 
 The library targets the following frameworks: 
@@ -11,10 +13,14 @@ The library targets the following frameworks:
 - .NET Framework 4.5
 - .NET Framework 4.0
 
+<br />
+
 ## Installation
 In order to use the Checkout.com .NET Standard Library you have two installation options:
 >1. Either install the library through NuGet by searching for the NuGet package name [*Checkout.ApiClient*](https://www.nuget.org/packages/Checkout.APIClient/) and installing it;
 >2. Or download the source code from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and reference it in your solution.
+
+<br />
 
 ## Initial Setup
 
@@ -35,6 +41,8 @@ If you get class name conflicts please add a namespace alias as shown below:
 ```csharp
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
+
+<br />
 
 ## Configuration
 
@@ -96,6 +104,8 @@ var response = CheckoutClient.LookupService.GetBinLookup(bin);
 
 > The full example is available on our [How to use the SDK Wiki entry](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki/Endpoints#how-to-use-the-sdk).
 
+<br />
+
 ## Going Live
 
 Once you are set with your integration on *Sandbox* you are ready to switch it to *Live*.
@@ -103,8 +113,10 @@ Once you are set with your integration on *Sandbox* you are ready to switch it t
 1. Contact your **Account Manager** to kick-off the switch from *Sandbox* to *Live*.
     - If you are not already in contact with an **Account Manager**, you may contact our [Sales Team](mailto:sales@checkout.com).
 2. Provide the necessary **Documentation** for your onboarding. That includes the [**PCI SAQ**](https://docs.checkout.com/docs/pci-compliance#section-validate-your-pci-compliance) (**P**ayment **C**ard **I**ndustry **S**elf-**A**ssessment **Q**uestionnaire).
-3. You will be provided with access to [*The Hub*](https://hub.checkout.com/login) where you can find your [**Live Secret Key**](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys). Place these **Live Secret Key** in your solution and you are ready to go live!
+3. You will be provided with access to [*The Hub*](https://hub.checkout.com/login) where you can find your [**Live Secret Key**](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys). Place this **Live Secret Key** in your solution and you are ready to go live!
     > Remember to ensure that `DebugMode` is no longer set to `true` when going live.
+
+<br />
 
 ## Reference 
 
