@@ -28,7 +28,7 @@ namespace Checkout.ApiServices.Tokens
         }
 
         /// <summary>
-        ///     <para>Do not use the <c>GetCardTokenAsync</c> method in live production.</para>
+        ///     <para>Do not use the <c>GetCardToken</c> method in live production.</para>
         ///     <para>The cardToken is part of the response when you use Checkout.com solutions like Checkout.js and Frames in your shop.</para>
         /// </summary>
         public HttpResponse<CardTokenCreate> GetCardToken(TokenCard requestModel)
