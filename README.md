@@ -11,7 +11,6 @@
 The library targets the following frameworks: 
 - .NET Standard 1.3 or higher (that includes .NET Core)
 - .NET Framework 4.5
-- .NET Framework 4.0
 
 <br />
 
