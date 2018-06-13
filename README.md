@@ -96,19 +96,15 @@ var response = CheckoutClient.LookupService.GetBinLookup(bin);
 
 > The full example is available on our [How to use the SDK Wiki entry](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki/Endpoints#how-to-use-the-sdk).
 
-## Debug Mode
-
-If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going live. Default is `false`.
-
-## Build
-
-To build the library from source, .NET Framework 4.6.1 or later is required.
-
 ## Going Live
 
-- In the _Account Keys_ section of the configuration options, place your **live** keys
-- In the _Basic_ section of the configuration options, switch the _Environment_ to **live**
-- Ensure that you have correctly configured the Redirection URLs and Webhooks in your **live** Checkout.com HUB
+Once you are set with your integration on *Sandbox* you are ready to switch it to *Live*.
+
+1. Contact your **Account Manager** to kick-off the switch from *Sandbox* to *Live*.
+    - If you are not already in contact with an **Account Manager**, you may contact our [Sales Team](mailto:sales@checkout.com).
+2. Provide the necessary **Documentation** for your onboarding. That includes the [**PCI SAQ**](https://docs.checkout.com/docs/pci-compliance#section-validate-your-pci-compliance) (**P**ayment **C**ard **I**ndustry **S**elf-**A**ssessment **Q**uestionnaire).
+3. You will be provided with access to [*The Hub*](https://hub.checkout.com/login) where you can find your [**Live Secret Key**](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys). Place these **Live Secret Key** in your solution and you are ready to go live!
+    > Remember to ensure that `DebugMode` is no longer set to `true` when going live.
 
 ## Reference 
 
