@@ -186,12 +186,12 @@ namespace Checkout
                     if (configuration.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
-                        Console.WriteLine(string.Format("\n- HttpRequest\n\tof Type:\t\t\t{0}\n\tto API Endpoint:\t\t{1}\n\twith Authorization:\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
+                        Console.WriteLine(string.Format("\n>> HttpRequest:\n\tof Type:\n\t\t{0}\n\tto API Endpoint:\n\t\t{1}\n\twith Authorization:\n\t\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
                         if (payload != null)
                         {
-                            Console.WriteLine(string.Format("\twith Payload:\t\t{0}", payload));
+                            Console.WriteLine(string.Format("\twith Payload:\n\t\t{0}", payload));
                         }
-                        Console.WriteLine(string.Format("\n- HttpResponse\n\treturns Status:\t\t{0}\n\twith Payload:\t\t{1}\n", responseMessage.StatusCode, responseAsString));
+                        Console.WriteLine(string.Format("\n<< HttpResponse:\n\treturns Status:\n\t\t{0}\n\twith Payload:\n\t\t{1}\n", responseMessage.StatusCode, responseAsString));
                         Console.WriteLine(string.Format("</{0}>\n", callerSection));
                         callerSection = "";
                     }
@@ -202,7 +202,7 @@ namespace Checkout
             {
                 if (configuration.DebugMode)
                 {
-                    Console.WriteLine(string.Format("\n- Exception thrown: {0}\treturns Status:\t{1}\n\twith Payload:\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
+                    Console.WriteLine(string.Format("\nException thrown: {0}\treturns Status:\n\t\t{1}\n\twith Payload:\n\t\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
                 }
 
                 responseCode = "Exception: " + ex.Message;
