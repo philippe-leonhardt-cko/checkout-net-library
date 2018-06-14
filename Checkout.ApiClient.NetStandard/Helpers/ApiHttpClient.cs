@@ -20,7 +20,7 @@ namespace Checkout
     /// </summary>
     ///
 
-    public sealed class ApiHttpClient : IApiHttpClient
+    public class ApiHttpClient : IApiHttpClient
     {
         public CheckoutConfiguration configuration;
         private HttpClientHandler requestHandler;

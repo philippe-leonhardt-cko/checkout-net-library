@@ -10,7 +10,7 @@ using Checkout.Helpers;
 
 namespace Checkout
 {
-    public sealed class ApiClientAsync : IApiClientAsync
+    public class ApiClientAsync : IApiClientAsync
     {
         public CheckoutConfiguration CheckoutConfiguration { get; private set; }
         public IApiHttpClient ApiHttpClient { get; private set; }
