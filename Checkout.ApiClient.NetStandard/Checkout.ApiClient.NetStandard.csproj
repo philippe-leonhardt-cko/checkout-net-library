@@ -25,6 +25,7 @@
     <RepositoryUrl>https://github.com/checkout/checkout-net-library.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryBranch>master</RepositoryBranch>
+    <PackageIconUrl>https://www.checkout.com/static/favicons/favicon-32x32.png</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
