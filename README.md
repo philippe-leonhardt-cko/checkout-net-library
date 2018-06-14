@@ -1,471 +1,129 @@
-# checkout-net-library
+[![Checkout.com](https://cdn.checkout.com/img/checkout-logo-online-payments.jpg)](https://checkout.com/)
 
-### Requirements
+# Checkout .NET Standard Library
 
-.Net Framework 4.5 and later
+[Checkout.com](https://checkout.com/) is a software platform that has integrated 100% of the value chain to create payment infrastructures that truly make a difference.
 
-### How to use the library
+## Target Frameworks
 
-In order to use the Checkout .Net library you have two options:
-- Install the library through Nuget. Search for the nuget package name **Checkout.APIClient** and install it.
-- Alternatively, you can download the sourcode from our master branch and reference it in your solution.
+The library targets the following frameworks: 
+- .NET Standard 1.3 or higher (that includes .NET Core)
+- .NET Framework 4.5
+- .NET Framework 4.0
 
-After that add the library namespace **using Checkout;** in your code as below:   
-```
+## Installation
+In order to use the Checkout.com .NET Standard Library you have two installation options:
+>1. Either install the library through NuGet by searching for the NuGet package name [*Checkout.ApiClient*](https://www.nuget.org/packages/Checkout.APIClient/) and installing it;
+>2. Or download the source code from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and reference it in your solution.
+
+## Initial Setup
+
+### Pre Requirements
+- [![PCI Logo][pcilogo]](https://www.pcisecuritystandards.org/) It is a requirement that all Checkout.com merchants validate their *PCI DSS* (**P**ayment **C**ard **I**ndustry **D**ata **S**ecurity **S**tandard) compliance annually. Details about your required level of compliance depend on the Checkout.com solution you want to use. [Read on in our Docs](https://docs.checkout.com/docs/pci-compliance#section-validate-your-pci-compliance) for the details. The [*PCI Security Standard Council*](https://www.pcisecuritystandards.org/) maintains, evolves and promotes the *PCI DSS*.
+- Before using the *Checkout.ApiClient* SDK, you require your *Secret Key* that you can get [here](https://docs.checkout.com/docs/business-level-administration#section-view-api-keys) from your Merchant Account a.k.a *The Hub*;
+  > If you do not have access to *The Hub* yet, simply go to https://checkout.com and click the "Get Sandbox" button to create a Sandbox Account.
+- You have the *Checkout.ApiClient* SDK installed either from [NuGet](https://www.nuget.org/packages/Checkout.APIClient/) or from our [master branch on GitHub](https://github.com/checkout/checkout-net-library/tree/master) and you have referenced it in your project.
+
+### Adding the SDK to your Solution
+
+Add the library namespace `Checkout` to your solution like this:   
+```csharp
 using Checkout;
 ```
 
-if you get class name conflicts please use namespace alias as example below:
-```
+If you get class name conflicts please add a namespace alias as shown below:
+```csharp
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 ```
 
-#### Configuration
-You will be required to **set your secret key** when initialising a new **APIClient** instance. You will also have option for other configurations defined in **AppSettings** of the config file. If you prefer to use config file then you need to have the following configuration in your config file:
+## Configuration
 
-- **Checkout.SecretKey**: This is your api secret key 
-- **Checkout.PublicKey**: This is your api public key 
-- **Checkout.RequestTimeout**: Set your default number of seconds to wait before the request times out on the ApiHttpClient. Default is 60.
-- **Checkout.MaxResponseContentBufferSize**: Sets the maximum number of bytes to buffer when reading the response. Default is 10240.
-- **Checkout.DebugMode**: If set to true, the request and response result will be logged to console. Set this option to false when going Live. Default is false;
-- **Checkout.Environment**: You can set your environment to point to **Sandbox** or **Live**.
+Once you are done with the [Initial Setup](#initial-setup), you are only a few lines of code away from tapping into the power of Checkout.com.
+1. Create a `CheckoutConfiguration` object with your **Secret Key** obtained from *The Hub*
+2. Initialize the `ApiClient` by passing it the `CheckoutConfiguration` object
 
-```html
-<appSettings>
-    <add key="Checkout.SecretKey" value="sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d" />
-    <add key="Checkout.PublicKey" value="pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a" />
-    <add key="Checkout.RequestTimeout" value="60" />
-    <add key="Checkout.MaxResponseContentBufferSize" value="10240" />
-    <add key="Checkout.DebugMode" value="true" />
-    <add key="Checkout.Environment" value="Sandbox" />
-</appSettings>
-```
-#### Constructor configuration 
-There are many constructors available for configuring the settings programmatically and you only need to do it once. If you provide settings from constructor it will override the matching setting in the config file otherwise the library will be looking for the settings in config file.
+![Initialize the ApiClient](/img/init_ApiClient.gif)
 
-```html
-APIClient()
-APIClient(string secretKey, Environment env, bool debugMode, int connectTimeout)
-APIClient(string secretKey, Environment env, bool debugMode)
-APIClient(string secretKey, Environment env)
-APIClient(string secretKey, bool debugMode)
-APIClient(string secretKey)
-```
+<br />
 
-#### Endpoints 
-There are various API endpoints that the **APIClient** interacts with. 
+Here's the code for the demo from above:
 
-- Charges
-- Customers
-- Cards
-- Tokens
+```csharp
+// Adding the Checkout namespace
+using Checkout;
 
-#### Charges
-
-##### Charge with card example
-```
-// Create payload
-var cardChargeRequestModel = new CardCharge()
+namespace Tests
 {
-	Email = "myEmail@hotmail.com",
-	AutoCapture = "Y",
-	AutoCapTime = 0,
-	Currency = "Usd",
-	TrackId = "TRK12345",
-	TransactionIndicator = "1",
-	CustomerIp = "82.23.168.254",
-	Description = "Ipad for Ebs travel",
-	Value = "100",
-	Card = new CardCreate()
+	public class BaseServiceTests
 	{
-		ExpiryMonth = "06",
-		ExpiryYear = "2018",
-		Cvv = "100",
-		Number = "4242424242424242",
-		Name = "Mehmet Ali",
-		BillingDetails = new Address()
+		protected ApiClient CheckoutClient;
+
+		public void Init()
 		{
-			AddressLine1 = "Flat 1",
-			AddressLine2 = "Glading Fields",
-			Postcode = "N16 2BR",
-			City = "London",
-			State = "Hackney",
-			Country = "GB",
-			Phone = new Phone()
+			// Creating an instance of CheckoutConfiguration with configurations for Sandbox
+			CheckoutConfiguration configuration = new CheckoutConfiguration()
 			{
-				CountryCode = "44",
-				Number = "203 583 44 55"
-			}
-		}
-	},
-	Products = new List<Product>(){
-		new Product{ 
-			Name="ipad 3", 
-			Price=100, 
-			Quantity=1, 
-			ShippingCost=10.5M, 
-			Description="Gold edition", 
-			Image="http://goofle.com/?id=12345", 
-			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
-		}
-	},
-	ShippingDetails = new Address()
-	{
-		AddressLine1 = "Flat 1",
-		AddressLine2 = "Glading Fields",
-		Postcode = "N16 2BR",
-		City = "London",
-		State = "Hackney",
-		Country = "GB",
-		Phone = new Phone()
-		{
-			CountryCode = "44",
-			Number = "203 583 44 55"
-		}
-	},
-	Metadata = new Dictionary<string, string>() { { "extraInformation", "EBS travel" } },
-	Udf1 = "udf1 string",
-	Udf2 = "udf2 string",
-	Udf3 = "udf3 string",
-	Udf4 = "udf4 string",
-	Udf5 = "udf5 string"
-};
-
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
-
-	// Submit your request and receive an apiResponse
-	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.ChargeWithCard(cardChargeRequestModel);
-
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var charge = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
-}
-catch (Exception e)
-{
-	//... Handle exception
-}
-```
-
-##### Charge with card token example
-```
-// Create payload
-var cardChargeRequestModel = new CardTokenCharge()
-{
-	Email = "myEmail@hotmail.com",
-	AutoCapture = "Y",
-	AutoCapTime = 0,
-	Currency = "Usd",
-	TrackId = "TRK12345",
-	TransactionIndicator = "1",
-	CustomerIp = "82.23.168.254",
-	Description = "Ipad for Ebs travel",
-	Value = "100",
-	CardToken = "card_tok_************************************",
-	Products = new List<Product>(){
-		new Product{ 
-			Name="ipad 3", 
-			Price=100, 
-			Quantity=1, 
-			ShippingCost=10.5M, 
-			Description="Gold edition", 
-			Image="http://goofle.com/?id=12345", 
-			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
-		}
-	},
-	ShippingDetails = new Address()
-	{
-		AddressLine1 = "Flat 1",
-		AddressLine2 = "Glading Fields",
-		Postcode = "N16 2BR",
-		City = "London",
-		State = "Hackney",
-		Country = "GB",
-		Phone = new Phone()
-		{
-			CountryCode = "44",
-			Number = "203 583 44 55"
-		}
-	},
-	BillingDetails = new Address()
-	{
-		AddressLine1 = "Flat 42",
-		AddressLine2 = "Oxford Street",
-		Postcode = "W1W 8SY",
-		City = "London",
-		State = "London",
-		Country = "GB"
-	},
-	Metadata = new Dictionary<string, string>() { { "extraInformation", "EBS travel" } },
-	Udf1 = "udf1 string",
-	Udf2 = "udf2 string",
-	Udf3 = "udf3 string",
-	Udf4 = "udf4 string",
-	Udf5 = "udf5 string"
-};
-
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
-
-	// Submit your request and receive an apiResponse
-	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.ChargeWithCardToken(cardChargeRequestModel);
-
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var charge = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
-}
-catch (Exception e)
-{
-	//... Handle exception
-}
-```
-
-
-#### Customers
-##### Create customer with card example
-```
-// Create payload
-var customerCreateRequest = new CustomerCreate()
-{
-	Name = "Miss Matt Quigley",
-	Description = "New customer created",
-	Email = "myEmail1@hotmail.com",
-	Phone =  new Phone()
-			{
-				CountryCode = "44",
-				Number = "203 583 44 55"
-			},
-	Metadata = new Dictionary<string, string>() { { "Category", "UK customer" } },
-	Card =  new CardCreate()
-	{
-		ExpiryMonth = "06",
-		ExpiryYear = "2018",
-		Cvv = "100",
-		Number = "4242424242424242",
-		Name = "Miss Matt Quigley",
-		BillingDetails = new Address()
-		{
-			AddressLine1 = "Flat 1",
-			AddressLine2 = "Glading Fields",
-			Postcode = "N16 2BR",
-			City = "London",
-			State = "Hackney",
-			Country = "GB",
-			Phone = new Phone()
-			{
-				CountryCode = "44",
-				Number = "203 583 44 55"
-			}
+				Secret Key = "sk_test_{your_secret_key}",
+				DebugMode = true
+			};
+			// Initializing the ApiClient using the Sandbox configuration
+			CheckoutClient = new ApiClient(configuration);
 		}
 	}
-};
-
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
-
-	// Submit your request and receive an apiResponse
-	HttpResponse<Customer> apiResponse = ckoAPIClient.CustomerService.CreateCustomer(customerCreateRequest);
-
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var customer = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
-}
-catch (Exception e)
-{
-	//... Handle exception
 }
 ```
 
-#### Cards
-##### Create card
-```
-// Create payload
-var cardCreateRequest = new CardCreate()
-{
-	ExpiryMonth = "06",
-	ExpiryYear = "2018",
-	Cvv = "100",
-	Number = "4242424242424242",
-	Name = "Miss Matt Quigley",
-	BillingDetails = new Address()
-	{
-		AddressLine1 = "Flat 1",
-		AddressLine2 = "Glading Fields",
-		Postcode = "N16 2BR",
-		City = "London",
-		State = "Hackney",
-		Country = "GB",
-		Phone = new Phone()
-		{
-			CountryCode = "44",
-			Number = "203 583 44 55"
-		}
-	}, 
-	DefaultCard=true
-};
+<br />
 
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+> Congratulations for installing and configuring the *Checkout .NET Standard Library!* :tada:  
+From here on you may explore all **Services** and their **Methods** in our [Wiki](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki).
 
-	// Submit your request and receive an apiResponse
-	HttpResponse<Card> apiResponse = ckoAPIClient.CardService.CreateCard("cust_9DECF6A8-DBF7-46F3-927D-BA6C3CE1F501", cardCreateRequest);
+<br />
 
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var card = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
-}
-catch (Exception e)
-{
-	//... Handle exception
-}
+## How to use the SDK
+
+After initializing the ApiClient, you can make any API Calls by simply writing `{ApiClient_instance}.{Service}.{Method}`.
+
+e.g.:
+
+```csharp
+...
+// Making an API Call to find details about the bank with Bank Identification Number (BIN) 465945
+string bin = "465945";
+var response = CheckoutClient.LookupService.GetBinLookup(bin);
+...
 ```
 
-#### Tokens
-##### Create payment token example
+> The full example is available on our [How to use the SDK Wiki entry](https://github.com/philippe-leonhardt-cko/checkout-net-library/wiki/Endpoints#how-to-use-the-sdk).
 
-```
-// Create payload
-var paymentTokenRequest = new PaymentTokenCreate()
-  {
-	  Currency = "usd",
-	  Value = "100",
-	  AutoCapTime = 1,
-	  AutoCapture = "N",
-	  ChargeMode = 1,
-	  Email = "myEmail1@hotmail.com",
-	  CustomerIp = "82.23.168.254",
-	  TrackId = "TRK12345", 
-	  Description = "new payment token",
-	  Products = new List<Product>(){
-		new Product{ 
-			Name="ipad 3", 
-			Price=100, 
-			Quantity=1, 
-			ShippingCost=10.5M, 
-			Description="Gold edition", 
-			Image="http://goofle.com/?id=12345", 
-			Sku="TR12345", TrackingUrl="http://tracket.com?id=123456"
-		}
-	},
-	  ShippingDetails = new Address()
-	  {
-		  AddressLine1 = "Flat 1",
-		  AddressLine2 = "Glading Fields",
-		  Postcode = "N16 2BR",
-		  City = "London",
-		  State = "Hackney",
-		  Country = "GB",
-		  Phone = new Phone()
-		  {
-			  CountryCode = "44",
-			  Number = "203 583 44 55"
-		  }
-	  },
-	  Metadata = new Dictionary<string, string>() { { "extraInformation", "EBS travel" } },
-	  Udf1 = "udf1 string",
-	  Udf2 = "udf2 string",
-	  Udf3 = "udf3 string",
-	  Udf4 = "udf4 string",
-	  Udf5 = "udf5 string"
-  };
+## Debug Mode
 
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+If you enable the debug mode the HttpRequests and HttpResponses will be logged to console. Set this option to `false` when going live. Default is `false`.
 
-	// Submit your request and receive an apiResponse
-	HttpResponse<PaymentToken> apiResponse = ckoAPIClient.TokenService.CreatePaymentToken(paymentTokenRequest);
+## Build
 
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var paymentToken = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
-}
-catch (Exception e)
-{
-	//... Handle exception
-}
-```
+To build the library from source, .NET Framework 4.6.1 or later is required.
 
-##### Verify charge example
+## Going Live
 
-```
-// Create payload
-string paymentToken = "pay_tok_e6ef69d3-11b2-473d-bdc0-6b03c8713454";
+- In the _Account Keys_ section of the configuration options, place your **live** keys
+- In the _Basic_ section of the configuration options, switch the _Environment_ to **live**
+- Ensure that you have correctly configured the Redirection URLs and Webhooks in your **live** Checkout.com HUB
 
-try
-{
-	// Create APIClient instance with your secret key
-	APIClient ckoAPIClient = new APIClient("sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d", Checkout.APIClient.Helpers.Environment.Sandbox);
+## Reference 
 
-	// Submit your request and receive an apiResponse
-	HttpResponse<Charge> apiResponse = ckoAPIClient.ChargeService.VerifyCharge(paymentToken);
+You can find our complete Documentation [here](http://docs.checkout.com/ "here").
 
-	if (!apiResponse.HasError)
-	{
-		// Access the response object retrieved from the api
-		var charge = apiResponse.Model;
-	}
-	else
-	{
-		// Api has returned an error object. You can access the details in the error property of the apiResponse.
-		// apiResponse.error
-	}
+### Useful URIs
+- [Codes](https://docs.checkout.com/docs/codes)
+- [Test Credit Card Numbers](https://docs.checkout.com/docs/testing#section-test-card-numbers)
 
-}
-catch (Exception e)
-{
-	//... Handle exception
-}
-```
+---
 
-### Debug Mode
+If you would like to get an account manager, please contact us at sales@checkout.com  
+For help during the integration process you can contact us at integration@checkout.com  
+For support, you can contact us at support@checkout.com
 
-If you enable debug mode by setting the **Checkout.DebugMode** to true in the config file or in code all the http requests and responses will be logged in the console.   
+*Checkout.com is authorised and regulated as a Payment institution by the UK Financial Conduct Authority.*
 
-### Unit Tests
-
-All the unit test written with NUnit and resides in the test project.
+[pcilogo]: https://www.pcisecuritystandards.org/touch-icon-iphone.png (PCI Security Standard Council \(R\))
