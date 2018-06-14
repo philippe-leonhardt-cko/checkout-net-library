@@ -22,8 +22,8 @@ namespace Tests
             // Configure this to switch between Sandbox and Live
             CheckoutConfiguration configuration = new CheckoutConfiguration()
             {
-                SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad",
-                PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b",
+                SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY"), //"sk_test_f952525d-b0eb-4320-a73f-58025ef59dad"
+                PublicKey = Environment.GetEnvironmentVariable("PUBLIC_KEY"), //"pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b"
                 DebugMode = true
             };
 
