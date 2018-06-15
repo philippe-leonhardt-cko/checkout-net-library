@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Checkout;
 using Checkout.ApiServices.Charges.ResponseModels;
 using FluentAssertions;
@@ -21,16 +17,16 @@ namespace Tests
             // Configure this to switch between Sandbox and Live
             CheckoutConfiguration configuration = new CheckoutConfiguration()
             {
-                SecretKey = Environment.GetEnvironmentVariable("SECRET_KEY"), //"sk_test_f952525d-b0eb-4320-a73f-58025ef59dad"
-                PublicKey = Environment.GetEnvironmentVariable("PUBLIC_KEY"), //"pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b"
+                SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad", //Environment.GetEnvironmentVariable("SECRET_KEY"),
+                PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b", //Environment.GetEnvironmentVariable("PUBLIC_KEY"),
                 DebugMode = true
             };
 
-            CheckoutClient = new ApiClient(configuration); 
+            CheckoutClient = new ApiClient(configuration);
         }
-		 
+
         #region Protected methods
- 
+
         /// <summary>
         ///     Creates a new charge with default card and new track id and asserts that is not declined
         /// </summary>
@@ -40,7 +36,7 @@ namespace Tests
         {
             return CreateChargeWithNewTrackId(out string cardNumber);
         }
- 
+
         /// <summary>
         ///     Creates a new charge with default card and new track id and asserts that is not declined
         /// </summary>
@@ -51,7 +47,7 @@ namespace Tests
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);
             cardCreateModel.TrackId = "TRF" + Guid.NewGuid();
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
- 
+
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
 
@@ -61,11 +57,11 @@ namespace Tests
                 Console.WriteLine(string.Format("\n** Advanced Info ** {0}", chargeResponse.Model.ResponseAdvancedInfo));
             };
             chargeResponse.Model.Status.Should().NotBe("Declined", "CreateChargeWithNewTrackId(out string cardNumber) must create an authorized charge, you may re-run this test");
- 
+
             cardNumber = cardCreateModel.Card.Number;
             return chargeResponse.Model;
         }
- 
+
         /// <summary>
         ///     Creates a new charge with provided card and new track id and asserts that is not declined
         /// </summary>
@@ -84,14 +80,14 @@ namespace Tests
             cardCreateModel.Card.ExpiryMonth = expirityMonth;
             cardCreateModel.Card.ExpiryYear = expirityYear;
             var chargeResponse = CheckoutClient.ChargeService.ChargeWithCard(cardCreateModel);
- 
+
             chargeResponse.Should().NotBeNull();
             chargeResponse.HttpStatusCode.Should().Be(HttpStatusCode.OK);
             chargeResponse.Model.Status.Should().NotBe("Declined");
- 
+
             return chargeResponse.Model;
         }
- 
+
         #endregion
     }
 }
