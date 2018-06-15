@@ -17,8 +17,8 @@ namespace Tests
             // Configure this to switch between Sandbox and Live
             CheckoutConfiguration configuration = new CheckoutConfiguration()
             {
-                SecretKey = "sk_test_f952525d-b0eb-4320-a73f-58025ef59dad", //Environment.GetEnvironmentVariable("SECRET_KEY"),
-                PublicKey = "pk_test_607415e3-3fe9-4940-a5d2-7f8be318596b", //Environment.GetEnvironmentVariable("PUBLIC_KEY"),
+                SecretKey = Environment.GetEnvironmentVariable("CKO_SECRET_KEY"),
+                PublicKey = Environment.GetEnvironmentVariable("CKO_PUBLIC_KEY"),
                 DebugMode = true
             };
 
@@ -70,8 +70,7 @@ namespace Tests
         /// <param name="expirityMonth"></param>
         /// <param name="expirityYear"></param>
         /// <returns></returns>
-        protected Charge CreateChargeWithNewTrackId(string cardNumber, string cvv, string expirityMonth,
-            string expirityYear)
+        protected Charge CreateChargeWithNewTrackId(string cardNumber, string cvv, string expirityMonth, string expirityYear)
         {
             var cardCreateModel = TestHelper.GetCardChargeCreateModel(TestHelper.RandomData.Email);
             cardCreateModel.TrackId = "TRF" + Guid.NewGuid();
