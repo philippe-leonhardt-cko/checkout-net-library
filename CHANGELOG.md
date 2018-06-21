@@ -1,10 +1,52 @@
+[![Checkout.com](https://cdn.checkout.com/img/checkout-logo-online-payments.jpg)](https://checkout.com/)
+
 # CHANGELOG
-> Starting with version 2.0.0 this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+Starting with version 2.0.0 this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+<br />
 
 ---
+
+<br />
+
 ## [Unreleased](#) (yyyy-mm-dd)
 
----
+<br />
+
+## [2.2.1](https://github.com/checkout/checkout-net-library/tree/2.2.1) (2018-06-21)
+
+### Features
+- **added:** attributes to satisfy [*stored card details* regulations by Visa and Mastercard](https://docs.checkout.com/docs/stored-card-details)
+  - `cardOnFile`
+  - `previousChargeId`
+  - `transactionIndicator`
+
+<br />
+
+## [2.2.0](https://github.com/checkout/checkout-net-library/tree/2.2.0) (2018-06-14)
+
+### BREAKING CHANGES
+- **removed:** targeting framework **.NET 4.0** for it ...
+  - [... only supporting early TLS 1.0](https://blog.pcisecuritystandards.org/are-you-ready-for-30-june-2018-sayin-goodbye-to-ssl-early-tls)
+  - [... not supporting asynchronous programming with async and await](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/)
+
+### Features
+- **added:** ability to [asynchronously program with **async and await**](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/) through additional classes and methods
+  - synchronous methods remain available via `ApiClient()`
+  - asynchronous methods are added via new Class `ApiClientAsync()`
+
+<br />
+
+## [2.1.0](https://github.com/checkout/checkout-net-library/tree/2.1.0) (2018-06-08)
+
+### Features
+- **added:** method to create a Card from a `cardToken`
+    ```csharp
+    CreateCard(string customerId, string cardToken)
+    ```
+
+<br />
+
 ## [2.0.2](https://github.com/checkout/checkout-net-library/tree/2.0.2) (2018-05-24)
 
 ### BREAKING CHANGES
@@ -25,10 +67,12 @@
   - `IReportingService()`
   - `ITokenService()`
 
----
+<br />
+
 ## [2.0.1](https://github.com/checkout/checkout-net-library/tree/2.0.1) (2018-05-05)
 
----
+<br />
+
 ## [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-05-04)
 
 This release is a port to **.NET Standard 1.3** and closes [#23](https://github.com/checkout/checkout-net-library/issues/23)
@@ -41,15 +85,15 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
     ```csharp
     AppSettings settings = new AppSettings()
     {
-        SecretKey = "sk_test_32b9cb39-1cd6-4f86-b750-7069a133667d",
-        PublicKey = "pk_test_2997d616-471e-48a5-ba86-c775ed3ac38a",
+        SecretKey = "sk_test_{your_secret_key}",
+        PublicKey = "pk_test_{your_public_key}",
         MaxResponseContentBufferSize = 10240,
         RequestTimeout = 60,
         DebugMode = true,
         Environment = Checkout.Helpers.Environment.Sandbox
     };
 
-    CheckoutClient = new APIClient(settings);
+    APIClient CheckoutClient = new APIClient(settings);
     ```
 
 ### Features
@@ -76,13 +120,15 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
   - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanCreate`
   - `ApiServices.RecurringPayments.ResponseModels.ResponsePaymentPlanUpdate`
 
----
+<br />
+
 ## [1.3.0.9](https://github.com/checkout/checkout-net-library/tree/1.3.0.9) (2018-01-22)
 
 ### Features
 - **added:** support for dynamic redirect URLs in Charge Requests
 
----
+<br />
+
 ## [1.3.0.7](https://github.com/checkout/checkout-net-library/tree/1.3.0.7) (2017-10-19)
 
 ### Bug Fixes
@@ -91,7 +137,8 @@ This release is a port to **.NET Standard 1.3** and closes [#23](https://github.
 ### Features
 - **added:** support for Attempt Non 3D in Charge Request
 
----
+<br />
+
 ## [1.3.0.6](https://github.com/checkout/checkout-net-library/tree/1.3.0.6) (2016-10-26)
 
 ### Features
