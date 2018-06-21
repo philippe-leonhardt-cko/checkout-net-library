@@ -10,5 +10,6 @@ namespace Checkout.ApiServices.Charges.RequestModels
         public List<CustomerPaymentPlanCreate> PaymentPlans { get; set; }
         public bool CardOnFile { get; set; }
         public string PreviousChargeId { get; set; }
+
     }
 }

@@ -4,13 +4,8 @@ using Checkout.ApiServices.RecurringPayments.RequestModels;
 
 namespace Checkout.ApiServices.Charges.RequestModels
 {
-    public class CardCharge : BaseCharge
+    public class CardCharge : DefaultCardCharge
     {
-        public string TransactionIndicator { get; set; }
         public CardCreate Card { get; set; }
-        public List<CustomerPaymentPlanCreate> PaymentPlans { get; set; }
-        public bool CardOnFile { get; set; }
-        public string PreviousChargeId { get; set; }
     }
 }
-
