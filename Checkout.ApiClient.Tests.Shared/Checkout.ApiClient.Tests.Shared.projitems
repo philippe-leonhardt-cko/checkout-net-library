@@ -9,6 +9,7 @@
     <Import_RootNamespace>Checkout.ApiClient.Tests.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CardService\CardServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChargeService\ChargeServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomerService\CustomerServiceTests.cs" />
