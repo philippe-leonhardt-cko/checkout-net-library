@@ -20,7 +20,7 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
-## [2.2.1](https://github.com/checkout/checkout-net-library/tree/2.2.1) (2018-06-21)
+## 2.2.1 (2018-06-21)
 
 ### Features
 - **added:** attributes to satisfy [*stored card details* regulations by Visa and Mastercard](https://docs.checkout.com/docs/stored-card-details)
@@ -30,7 +30,7 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
-## [2.2.0](https://github.com/checkout/checkout-net-library/tree/2.2.0) (2018-06-14)
+## 2.2.0 (2018-06-14)
 
 ### BREAKING CHANGES
 - **removed:** targeting framework **.NET 4.0** for it ...
@@ -44,7 +44,7 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
-## [2.1.0](https://github.com/checkout/checkout-net-library/tree/2.1.0) (2018-06-08)
+## 2.1.0 (2018-06-08)
 
 ### Features
 - **added:** method to create a Card from a `cardToken`
@@ -54,7 +54,7 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
-## [2.0.2](https://github.com/checkout/checkout-net-library/tree/2.0.2) (2018-05-24)
+## 2.0.2 (2018-05-24)
 
 ### BREAKING CHANGES
 - **changed:** naming conventions for more consistency
@@ -76,11 +76,11 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
-## [2.0.1](https://github.com/checkout/checkout-net-library/tree/2.0.1) (2018-05-05)
+## 2.0.1 (2018-05-05)
 
 <br />
 
-## [2.0.0](https://github.com/checkout/checkout-net-library/tree/2.0.0) (2018-05-04)
+## 2.0.0 (2018-05-04)
 
 This release is a port to **.NET Standard 1.3** and closes [#23](https://github.com/checkout/checkout-net-library/issues/23)
 
