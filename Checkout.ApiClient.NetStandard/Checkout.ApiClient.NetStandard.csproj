@@ -21,7 +21,7 @@
     <PackageProjectUrl>https://github.com/checkout/checkout-net-library</PackageProjectUrl>
     <PackageIconUri>https://www.checkout.com/static/favicons/favicon-32x32.png</PackageIconUri>
     <PackageTags>payment; card; gateway; checkout; credit; money</PackageTags>
-    <PackageReleaseNotes>2.0.0 is a port to .NET Standard 1.3; 2.2.2 aligns with new credit card scheme requirements for recurring payments</PackageReleaseNotes>
+    <PackageReleaseNotes>2.0.0 is a port to .NET Standard 1.3; 2.2.2 improves structure of class inheritance</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/checkout/checkout-net-library.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryBranch>master</RepositoryBranch>
