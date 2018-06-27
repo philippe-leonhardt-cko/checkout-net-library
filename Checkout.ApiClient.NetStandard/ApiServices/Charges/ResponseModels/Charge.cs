@@ -8,13 +8,12 @@ using Newtonsoft.Json;
 
 namespace Checkout.ApiServices.Charges.ResponseModels
 {
-    public class Charge : BaseCharge
+    public class Charge : DefaultCardCharge
     {
         public string Id { get; set; }
         public string OriginalId { get; set; }
         public bool LiveMode { get; set; }
         public string Created { get; set; }
-        public string TransactionIndicator { get; set; }
         public bool Used { get; set; }
         public Card Card { get; set; }
         public string ResponseMessage { get; set; }
