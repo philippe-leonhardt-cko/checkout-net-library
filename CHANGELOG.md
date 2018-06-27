@@ -13,6 +13,13 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
+## [2.2.2](https://github.com/checkout/checkout-net-library/tree/2.2.2) (2018-06-27)
+
+### Changes
+- **changed:** structure of some class inheritance
+
+<br />
+
 ## [2.2.1](https://github.com/checkout/checkout-net-library/tree/2.2.1) (2018-06-21)
 
 ### Features
