@@ -13,6 +13,13 @@ Starting with version 2.0.0 this project adheres to [Semantic Versioning](http:/
 
 <br />
 
+## 2.2.3 (2018-07-03)
+
+### Features
+- **added:** `RecipientDetails` attribute to satisfy [*requirements for financial institutions* regulations by Visa and Mastercard](https://docs.checkout.com/docs/requirements-for-financial-institutions)
+
+<br />
+
 ## [2.2.2](https://github.com/checkout/checkout-net-library/tree/2.2.2) (2018-06-27)
 
 ### Changes
