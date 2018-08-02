@@ -11,3 +11,7 @@ PublishProfiles/
 *.dbmdl
 *.nunit
 packages/
+.vs/
+.vscode/
+launchSettings.json
+*.cd
