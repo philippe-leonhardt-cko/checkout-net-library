@@ -8,5 +8,6 @@ namespace Checkout.ApiServices.Lookups
     {
         Task<HttpResponse<CountryInfo>> GetBinLookupAsync(string bin);
         Task<HttpResponse<LocalPaymentData>> GetLocalPaymentIssuerIdsAsync(string lppId);
+        Task<HttpResponse<TokenDetails>> GetTokenDetailsAsync(string token, string provider);
     }
 }
