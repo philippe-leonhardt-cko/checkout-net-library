@@ -20,5 +20,10 @@ namespace Checkout.ApiServices.Lookups
         {
             return _lookupsServiceAsync.GetLocalPaymentIssuerIdsAsync(lppId).Result;
         }
+
+        public HttpResponse<TokenDetails> GetTokenDetails(string token, string provider)
+        {
+            return _lookupsServiceAsync.GetTokenDetailsAsync(token, provider).Result;
+        }
     }
 }
