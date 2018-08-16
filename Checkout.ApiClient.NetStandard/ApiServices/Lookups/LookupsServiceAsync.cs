@@ -25,5 +25,11 @@ namespace Checkout.ApiServices.Lookups
             var uri = string.Format(_configuration.ApiUrls.LocalPaymentIssuerIdLookup, lppId);
             return _apiHttpClient.GetRequest<LocalPaymentData>(uri, _configuration.SecretKey);
         }
+
+        public Task<HttpResponse<TokenDetails>> GetTokenDetailsAsync(string token, string provider)
+        {
+            var uri = string.Format(_configuration.ApiUrls.TokenData, token, provider);
+            return _apiHttpClient.GetRequest<TokenDetails>(uri, _configuration.SecretKey);
+        }
     }
 }

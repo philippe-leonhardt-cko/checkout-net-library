@@ -6,5 +6,6 @@ namespace Checkout.ApiServices.Lookups
     {
         HttpResponse<CountryInfo> GetBinLookup(string bin);
         HttpResponse<LocalPaymentData> GetLocalPaymentIssuerIds(string lppId);
+        HttpResponse<TokenDetails> GetTokenDetails(string token, string provider);
     }
 }
