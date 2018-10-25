@@ -13,3 +13,5 @@ PublishProfiles/
 packages/
 .vs/
 .vscode/
+launchSettings.json
+*.cd

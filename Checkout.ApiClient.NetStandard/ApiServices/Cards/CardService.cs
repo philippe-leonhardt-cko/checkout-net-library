@@ -4,45 +4,43 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Cards
 {
-    public class CardService
+    public class CardService : ICardService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public CardService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private ICardServiceAsync _cardServiceAsync;
+      
+        public CardService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
-            _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _cardServiceAsync = new CardServiceAsync(apiHttpclient, configuration);
         }
 
         public HttpResponse<Card> CreateCard(string customerId, CardCreate requestModel)
         {
-            var createCardUri = string.Format(_appSettings.ApiUrls.Cards, customerId);
-            return _apiHttpClient.PostRequest<Card>(createCardUri, _appSettings.SecretKey, requestModel);
+            return _cardServiceAsync.CreateCardAsync(customerId, requestModel).Result;
+        }
+
+        public HttpResponse<Card> CreateCard(string customerId, string cardToken)
+        {
+            return _cardServiceAsync.CreateCardAsync(customerId, cardToken).Result;
         }
 
         public HttpResponse<Card> GetCard(string customerId, string cardId)
         {
-            var getCardUri = string.Format(_appSettings.ApiUrls.Card, customerId, cardId);
-            return _apiHttpClient.GetRequest<Card>(getCardUri, _appSettings.SecretKey);
+            return _cardServiceAsync.GetCardAsync(customerId, cardId).Result;
         }
 
         public HttpResponse<OkResponse> UpdateCard(string customerId, string cardId, CardUpdate requestModel)
         {
-            var updateCardUri = string.Format(_appSettings.ApiUrls.Card, customerId, cardId);
-            return _apiHttpClient.PutRequest<OkResponse>(updateCardUri, _appSettings.SecretKey, requestModel);
+            return _cardServiceAsync.UpdateCardAsync(customerId, cardId, requestModel).Result;
         }
 
         public HttpResponse<OkResponse> DeleteCard(string customerId, string cardId)
         {
-            var deleteCardUri = string.Format(_appSettings.ApiUrls.Card, customerId, cardId);
-            return _apiHttpClient.DeleteRequest<OkResponse>(deleteCardUri, _appSettings.SecretKey);
+            return _cardServiceAsync.DeleteCardAsync(customerId, cardId).Result;
         }
 
         public HttpResponse<CardList> GetCardList(string customerId)
         {
-            var getCardListUri = string.Format(_appSettings.ApiUrls.Cards, customerId);
-            return _apiHttpClient.GetRequest<CardList>(getCardListUri, _appSettings.SecretKey);
+            return _cardServiceAsync.GetCardListAsync(customerId).Result;
         }
-
     }
 }

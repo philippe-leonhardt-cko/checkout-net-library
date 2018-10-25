@@ -6,7 +6,12 @@ namespace Checkout.ApiServices.Charges.RequestModels
 {
     public class DefaultCardCharge : BaseCharge
     {
-        public string TransactionIndicator { get; set; }
+        public bool AttemptN3D { get; set; } = true;
+        public bool CardOnFile { get; set; }
+        public string PreviousChargeId { get; set; }
         public List<CustomerPaymentPlanCreate> PaymentPlans { get; set; }
+        public RecipientDetails RecipientDetails { get; set; }
+        public string TransactionIndicator { get; set; }
+
     }
 }

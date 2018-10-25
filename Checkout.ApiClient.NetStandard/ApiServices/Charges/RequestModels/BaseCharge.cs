@@ -5,20 +5,12 @@ namespace Checkout.ApiServices.Charges.RequestModels
 {
     public class BaseCharge : BaseChargeInfo
     {
-        private const string Yes = "y";
-
-        public BaseCharge()
-        {
-            AutoCapture = Yes;
-            ChargeMode = 1;			// Default mode is no 3D
-            AttemptN3D = true;
-        }
+        private const string Yes = "Y";
 
         public string Value { get; set; }
         public string Currency { get; set; }
-        public int ChargeMode { get; set; }
-        public bool AttemptN3D { get; set; }
-        public string AutoCapture { get; set; }
+        public int ChargeMode { get; set; } = 1; // Default mode is no 3D
+        public string AutoCapture { get; set; } = Yes;
         public decimal AutoCapTime { get; set; }
         public string CustomerIp { get; set; }
         public string Email { get; set; }
@@ -32,6 +24,5 @@ namespace Checkout.ApiServices.Charges.RequestModels
         public bool? RiskCheck { get; set; }
         public string SuccessUrl { get; set; }
         public string FailUrl { get; set; }
-
     }
 }

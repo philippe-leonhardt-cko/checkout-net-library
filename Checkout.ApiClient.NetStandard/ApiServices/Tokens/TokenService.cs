@@ -4,34 +4,36 @@ using Checkout.ApiServices.Tokens.ResponseModels;
 
 namespace Checkout.ApiServices.Tokens
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public TokenService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private ITokenServiceAsync _tokenServiceAsync;
+
+        public TokenService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
-            _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _tokenServiceAsync = new TokenServiceAsync(apiHttpclient, configuration);
         }
         public HttpResponse<PaymentToken> CreatePaymentToken(PaymentTokenCreate requestModel)
         {
-            return _apiHttpClient.PostRequest<PaymentToken>(_appSettings.ApiUrls.PaymentToken, _appSettings.SecretKey, requestModel);
+            return _tokenServiceAsync.CreatePaymentTokenAsync(requestModel).Result;
         }
 
         public HttpResponse<OkResponse> UpdatePaymentToken(string paymentToken, PaymentTokenUpdate requestModel)
         {
-            var updatePaymentTokenUri = string.Format(_appSettings.ApiUrls.UpdatePaymentToken, paymentToken);
-            return _apiHttpClient.PutRequest<OkResponse>(updatePaymentTokenUri, _appSettings.SecretKey, requestModel);
+            return _tokenServiceAsync.UpdatePaymentTokenAsync(paymentToken, requestModel).Result;
         }
 
         public HttpResponse<CardTokenResponse> CreateVisaCheckoutCardToken(VisaCheckoutTokenCreate requestModel)
         {
-            return _apiHttpClient.PostRequest<CardTokenResponse>(_appSettings.ApiUrls.VisaCheckout, _appSettings.PublicKey, requestModel);
+            return _tokenServiceAsync.CreateVisaCheckoutCardTokenAsync(requestModel).Result;
         }
 
+        /// <summary>
+        ///     <para>Do not use the <c>GetCardToken</c> method in live production.</para>
+        ///     <para>The cardToken is part of the response when you use Checkout.com solutions like Checkout.js and Frames in your shop.</para>
+        /// </summary>
         public HttpResponse<CardTokenCreate> GetCardToken(TokenCard requestModel)
         {
-            return _apiHttpClient.PostRequest<CardTokenCreate>(_appSettings.ApiUrls.CardToken, _appSettings.PublicKey, requestModel);
+            return _tokenServiceAsync.GetCardTokenAsync(requestModel).Result;
         }
     }
 }

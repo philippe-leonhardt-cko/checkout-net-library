@@ -4,20 +4,18 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Payouts
 {
-    public class PayoutsService
+    public class PayoutsService : IPayoutsService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public PayoutsService (ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private IPayoutsServiceAsync _payoutsServiceAsync;
+
+        public PayoutsService (IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
-            _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _payoutsServiceAsync = new PayoutsServiceAsync(apiHttpclient, configuration);
         }
 
         public HttpResponse<Payout> MakePayout(BasePayout requestModel)
         {
-            var createPayoutsUri = string.Format(_appSettings.ApiUrls.Payouts);
-            return _apiHttpClient.PostRequest<Payout>(createPayoutsUri, _appSettings.SecretKey, requestModel);
+            return _payoutsServiceAsync.MakePayoutAsync(requestModel).Result;
         }
     }
 }

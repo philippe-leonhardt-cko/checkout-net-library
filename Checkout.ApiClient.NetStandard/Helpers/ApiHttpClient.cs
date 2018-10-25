@@ -20,33 +20,27 @@ namespace Checkout
     /// </summary>
     ///
 
-    public sealed class ApiHttpClient
+    public class ApiHttpClient : IApiHttpClient
     {
-        private AppSettings _appSettings;
-#if (NET40)
-        private WebRequestHandler requestHandler;
-#elif (NET45 || NETSTANDARD)
+        public CheckoutConfiguration configuration;
         private HttpClientHandler requestHandler;
-#endif
+
         private HttpClient httpClient;
 
-        public ApiHttpClient(AppSettings appSettings)
+        public ApiHttpClient(CheckoutConfiguration configuration)
         {
-            _appSettings = appSettings;
+            this.configuration = configuration;
             ResetHandler();
         }
 
-        public void ResetHandler()
+        private void ResetHandler()
         {
             if (requestHandler != null)
             {
                 requestHandler.Dispose();
             }
-#if (NET40)
-            requestHandler = new WebRequestHandler
-#elif (NET45 || NETSTANDARD)
+
             requestHandler = new HttpClientHandler
-#endif
             {
                 AutomaticDecompression = DecompressionMethods.GZip,
                 AllowAutoRedirect = false,
@@ -61,11 +55,11 @@ namespace Checkout
 
             httpClient = new HttpClient(requestHandler)
             {
-                MaxResponseContentBufferSize = _appSettings.MaxResponseContentBufferSize,
-                Timeout = TimeSpan.FromSeconds(_appSettings.RequestTimeout)
+                MaxResponseContentBufferSize = configuration.MaxResponseContentBufferSize,
+                Timeout = TimeSpan.FromSeconds(configuration.RequestTimeout)
             };
 
-            SetHttpRequestHeader("User-Agent", AppSettings.ClientUserAgentName);
+            SetHttpRequestHeader("User-Agent", CheckoutConfiguration.ClientUserAgentName);
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("Gzip"));
         }
 
@@ -94,87 +88,71 @@ namespace Checkout
         /// <summary>
         /// Submits a get request to the given web address with default content type e.g. text/plain
         /// </summary>
-        public HttpResponse<T> GetRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
+        public Task<HttpResponse<T>> GetRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(requestUri)
             };
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
         /// Submits a post request to the given web address
         /// </summary>
-        public HttpResponse<T> PostRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
+        public Task<HttpResponse<T>> PostRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Post, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
 
-            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, AppSettings.DefaultContentType);
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, CheckoutConfiguration.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
         /// Submits a put request to the given web address
         /// </summary>
-        public HttpResponse<T> PutRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
+        public Task<HttpResponse<T>> PutRequest<T>(string requestUri, string authenticationKey, object requestPayload = null, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage(HttpMethod.Put, requestUri);
             var requestPayloadAsString = GetObjectAsString(requestPayload);
 
-            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, AppSettings.DefaultContentType);
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Content = new StringContent(requestPayloadAsString, Encoding.UTF8, CheckoutConfiguration.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg, requestPayloadAsString);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg, requestPayloadAsString).Result;
-#endif
         }
 
         /// <summary>
         /// Submits a delete request to the given web address
         /// </summary>
-        public HttpResponse<T> DeleteRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
+        public Task<HttpResponse<T>> DeleteRequest<T>(string requestUri, string authenticationKey, [CallerMemberName] string callerFunction = "")
         {
             var httpRequestMsg = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
                 RequestUri = new Uri(requestUri)
             };
-            httpRequestMsg.Headers.Add("Accept", AppSettings.DefaultContentType);
+            httpRequestMsg.Headers.Add("Accept", CheckoutConfiguration.DefaultContentType);
 
             SetHttpRequestHeader("Authorization", authenticationKey);
 
             callerSection = callerFunction;
-#if (NET40)
             return SendRequest<T>(httpRequestMsg);
-#elif (NET45 || NETSTANDARD)
-            return SendRequest<T>(httpRequestMsg).Result;
-#endif
         }
 
         /// <summary>
@@ -183,60 +161,48 @@ namespace Checkout
         /// <param name="request"></param>
         /// <returns></returns>
 
-#if (NET40)
-        private HttpResponse<T> SendRequest<T>(HttpRequestMessage request, string payload = null)
+        private async Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
         {
             HttpResponse<T> response = null;
-#elif (NET45 || NETSTANDARD)
-        private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request, string payload = null)
-        {
-            Task<HttpResponse<T>> response = null;
-#endif
             HttpResponseMessage responseMessage = null;
             string responseAsString = null;
             string responseCode = null;
 
             try
             {
-#if NET40
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-#elif NET45 
+#if NET45 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 #endif
-                responseMessage = httpClient.SendAsync(request).Result;
+                responseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
 
                 responseCode = responseMessage.StatusCode.ToString();
 
-                var responseContent = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                var responseContent = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
                 if (responseContent != null && responseContent.Length > 0)
                 {
                     responseAsString = Encoding.UTF8.GetString(responseContent);
 
-                    if (_appSettings.DebugMode)
+                    if (configuration.DebugMode)
                     {
                         Console.WriteLine(string.Format("\n<{0}>", callerSection));
-                        Console.WriteLine(string.Format("\n- HttpRequest\n\tof Type:\t\t\t{0}\n\tto API Endpoint:\t\t{1}\n\twith Authorization:\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
+                        Console.WriteLine(string.Format("\n>> HttpRequest:\n\tof Type:\n\t\t{0}\n\tto API Endpoint:\n\t\t{1}\n\twith Authorization:\n\t\t{2}", request.Method.ToString().ToUpper(), request.RequestUri, request.Headers.Authorization.ToString()));
                         if (payload != null)
                         {
-                            Console.WriteLine(string.Format("\twith Payload:\t\t{0}", payload));
+                            Console.WriteLine(string.Format("\twith Payload:\n\t\t{0}", payload));
                         }
-                        Console.WriteLine(string.Format("\n- HttpResponse\n\treturns Status:\t\t{0}\n\twith Payload:\t\t{1}\n", responseMessage.StatusCode, responseAsString));
+                        Console.WriteLine(string.Format("\n<< HttpResponse:\n\treturns Status:\n\t\t{0}\n\twith Payload:\n\t\t{1}\n", responseMessage.StatusCode, responseAsString));
                         Console.WriteLine(string.Format("</{0}>\n", callerSection));
                         callerSection = "";
                     }
                 }
-#if (NET40)
                 response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
-#elif (NET45 || NETSTANDARD)
-                response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
-#endif
             }
             catch (Exception ex)
             {
-                if (_appSettings.DebugMode)
+                if (configuration.DebugMode)
                 {
-                    Console.WriteLine(string.Format("\n- Exception thrown: {0}\treturns Status:\t{1}\n\twith Payload:\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
+                    Console.WriteLine(string.Format("\nException thrown: {0}\treturns Status:\n\t\t{1}\n\twith Payload:\n\t\t{2}", ExceptionHelper.FlattenExceptionMessages(ex), (responseMessage != null ? responseMessage.StatusCode.ToString() : string.Empty), responseAsString));
                 }
 
                 responseCode = "Exception: " + ex.Message;
@@ -282,6 +248,5 @@ namespace Checkout
         {
             return ContentAdaptor.JsonStringToObject<T>(responseAsString);
         }
-
     }
 }

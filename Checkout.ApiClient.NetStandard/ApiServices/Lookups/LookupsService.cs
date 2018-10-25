@@ -3,25 +3,27 @@ using Checkout.ApiServices.SharedModels;
 
 namespace Checkout.ApiServices.Lookups
 {
-    public class LookupsService
+    public class LookupsService : ILookupsService
     {
-        private ApiHttpClient _apiHttpClient;
-        private AppSettings _appSettings;
-        public LookupsService(ApiHttpClient apiHttpclient, AppSettings appSettings)
+        private ILookupsServiceAsync _lookupsServiceAsync;
+
+        public LookupsService(IApiHttpClient apiHttpclient, CheckoutConfiguration configuration)
         {
-            _apiHttpClient = apiHttpclient;
-            _appSettings = appSettings;
+            _lookupsServiceAsync = new LookupsServiceAsync(apiHttpclient, configuration);
         }
         public HttpResponse<CountryInfo> GetBinLookup(string bin)
         {
-            var uri = string.Format(_appSettings.ApiUrls.BinLookup, bin);
-            return _apiHttpClient.GetRequest<CountryInfo>(uri, _appSettings.SecretKey);
+            return _lookupsServiceAsync.GetBinLookupAsync(bin).Result;
         }
 
         public HttpResponse<LocalPaymentData> GetLocalPaymentIssuerIds(string lppId)
         {
-            var uri = string.Format(_appSettings.ApiUrls.LocalPaymentIssuerIdLookup, lppId);
-            return _apiHttpClient.GetRequest<LocalPaymentData>(uri, _appSettings.SecretKey);
+            return _lookupsServiceAsync.GetLocalPaymentIssuerIdsAsync(lppId).Result;
+        }
+
+        public HttpResponse<TokenDetails> GetTokenDetails(string token, string provider)
+        {
+            return _lookupsServiceAsync.GetTokenDetailsAsync(token, provider).Result;
         }
     }
 }
